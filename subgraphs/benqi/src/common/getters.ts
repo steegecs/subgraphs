@@ -44,7 +44,7 @@ import { Comptroller } from "../../generated/Comptroller/Comptroller";
 
 export function getOrCreateUsageMetricSnapshot(event: ethereum.Event): UsageMetricsDailySnapshot {
   // Number of days since Unix epoch
-  let id: i64 = event.block.timestamp.toI64() / SECONDS_PER_DAY;
+  let id = event.block.timestamp.toI64() / SECONDS_PER_DAY;
 
   // Create unique id for the day
   let usageMetrics = UsageMetricsDailySnapshot.load(id.toString());
@@ -65,7 +65,7 @@ export function getOrCreateUsageMetricSnapshot(event: ethereum.Event): UsageMetr
 }
 
 export function getOrCreateMarketDailySnapshot(event: ethereum.Event): MarketDailySnapshot {
-  let id: i64 = event.block.timestamp.toI64() / SECONDS_PER_DAY;
+  let id = event.block.timestamp.toI64() / SECONDS_PER_DAY;
   let marketAddress = event.address.toHexString(); // TODO: might not be able to do this
   let marketMetrics = MarketDailySnapshot.load(marketAddress.concat("-").concat(id.toString()));
 
@@ -74,19 +74,12 @@ export function getOrCreateMarketDailySnapshot(event: ethereum.Event): MarketDai
     marketMetrics.protocol = COMPTROLLER_ADDRESS;
     marketMetrics.market = marketAddress;
     marketMetrics.totalValueLockedUSD = BIGDECIMAL_ZERO;
-    let inputBalances = new Array<BigInt>();
-    inputBalances.push(BIGINT_ZERO);
-    marketMetrics.inputTokenBalances = inputBalances;
-    let inputPrices = new Array<BigDecimal>();
-    marketMetrics.inputTokenPricesUSD = inputPrices;
+    marketMetrics.inputTokenBalances = [BIGINT_ZERO];
+    marketMetrics.inputTokenPricesUSD = [BIGDECIMAL_ZERO];
     marketMetrics.outputTokenSupply = BIGINT_ZERO;
     marketMetrics.outputTokenPriceUSD = BIGDECIMAL_ZERO;
-    let emissionsAmount = new Array<BigInt>();
-    emissionsAmount.push(BIGINT_ZERO);
-    marketMetrics.rewardTokenEmissionsAmount = emissionsAmount;
-    let emissionsUSD = new Array<BigDecimal>();
-    emissionsUSD.push(BIGDECIMAL_ZERO);
-    marketMetrics.rewardTokenEmissionsUSD = emissionsUSD;
+    marketMetrics.rewardTokenEmissionsAmount = [BIGINT_ZERO];
+    marketMetrics.rewardTokenEmissionsUSD = [BIGDECIMAL_ZERO];
     marketMetrics.blockNumber = event.block.number;
     marketMetrics.timestamp = event.block.timestamp;
     marketMetrics.depositRate = BIGDECIMAL_ZERO;
@@ -101,7 +94,7 @@ export function getOrCreateMarketDailySnapshot(event: ethereum.Event): MarketDai
 
 export function getOrCreateFinancials(event: ethereum.Event): FinancialsDailySnapshot {
   // Number of days since Unix epoch
-  let id: i64 = event.block.timestamp.toI64() / SECONDS_PER_DAY;
+  let id = event.block.timestamp.toI64() / SECONDS_PER_DAY;
 
   let financialMetrics = FinancialsDailySnapshot.load(id.toString());
 
@@ -135,7 +128,7 @@ export function getOrCreateLendingProtcol(): LendingProtocol {
     protocol.subgraphVersion = SUBGRAPH_VERSION;
     protocol.network = NETWORK_ETHEREUM;
     protocol.type = PROTOCOL_TYPE;
-    protocol.totalUniqueUsers = 0 as i32;
+    protocol.totalUniqueUsers = 0;
     protocol.totalValueLockedUSD = BIGDECIMAL_ZERO;
     protocol._totalVolumeUSD = BIGDECIMAL_ZERO;
     protocol.lendingType = LENDING_TYPE;
@@ -206,19 +199,11 @@ export function getOrCreateMarket(event: ethereum.Event, marketAddress: Address)
     // populate quantitative data
     market.totalValueLockedUSD = BIGDECIMAL_ZERO;
     market.totalVolumeUSD = BIGDECIMAL_ZERO;
-    let inputTokenBalances = new Array<BigInt>();
-    inputTokenBalances.push(BIGINT_ZERO);
-    market.inputTokenBalances = inputTokenBalances;
+    market.inputTokenBalances = [BIGINT_ZERO];
     market.outputTokenSupply = BIGINT_ZERO;
     market.outputTokenPriceUSD = BIGDECIMAL_ZERO;
-    let emissionsAmount = new Array<BigInt>();
-    emissionsAmount.push(BIGINT_ZERO);
-    emissionsAmount.push(BIGINT_ZERO);
-    market.rewardTokenEmissionsAmount = emissionsAmount;
-    let emissionsUSD = new Array<BigDecimal>();
-    emissionsUSD.push(BIGDECIMAL_ZERO);
-    emissionsUSD.push(BIGDECIMAL_ZERO);
-    market.rewardTokenEmissionsUSD = emissionsUSD;
+    market.rewardTokenEmissionsAmount = [BIGINT_ZERO, BIGINT_ZERO];
+    market.rewardTokenEmissionsUSD = [BIGDECIMAL_ZERO, BIGDECIMAL_ZERO];
     market.createdTimestamp = event.block.timestamp;
     market.createdBlockNumber = event.block.number;
 
@@ -242,8 +227,8 @@ export function getOrCreateMarket(event: ethereum.Event, marketAddress: Address)
     market._reserveFactor = tryReserveFactor.reverted
       ? BIGDECIMAL_ZERO
       : tryReserveFactor.value.toBigDecimal().div(exponentToBigDecimal(DEFAULT_DECIMALS));
-    market._supplySideRevenueUSD = BIGDECIMAL_ZERO;
-    market._protocolSideRevenueUSD = BIGDECIMAL_ZERO;
+    market._supplySideRevenueUSDPerBlock = BIGDECIMAL_ZERO;
+    market._protocolSideRevenueUSDPerBlock = BIGDECIMAL_ZERO;
     market._outstandingBorrowAmount = BIGINT_ZERO;
     market.liquidationPenalty = protocol._liquidationPenalty;
 
@@ -253,7 +238,7 @@ export function getOrCreateMarket(event: ethereum.Event, marketAddress: Address)
   return market;
 }
 
-export function getOrCreateQiToken(tokenAddress: Address, qiContract: CToken): Token {
+export function getOrCreateQiToken(tokenAddress: Address, qiContract: BenqiTokenqi): Token {
   let cToken = Token.load(tokenAddress.toHexString());
 
   if (cToken == null) {

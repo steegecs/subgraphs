@@ -30,7 +30,7 @@ import { Oracle } from "../../generated/Comptroller/Oracle";
 
 // create a Deposit entity, return false if transaction is null
 // null = market does not exist
-export function createDeposit(event: ethereum.Event, amount: BigInt, mintTokens: BigInt, sender: Address): bool {
+export function createDeposit(event: ethereum.Event, amount: BigInt, mintTokens: BigInt, sender: Address): boolean {
   let marketAddress = event.address;
   let market = getOrCreateMarket(event, marketAddress);
 
@@ -77,11 +77,12 @@ export function createDeposit(event: ethereum.Event, amount: BigInt, mintTokens:
   market.save();
   deposit.save();
   updateProtocolTVL(event); // also updates market TVL
+
   return true;
 }
 
 // creates a withdraw entity, returns false if market does not exist
-export function createWithdraw(event: ethereum.Event, redeemer: Address, amount: BigInt): bool {
+export function createWithdraw(event: ethereum.Event, redeemer: Address, amount: BigInt): boolean {
   // grab and store market entity
   let marketAddress = event.address;
   let market = getOrCreateMarket(event, marketAddress);
@@ -123,7 +124,7 @@ export function createWithdraw(event: ethereum.Event, redeemer: Address, amount:
   return true;
 }
 
-export function createBorrow(event: ethereum.Event, borrower: Address, amount: BigInt): bool {
+export function createBorrow(event: ethereum.Event, borrower: Address, amount: BigInt): boolean {
   // grab and store market entity
   let marketAddress = event.address;
   let market = getOrCreateMarket(event, marketAddress);
@@ -178,7 +179,7 @@ export function createBorrow(event: ethereum.Event, borrower: Address, amount: B
 }
 
 // create Repay entity, return false if market does not exist
-export function createRepay(event: ethereum.Event, payer: Address, amount: BigInt): bool {
+export function createRepay(event: ethereum.Event, payer: Address, amount: BigInt): boolean {
   // grab and store market entity
   let marketAddress = event.address;
   let market = getOrCreateMarket(event, marketAddress);
@@ -228,7 +229,7 @@ export function createLiquidation(
   liquidator: Address,
   liquidatedAmount: BigInt, // sieze tokens
   repaidAmount: BigInt,
-): bool {
+): boolean {
   // grab and store market
   let marketAddress = event.address;
   let market = getOrCreateMarket(event, marketAddress);
@@ -283,7 +284,7 @@ export function createLiquidation(
   // calc amount/amountUSD/profitUSD
   liquidation.amount = liquidatedAmount
     .times(liquidatedExchangeRate)
-    .div(BigInt.fromI32(10).pow(DEFAULT_DECIMALS as u8));
+    .div(BigInt.fromI32(10).pow(DEFAULT_DECIMALS));
   liquidation.amountUSD = liquidation.amount
     .toBigDecimal()
     .div(exponentToBigDecimal(underlyingDecimals))
@@ -387,7 +388,7 @@ export function updateRewards(event: ethereum.Event, market: Market): void {
 
   // try to get COMP price using assetPrices() and prices[] mapping in SimplePriceOracle.sol
   let protocol = getOrCreateLendingProtcol();
-  let oracleAddress = changetype<Address>(protocol._priceOracle);
+  let oracleAddress = protocol._priceOracle;
   let oracle = Oracle.bind(oracleAddress);
   QiPriceUSD = oracle.assetPrices(Address.fromString(QI_ADDRESS)).toBigDecimal().div(exponentToBigDecimal(6)); // price returned with 6 decimals of precision per docs
   AvaxPriceUSD = oracle.assetPrices(Address.fromString(AVAX_ADDRESS)).toBigDecimal().div(exponentToBigDecimal(6)); // price returned with 6 decimals of precision per docs
