@@ -8,6 +8,7 @@ import {
   INT_ZERO,
   INT_ONE,
   QI_ADDRESS,
+  AVAX_ADDRESS,
 } from "../common/utils/constants";
 import {
   getOrCreateLendingProtcol,
@@ -284,7 +285,7 @@ export function createLiquidation(
   // calc amount/amountUSD/profitUSD
   liquidation.amount = liquidatedAmount
     .times(liquidatedExchangeRate)
-    .div(BigInt.fromI32(10).pow(DEFAULT_DECIMALS));
+    .div(BigInt.fromI32(10).pow(18));
   liquidation.amountUSD = liquidation.amount
     .toBigDecimal()
     .div(exponentToBigDecimal(underlyingDecimals))
@@ -292,7 +293,7 @@ export function createLiquidation(
 
   // update market inputTokenPrice
   let repayUnderlyingDecimals = getOrCreateToken(market.inputTokens[0]).decimals;
-  market._inputTokenPrice = getUSDPriceOfToken(market, blockNumber.toI32());
+  market._inputTokenPrice = getUSDPriceOfToken(market);
   let costUSD: BigDecimal = repaidAmount
     .toBigDecimal()
     .div(exponentToBigDecimal(repayUnderlyingDecimals))
@@ -319,7 +320,7 @@ export function updateMarketPrices(market: Market, event: ethereum.Event): void 
     .times(exponentToBigDecimal(COMPOUND_DECIMALS))
     .div(mantissaFactorBD)
     .truncate(DEFAULT_DECIMALS);
-  market._inputTokenPrice = getUSDPriceOfToken(market, event.block.number.toI32());
+  market._inputTokenPrice = getUSDPriceOfToken(market);
   market.outputTokenPriceUSD = market._exchangeRate.times(market._inputTokenPrice);
 
   market.save();
@@ -332,7 +333,7 @@ export function updateProtocolTVL(event: ethereum.Event): void {
   // loop through each market
   for (let i = 0; i < protocol._marketIds.length; i++) {
     let market = getOrCreateMarket(event, Address.fromString(protocol._marketIds[i]));
-    market._inputTokenPrice = getUSDPriceOfToken(market, event.block.number.toI32());
+    market._inputTokenPrice = getUSDPriceOfToken(market);
     let underlyingDecimals = getOrCreateToken(market.inputTokens[0]).decimals;
     let inputDecimalAmount = market.inputTokenBalances[0].toBigDecimal().div(exponentToBigDecimal(underlyingDecimals));
     market.totalValueLockedUSD = market._inputTokenPrice.times(inputDecimalAmount);
@@ -354,7 +355,7 @@ export function updateRewards(event: ethereum.Event, market: Market): void {
     QiRewardTokenBorrow = getOrCreateRewardToken(market.id, Address.fromString(QI_ADDRESS), RewardTokenType.BORROW);
     AvaxRewardTokenDeposit = getOrCreateRewardToken(market.id, Address.fromString(AVAX_ADDRESS), RewardTokenType.DEPOSIT);
     AvaxRewardTokenBorrow = getOrCreateRewardToken(market.id, Address.fromString(AVAX_ADDRESS), RewardTokenType.BORROW);
-    market.rewardTokens = [QiRewardTokenDeposit!.id, QiRewardTokenBorrow!.id, AvaxRewardTokenDeposit!.id, AvaxRewardTokenBorrow!.id];
+    market.rewardTokens = [QiRewardTokenDeposit.id, QiRewardTokenBorrow.id, AvaxRewardTokenDeposit.id, AvaxRewardTokenBorrow.id];
   }
 
   // get COMP distribution/block
@@ -362,7 +363,7 @@ export function updateRewards(event: ethereum.Event, market: Market): void {
     QiRewardTokenBorrow = getOrCreateRewardToken(market.id, Address.fromString(QI_ADDRESS), RewardTokenType.BORROW);
     AvaxRewardTokenBorrow = getOrCreateRewardToken(market.id, Address.fromString(AVAX_ADDRESS), RewardTokenType.BORROW);
   }
-  let QiRewardDecimals = QiRewardTokenBorrow!.decimals;
+  let QiRewardDecimals = QiRewardTokenBorrow.decimals;
   let AvaxRewardDecimals = AvaxRewardTokenBorrow!.decimals;
   let troller = Comptroller.bind(Address.fromString(COMPTROLLER_ADDRESS));
   let tryQiDistribution = troller.try_rewardSpeeds(INT_ZERO, event.address);
@@ -388,8 +389,8 @@ export function updateRewards(event: ethereum.Event, market: Market): void {
 
   // try to get COMP price using assetPrices() and prices[] mapping in SimplePriceOracle.sol
   let protocol = getOrCreateLendingProtcol();
-  let oracleAddress = protocol._priceOracle;
-  let oracle = Oracle.bind(oracleAddress);
+  let oracleAddress = protocol._priceOracle!;
+  let oracle = Oracle.bind(Address.fromBytes(oracleAddress));
   QiPriceUSD = oracle.assetPrices(Address.fromString(QI_ADDRESS)).toBigDecimal().div(exponentToBigDecimal(6)); // price returned with 6 decimals of precision per docs
   AvaxPriceUSD = oracle.assetPrices(Address.fromString(AVAX_ADDRESS)).toBigDecimal().div(exponentToBigDecimal(6)); // price returned with 6 decimals of precision per docs
 

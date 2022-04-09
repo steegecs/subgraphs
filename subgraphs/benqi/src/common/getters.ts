@@ -9,24 +9,24 @@ import {
   UsageMetricsDailySnapshot,
 } from "../../generated/schema";
 import {
+  AVAX_ADDRESS,
+  AVAX_NAME,
+  AVAX_SYMBOL,
   BIGDECIMAL_ONE,
   BIGDECIMAL_ZERO,
   BIGINT_ZERO,
-  CETH_ADDRESS,
   COMPTROLLER_ADDRESS,
-  QI_ADDRESS,
   DEFAULT_DECIMALS,
-  ETH_ADDRESS,
-  ETH_NAME,
-  ETH_SYMBOL,
   LENDING_TYPE,
   NETWORK_ETHEREUM,
+  ORACLE,
   PROTOCOL_NAME,
   PROTOCOL_RISK_TYPE,
   PROTOCOL_SLUG,
   PROTOCOL_TYPE,
+  QIAVAX_ADDRESS,
+  QI_ADDRESS,
   RewardTokenType,
-  SAI_ADDRESS,
   SCHEMA_VERSION,
   SECONDS_PER_DAY,
   SUBGRAPH_VERSION,
@@ -34,6 +34,7 @@ import {
 } from "./utils/constants";
 import { getAssetDecimals, getAssetName, getAssetSymbol } from "./utils/tokens";
 import { BenqiTokenqi } from "../../generated/Comptroller/BenqiTokenqi";
+import { QiErc20Interface } from "../../generated/templates/BenqiTokenqi/QiErc20Interface";
 import { Address, BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts";
 import { exponentToBigDecimal } from "./utils/utils";
 import { Comptroller } from "../../generated/Comptroller/Comptroller";
@@ -134,6 +135,7 @@ export function getOrCreateLendingProtcol(): LendingProtocol {
     protocol.lendingType = LENDING_TYPE;
     protocol.riskType = PROTOCOL_RISK_TYPE;
     protocol._marketIds = [];
+    protocol._priceOracle = Address.fromString(ORACLE)
 
     // get initial liquidation penalty
     let troller = Comptroller.bind(Address.fromString(COMPTROLLER_ADDRESS));
@@ -153,10 +155,12 @@ export function getOrCreateMarket(event: ethereum.Event, marketAddress: Address)
   if (!market) {
     market = new Market(marketAddress.toHexString());
     let qiTokenContract = BenqiTokenqi.bind(marketAddress);
+    let qiErc20Interface = QiErc20Interface.bind(marketAddress)
     let underlyingAddress: string;
-    let underlying = qiTokenContract.try_underlying();
-    if (marketAddress.toHexString().toLowerCase() == CETH_ADDRESS) {
-      underlyingAddress = ETH_ADDRESS;
+    let underlying = qiErc20Interface.try_underlying();
+
+    if (marketAddress.toHexString().toLowerCase() == QIAVAX_ADDRESS) {
+      underlyingAddress = AVAX_ADDRESS;
     } else if (underlying.reverted) {
       underlyingAddress = ZERO_ADDRESS;
     } else {
@@ -175,25 +179,46 @@ export function getOrCreateMarket(event: ethereum.Event, marketAddress: Address)
     let inputToken = getOrCreateToken(underlyingAddress);
     let outputToken = getOrCreateQiToken(marketAddress, qiTokenContract);
     // COMP was not created until block 9601359
-    if (event.block.number.toI32() > 9601359) {
-      let rewardTokenDeposit = getOrCreateRewardToken(
-        marketAddress.toHexString(),
-        Address.fromString(QI_ADDRESS),
-        RewardTokenType.DEPOSIT,
-      );
-      let rewardTokenBorrow = getOrCreateRewardToken(
-        marketAddress.toHexString(),
-        Address.fromString(QI_ADDRESS),
-        RewardTokenType.BORROW,
-      );
-      let rewardTokenArr = new Array<string>();
-      rewardTokenArr.push(rewardTokenDeposit.id);
-      rewardTokenArr.push(rewardTokenBorrow.id);
-      market.rewardTokens = rewardTokenArr;
-    }
-    let inputTokens = new Array<string>();
-    inputTokens.push(inputToken.id);
-    market.inputTokens = inputTokens;
+    // if (event.block.number.toI32() > 9601359) {
+    //   let rewardTokenDeposit = getOrCreateRewardToken(
+    //     marketAddress.toHexString(),
+    //     Address.fromString(QI_ADDRESS),
+    //     RewardTokenType.DEPOSIT,
+    //   );
+    //   let rewardTokenBorrow = getOrCreateRewardToken(
+    //     marketAddress.toHexString(),
+    //     Address.fromString(QI_ADDRESS),
+    //     RewardTokenType.BORROW,
+    //   );
+    //   let rewardTokenArr = new Array<string>();
+    //   rewardTokenArr.push(rewardTokenDeposit.id);
+    //   rewardTokenArr.push(rewardTokenBorrow.id);
+    //   market.rewardTokens = rewardTokenArr;
+    // }
+
+    let rewardQiTokenDeposit = getOrCreateRewardToken(
+      marketAddress.toHexString(),
+      Address.fromString(QI_ADDRESS),
+      RewardTokenType.DEPOSIT,
+    );
+    let rewardQiTokenBorrow = getOrCreateRewardToken(
+      marketAddress.toHexString(),
+      Address.fromString(QI_ADDRESS),
+      RewardTokenType.BORROW,
+    );
+    let rewardAvaxTokenDeposit = getOrCreateRewardToken(
+      marketAddress.toHexString(),
+      Address.fromString(AVAX_ADDRESS),
+      RewardTokenType.DEPOSIT,
+    );
+    let rewardAvaxTokenBorrow = getOrCreateRewardToken(
+      marketAddress.toHexString(),
+      Address.fromString(AVAX_ADDRESS),
+      RewardTokenType.BORROW,
+    );
+
+    market.rewardTokens = [rewardQiTokenDeposit.id, rewardQiTokenBorrow.id, rewardAvaxTokenDeposit.id, rewardAvaxTokenBorrow.id];
+    market.inputTokens = [inputToken.id];
     market.outputToken = outputToken.id;
 
     // populate quantitative data
@@ -207,12 +232,6 @@ export function getOrCreateMarket(event: ethereum.Event, marketAddress: Address)
     market.createdTimestamp = event.block.timestamp;
     market.createdBlockNumber = event.block.number;
 
-    // lending-specific data
-    if (underlyingAddress == SAI_ADDRESS) {
-      market.name = "Dai Stablecoin v1.0 (DAI)";
-    } else {
-      market.name = inputToken.name;
-    }
     market.isActive = true; // event MarketListed() makes a market active
     market.canUseAsCollateral = false; // until Collateral is taken out
     market.canBorrowFrom = false; // until Borrowed from
@@ -258,9 +277,9 @@ export function getOrCreateToken(tokenAddress: string): Token {
     token = new Token(tokenAddress);
 
     // check for ETH token - unique
-    if (tokenAddress == ETH_ADDRESS) {
-      token.name = ETH_NAME;
-      token.symbol = ETH_SYMBOL;
+    if (tokenAddress == AVAX_ADDRESS) {
+      token.name = AVAX_NAME;
+      token.symbol = AVAX_SYMBOL;
       token.decimals = DEFAULT_DECIMALS;
     } else {
       token.name = getAssetName(Address.fromString(tokenAddress));

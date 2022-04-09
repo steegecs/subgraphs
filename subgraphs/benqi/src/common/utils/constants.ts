@@ -52,26 +52,23 @@ export namespace RewardTokenType {
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-export const ETH_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
-export const ETH_NAME = "Ether";
-export const ETH_SYMBOL = "ETH";
+export const AVAX_ADDRESS = "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE";
+export const AVAX_NAME = "Avalanche";
+export const AVAX_SYMBOL = "AVAX";
 
 export const COMPTROLLER_ADDRESS = '0x486Af39519B4Dc9a7fCcd318217352830E8AD9b4'
-export const PRICE_ORACLE1_ADDRESS = "0x02557a5E05DeFeFFD4cAe6D83eA3d173B272c904";
-export const SAI_ADDRESS = "0x89d24a6b4ccb1b6faa2625fe562bdd9a23260359";
-export const USDC_ADDRESS = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48";
-export const CUSDC_ADDRESS = "0x39aa39c021dfbae8fac545936693ac917d5e7563";
-export const CETH_ADDRESS = "0x4ddc2d193948926d02f9b1fe9e1daa0718270ed5";
-export const QI_ADDRESS = "0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5";
-export const CCOMP_ADDRESS = "0x70e36f6bf80a52b3b46b3af8e106cc0ed743e8e4";
-export const CUSDT_ADDRESS = "0xf650c3d88d12db855b8bf7d11be6c55a4e07dcc9";
-export const CTUSD_ADDRESS = "0x12392f67bdf24fae0af363c24ac620a2f67dad86";
+export const ORACLE = "0x36E039e6391A5E7A7267650979fdf613f659be5D"
+
+export const QIAVAX_ADDRESS = "0x5C0401e81Bc07Ca70fAD469b451682c0d747Ef1c";
+export const QI_ADDRESS = "0x8729438EB15e2C8B576fCc6AeCdA6A148776C0F5"
+
+export const QIUSDC_ADDRESS = "0xBEb5d47A3f720Ec0a390d04b4d41ED7d9688bC7F"
 
 ////////////////////////
 ///// Type Helpers /////
 ////////////////////////
 
-export const DEFAULT_DECIMALS = 18;
+export const DEFAULT_DECIMALS = 18 as i32;
 
 export const USDC_DECIMALS = 6;
 export const USDC_DENOMINATOR = BigDecimal.fromString("1000000");
