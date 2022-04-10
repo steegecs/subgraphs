@@ -95,7 +95,9 @@ export const MAX_UINT = BigInt.fromI32(2).times(BigInt.fromI32(255));
 ///// Date/Time /////
 /////////////////////
 
-export const SECONDS_PER_DAY = 60 * 60 * 24; // 86400
+export const SECONDS_PER_DAY = 60 * 60 * 24 as i32; // 86400
+export const SECONDS_PER_DAY_BI = BigInt.fromString(SECONDS_PER_DAY)
+export const SECONDS_PER_DAY_BD = new BigDecimal(SECONDS_PER_DAY_BI)
 export const MS_PER_DAY = new BigDecimal(BigInt.fromI32(24 * 60 * 60 * 1000));
 export const DAYS_PER_YEAR = new BigDecimal(BigInt.fromI32(365));
 export const SECONDS_PER_YEAR = new BigDecimal(BigInt.fromI32(31536000));
@@ -119,3 +121,5 @@ export const COMPOUND_DECIMALS = 8;
 //////////////
 ///////
 
+export const WINDOW_SIZE_SECONDS = 86400
+export const WINDOW_SIZE_SECONDS_BD = BigDecimal.fromString(WINDOW_SIZE_SECONDS.toString())

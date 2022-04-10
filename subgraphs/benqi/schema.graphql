@@ -610,3 +610,8 @@ type _DailyActiveAccount @entity {
   " { Days since Unix epoch }-{ Address of the account } "
   id: ID!
 }
+
+type _speedTracker @entity {
+  id: ID!
+  windowArray: [Int!]!
+}

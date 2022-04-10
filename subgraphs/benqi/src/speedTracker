@@ -1,0 +1,75 @@
+import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
+import { _windowTracker } from "../generated/schema";
+import { BIGDECIMAL_ZERO } from "./common/utils/constants";
+
+export const SECONDS_PER_DAY = 60 * 60 * 24 as i32; // 86400
+export const SECONDS_PER_DAY_BI = BigInt.fromString(SECONDS_PER_DAY)
+export const SECONDS_PER_DAY_BD = new BigDecimal(SECONDS_PER_DAY_BI)
+export const WINDOW_SIZE_SECONDS = 86400
+export const WINDOW_SIZE_SECONDS_BD = BigDecimal.fromString(WINDOW_SIZE_SECONDS.toString())
+export const STORAGE_INTERVAL = 5 as i32
+
+export function getAverageBlocksPerDay(currentBlockNumber: number, currentTimestamp: number): BigDecimal {
+    let windowTracker = getOrCreateWindowTracker()
+    let windowArray : number[][] = windowTracker.windowArray
+
+    if (windowArray.length == 0) {
+        windowArray.push([currentTimestamp, currentBlockNumber])
+        windowTracker.windowArray = windowArray
+        windowTracker.save()
+
+        return BIGDECIMAL_ZERO
+    }
+    // Add current timestamp and block numnber to array if new block is at least 5 blocks later than previously stored
+    // Used to save memory and efficiency on array resizing
+    if (currentBlockNumber - windowArray[0][1] > STORAGE_INTERVAL) {
+        windowArray.push([currentTimestamp, currentBlockNumber])
+    }
+
+    // Return 0 incase there is only one element
+    if (windowArray.length < 2) {
+        return BIGDECIMAL_ZERO
+    }
+
+    // The timestamp at the start of the window (default 24 hours in seconds)
+    let startTimestamp = currentTimestamp - WINDOW_SIZE_SECONDS
+    
+
+    while(windowArray.length > 2) {
+        // Remove items from array that were greater than 24 Hours ago
+        if (windowArray[windowArray.length - 1][0] < startTimestamp) {
+            windowArray.pop()
+        }
+        else {
+            windowTracker.windowArray = windowArray
+            break
+        }
+    }
+
+    // Wideness of the window in seconds
+    let windowSecondsCount = BigDecimal.fromString((windowArray[0][0] - windowArray[windowArray.length - 1][0]).toString())
+
+    // Wideness of the window in blocks
+    let windowBlocksCount = BigDecimal.fromString((windowArray[0][1] - windowArray[windowArray.length - 1][1]).toString())
+    
+    // Estimate block speed for the window in seconds
+    let blockSpeed = (WINDOW_SIZE_SECONDS_BD.div(windowSecondsCount)).times(windowBlocksCount)
+
+    // block speed converted to 24 hour period
+    let blockSpeedPerDay = (SECONDS_PER_DAY_BD.div(WINDOW_SIZE_SECONDS_BD)).times(blockSpeed)
+
+    windowTracker.save()
+    
+    return blockSpeedPerDay
+}
+
+export function getOrCreateWindowTracker(): _windowTracker {
+    let windowTracker = _windowTracker.load("SpeedTracker")
+
+    if (!windowTracker) {
+        // Holds timestamp/blockNumber pairs
+        windowTracker.windowArray = [[]]
+    }
+
+    return windowTracker
+}
