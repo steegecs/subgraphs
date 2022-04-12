@@ -61,6 +61,8 @@ templates:
         - FinancialsDailySnapshot
         - MarketDailySnapshot
       abis:
+        - name: Comptroller
+          file: ./abis/Comptroller.json
         - name: BenqiTokenqi
           file: ./abis/BenqiTokenqi.json
         - name: Oracle
