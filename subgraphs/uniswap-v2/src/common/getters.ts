@@ -13,6 +13,9 @@ import {
   _TokenTracker,
   LiquidityPoolFee,
   Token,
+  UsageMetricsHourlySnapshot,
+  FinancialsHourlySnapshot,
+  PoolHourlySnapshot,
 } from "../../generated/schema";
 import {
   BIGDECIMAL_ZERO,
@@ -24,6 +27,7 @@ import {
   SECONDS_PER_DAY,
   BIGINT_ZERO,
   DEFAULT_DECIMALS,
+  SECONDS_PER_HOUR,
 } from "./constants";
 
 export function getOrCreateDex(): DexAmmProtocol {
@@ -131,6 +135,34 @@ export function getOrCreatePoolDailySnapshot(event: ethereum.Event): PoolDailySn
   return poolMetrics;
 }
 
+export function getOrCreatePoolHourlySnapshot(event: ethereum.Event): PoolHourlySnapshot {
+  let dayID = event.block.timestamp.toI32() / SECONDS_PER_HOUR;
+  let id = dayID.toString();
+  let poolMetrics = PoolHourlySnapshot.load(
+    event.address
+      .toHexString()
+      .concat("-")
+      .concat(id)
+  );
+
+  if (!poolMetrics) {
+    poolMetrics = new PoolHourlySnapshot(
+      event.address
+        .toHexString()
+        .concat("-")
+        .concat(id)
+    );
+    poolMetrics.protocol = FACTORY_ADDRESS;
+    poolMetrics.pool = event.address.toHexString();
+    poolMetrics.currentRewardTokenEmissionsAmount = [];
+    poolMetrics.currentRewardTokenEmissionsUSD = [];
+
+    poolMetrics.save();
+  }
+
+  return poolMetrics;
+}
+
 export function getOrCreateFinancials(event: ethereum.Event): FinancialsDailySnapshot {
   // Number of days since Unix epoch
   let dayID = event.block.timestamp.toI32() / SECONDS_PER_DAY;
@@ -140,6 +172,28 @@ export function getOrCreateFinancials(event: ethereum.Event): FinancialsDailySna
 
   if (!financialMetrics) {
     financialMetrics = new FinancialsDailySnapshot(id);
+    financialMetrics.protocol = FACTORY_ADDRESS;
+
+    financialMetrics.cumulativeTotalRevenueUSD = BIGDECIMAL_ZERO;
+    financialMetrics.cumulativeVolumeUSD = BIGDECIMAL_ZERO;
+    financialMetrics.currentTvlUSD = BIGDECIMAL_ZERO;
+    financialMetrics.cumulativeSupplySideRevenueUSD = BIGDECIMAL_ZERO;
+    financialMetrics.cumulativeProtocolSideRevenueUSD = BIGDECIMAL_ZERO;
+
+    financialMetrics.save();
+  }
+  return financialMetrics;
+}
+
+export function getOrCreateFinancialsHourly(event: ethereum.Event): FinancialsHourlySnapshot {
+  // Number of days since Unix epoch
+  let dayID = event.block.timestamp.toI32() / SECONDS_PER_HOUR;
+  let id = dayID.toString();
+
+  let financialMetrics = FinancialsHourlySnapshot.load(id);
+
+  if (!financialMetrics) {
+    financialMetrics = new FinancialsHourlySnapshot(id);
     financialMetrics.protocol = FACTORY_ADDRESS;
 
     financialMetrics.cumulativeTotalRevenueUSD = BIGDECIMAL_ZERO;

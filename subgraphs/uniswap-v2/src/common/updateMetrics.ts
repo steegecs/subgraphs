@@ -1,17 +1,27 @@
 import { log, dataSource, Address, BigDecimal, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
-import { Account, DailyActiveAccount, UsageMetricsDailySnapshot, _HelperStore, _TokenTracker } from "../../generated/schema";
+import {
+  Account,
+  DailyActiveAccount,
+  HourlyActiveAccount,
+  UsageMetricsDailySnapshot,
+  UsageMetricsHourlySnapshot,
+  _HelperStore,
+  _TokenTracker,
+} from "../../generated/schema";
 import {
   getLiquidityPool,
   getLiquidityPoolAmounts,
   getOrCreateDex,
   getOrCreateEtherHelper,
   getOrCreateFinancials,
+  getOrCreateFinancialsHourly,
   getOrCreatePoolDailySnapshot,
+  getOrCreatePoolHourlySnapshot,
   getOrCreateToken,
   getOrCreateTokenTracker,
   getOrCreateUsersHelper,
 } from "./getters";
-import { BIGDECIMAL_ZERO, BIGINT_ZERO, DEFAULT_DECIMALS, FACTORY_ADDRESS, INT_ONE, SECONDS_PER_DAY, WHITELIST } from "./constants";
+import { BIGDECIMAL_ZERO, BIGINT_ZERO, DEFAULT_DECIMALS, FACTORY_ADDRESS, INT_ONE, SECONDS_PER_DAY, SECONDS_PER_HOUR, WHITELIST } from "./constants";
 import { convertTokenToDecimal } from "./utils/utils";
 import { getUsdPricePerToken } from "../Prices/index";
 import { findEthPerToken, getEthPriceInUSD } from "./price/price";
@@ -41,9 +51,14 @@ export function updateFinancials(event: ethereum.Event): void {
 export function updateUsageMetrics(event: ethereum.Event, from: string): void {
   // Number of days since Unix epoch
   let dayID = event.block.timestamp.toI32() / SECONDS_PER_DAY;
+  let hourID = event.block.timestamp.toI32() / SECONDS_PER_HOUR;
+
   let id = dayID.toString();
+  let idHour = hourID.toString();
+
   let usageMetrics = UsageMetricsDailySnapshot.load(id);
-  let usageMetricsHourly = UsageMetricsHourlySnapshot.load(id);
+  let usageMetricsHourly = UsageMetricsHourlySnapshot.load(idHour);
+
   let totalUniqueUsers = getOrCreateUsersHelper();
   let protocol = getOrCreateDex();
 
@@ -60,6 +75,19 @@ export function updateUsageMetrics(event: ethereum.Event, from: string): void {
   usageMetrics.timestamp = event.block.timestamp;
   usageMetrics.dailyTransactionCount += 1;
 
+  if (!usageMetricsHourly) {
+    usageMetricsHourly = new UsageMetricsHourlySnapshot(id);
+    usageMetricsHourly.protocol = FACTORY_ADDRESS;
+    usageMetricsHourly.dailyActiveUsers = 0;
+    usageMetricsHourly.cumulativeUniqueUsers = 0;
+    usageMetricsHourly.dailyTransactionCount = 0;
+  }
+
+  // Update the block number and timestamp to that of the last transaction of that day
+  usageMetricsHourly.blockNumber = event.block.number;
+  usageMetricsHourly.timestamp = event.block.timestamp;
+  usageMetricsHourly.dailyTransactionCount += 1;
+
   let account = Account.load(from);
   if (!account) {
     account = new Account(from);
@@ -67,6 +95,7 @@ export function updateUsageMetrics(event: ethereum.Event, from: string): void {
     totalUniqueUsers.valueInt += 1;
   }
   usageMetrics.cumulativeUniqueUsers = totalUniqueUsers.valueInt;
+  usageMetricsHourly.cumulativeUniqueUsers = totalUniqueUsers.valueInt;
   protocol.cumulativeUniqueUsers = totalUniqueUsers.valueInt;
 
   // Combine the id and the user address to generate a unique user id for the day
@@ -78,8 +107,18 @@ export function updateUsageMetrics(event: ethereum.Event, from: string): void {
     usageMetrics.dailyActiveUsers += 1;
   }
 
+  // Combine the id and the user address to generate a unique user id for the day
+  let hourlyActiveAccountId = idHour.concat(from);
+  let hourlyActiveAccount = HourlyActiveAccount.load(hourlyActiveAccountId);
+  if (!hourlyActiveAccount) {
+    hourlyActiveAccount = new HourlyActiveAccount(dailyActiveAccountId);
+    hourlyActiveAccount.save();
+    usageMetricsHourly.dailyActiveUsers += 1;
+  }
+
   totalUniqueUsers.save();
   usageMetrics.save();
+  usageMetricsHourly.save();
   protocol.save();
 }
 

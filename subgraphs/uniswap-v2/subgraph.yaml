@@ -2,9 +2,6 @@ specVersion: 0.0.2
 repository: https://github.com/messari/subgraphs
 schema:
   file: ./schema.graphql
-graft:
-  base: QmZ5RaRCyuQ1tLem3rZrC6Zaa3BHCFJ8tok3mPcBeuxny2
-  block: 10207856
 dataSources:
   - kind: ethereum/contract
     name: Factory
