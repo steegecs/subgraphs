@@ -19,6 +19,7 @@ import { findEthPerToken, getEthPriceInUSD } from "./price/price";
 // Update FinancialsDailySnapshots entity
 export function updateFinancials(event: ethereum.Event): void {
   let financialMetrics = getOrCreateFinancials(event);
+  let financialMetricsHourly = getOrCreateFinancialsHourly(event);
   let protocol = getOrCreateDex();
 
   // Update the block number and timestamp to that of the last transaction of that day
@@ -27,6 +28,13 @@ export function updateFinancials(event: ethereum.Event): void {
   financialMetrics.currentTvlUSD = protocol.currentTvlUSD;
   financialMetrics.cumulativeVolumeUSD = protocol.cumulativeVolumeUSD;
 
+  // Update the block number and timestamp to that of the last transaction of that day
+  financialMetricsHourly.blockNumber = event.block.number;
+  financialMetricsHourly.timestamp = event.block.timestamp;
+  financialMetricsHourly.currentTvlUSD = protocol.currentTvlUSD;
+  financialMetricsHourly.cumulativeVolumeUSD = protocol.cumulativeVolumeUSD;
+
+  financialMetricsHourly.save();
   financialMetrics.save();
 }
 
@@ -79,6 +87,7 @@ export function updateUsageMetrics(event: ethereum.Event, from: string): void {
 export function updatePoolMetrics(event: ethereum.Event): void {
   // get or create pool metrics
   let poolMetrics = getOrCreatePoolDailySnapshot(event);
+  let poolMetricsHourly = getOrCreatePoolHourlySnapshot(event);
   let pool = getLiquidityPool(event.address.toHexString());
 
   // Update the block number and timestamp to that of the last transaction of that day
@@ -90,6 +99,16 @@ export function updatePoolMetrics(event: ethereum.Event): void {
   poolMetrics.blockNumber = event.block.number;
   poolMetrics.timestamp = event.block.timestamp;
 
+  // Update the block number and timestamp to that of the last transaction of that day
+  poolMetricsHourly.currentTvlUSD = pool.currentTvlUSD;
+  poolMetricsHourly.cumulativeVolumeUSD = pool.cumulativeVolumeUSD;
+  poolMetricsHourly.inputTokenBalances = pool.inputTokenBalances;
+  poolMetricsHourly.outputTokenSupply = pool.outputTokenSupply;
+  poolMetricsHourly.outputTokenPriceUSD = pool.outputTokenPriceUSD;
+  poolMetricsHourly.blockNumber = event.block.number;
+  poolMetricsHourly.timestamp = event.block.timestamp;
+
+  poolMetricsHourly.save();
   poolMetrics.save();
 }
 

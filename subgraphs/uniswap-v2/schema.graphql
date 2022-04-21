@@ -631,6 +631,12 @@ type DailyActiveAccount @entity {
   id: ID!
 }
 
+# Helper entity for calculating daily active users
+type HourlyActiveAccount @entity {
+  " { Days since Unix epoch }-{ Address of the account } "
+  id: ID!
+}
+
 #Added Entities
 
 " Thia entity is used to track data from the transfer events. Mainly, I want to track the executor of the deposit/withdraw and the liquidity minted/burned "
