@@ -35,6 +35,7 @@ export function updateUsageMetrics(event: ethereum.Event, from: string): void {
   let dayID = event.block.timestamp.toI32() / SECONDS_PER_DAY;
   let id = dayID.toString();
   let usageMetrics = UsageMetricsDailySnapshot.load(id);
+  let usageMetricsHourly = UsageMetricsHourlySnapshot.load(id);
   let totalUniqueUsers = getOrCreateUsersHelper();
   let protocol = getOrCreateDex();
 
