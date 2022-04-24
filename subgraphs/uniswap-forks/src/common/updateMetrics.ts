@@ -14,6 +14,7 @@ import { BIGDECIMAL_TWO, BIGDECIMAL_ZERO, BIGINT_ZERO, DEFAULT_DECIMALS, INT_ONE
 import { convertTokenToDecimal } from "./utils/utils";
 import { findNativeTokenPerToken, updateNativeTokenPriceInUSD } from "./price/price";
 import { NetworkConfigs } from "../../config/_networkConfig";
+import { getUsdPricePerToken } from "../prices/index";
 
 // Update FinancialsDailySnapshots entity
 export function updateFinancials(event: ethereum.Event): void {
@@ -194,8 +195,32 @@ export function updateTvlAndTokenPrices(poolAddress: string, blockNumber: BigInt
 
   let nativeToken = updateNativeTokenPriceInUSD();
 
-  token0.lastPriceUSD = findNativeTokenPerToken(token0, nativeToken);
-  token1.lastPriceUSD = findNativeTokenPerToken(token1, nativeToken);
+  if (blockNumber > BigInt.fromI32(10207858)) {
+    if (blockNumber.minus(token0.lastPriceBlockNumber!).gt(BigInt.fromI32(0))) {
+      let fetch0Price = getUsdPricePerToken(Address.fromString(token0.id), blockNumber);
+      if (!fetch0Price.reverted) {
+        token0.lastPriceUSD = fetch0Price.usdPrice.div(fetch0Price.decimals.toBigDecimal());
+      } else {
+        // default value of this variable, if reverted is BigDecimal Zero
+        token0.lastPriceUSD = fetch0Price.usdPrice;
+        token0.lastPriceBlockNumber = blockNumber;
+      }
+    }
+
+    if (blockNumber.minus(token1.lastPriceBlockNumber!).gt(BigInt.fromI32(0))) {
+      let fetch1Price = getUsdPricePerToken(Address.fromString(token0.id), blockNumber);
+      if (!fetch1Price.reverted) {
+        token1.lastPriceUSD = fetch1Price.usdPrice.div(fetch1Price.decimals.toBigDecimal());
+      } else {
+        // default value of this variable, if reverted is BigDecimal Zero
+        token1.lastPriceUSD = fetch1Price.usdPrice;
+        token1.lastPriceBlockNumber = blockNumber;
+      }
+    }
+  } else {
+    token0.lastPriceUSD = findNativeTokenPerToken(token0, nativeToken);
+    token1.lastPriceUSD = findNativeTokenPerToken(token1, nativeToken);
+  }
 
   // Subtract the old pool tvl
   protocol.totalValueLockedUSD = protocol.totalValueLockedUSD.minus(pool.totalValueLockedUSD);
