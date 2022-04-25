@@ -69,14 +69,7 @@ function createPoolFees(poolAddress: Bytes): Bytes[] {
 }
 
 // Create a liquidity pool from PairCreated contract call
-export function createLiquidityPool(
-  event: ethereum.Event,
-  protocol: DexAmmProtocol,
-  poolAddress: Bytes,
-  token0: Token,
-  token1: Token,
-  LPtoken: Token
-): void {
+export function createLiquidityPool(event: ethereum.Event, protocol: DexAmmProtocol, poolAddress: Bytes, token0: Token, token1: Token, LPtoken: Token): void {
   let pool = new LiquidityPool(poolAddress);
   let poolAmounts = new _LiquidityPoolAmount(poolAddress);
 
@@ -219,15 +212,7 @@ function percToDec(percentage: BigDecimal): BigDecimal {
 }
 
 // Handle swaps data and update entities volumes and fees
-export function createSwapHandleVolumeAndFees(
-  event: ethereum.Event,
-  to: Bytes,
-  sender: Bytes,
-  amount0In: BigInt,
-  amount1In: BigInt,
-  amount0Out: BigInt,
-  amount1Out: BigInt
-): void {
+export function createSwapHandleVolumeAndFees(event: ethereum.Event, to: Bytes, sender: Bytes, amount0In: BigInt, amount1In: BigInt, amount0Out: BigInt, amount1Out: BigInt): void {
   let protocol = getOrCreateDex();
   let pool = getLiquidityPool(event.address);
   let poolAmounts = getLiquidityPoolAmounts(event.address);
@@ -251,12 +236,7 @@ export function createSwapHandleVolumeAndFees(
   // let derivedAmountUSD = token1USD.plus(token0USD).div(BIGDECIMAL_TWO)
 
   // only accounts for volume through white listed tokens
-  let trackedAmountUSD = getTrackedVolumeUSD(
-    amount0TotalConverted,
-    tokenTracker0 as _TokenTracker,
-    amount1TotalConverted,
-    tokenTracker1 as _TokenTracker
-  );
+  let trackedAmountUSD = getTrackedVolumeUSD(amount0TotalConverted, tokenTracker0 as _TokenTracker, amount1TotalConverted, tokenTracker1 as _TokenTracker);
 
   let tradingFee = getLiquidityPoolFee(pool.fees[0]);
   let protocolFee = getLiquidityPoolFee(pool.fees[1]);
