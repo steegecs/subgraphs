@@ -208,7 +208,7 @@ export function updateTvlAndTokenPrices(poolAddress: string, blockNumber: BigInt
     }
 
     if (blockNumber.minus(token1.lastPriceBlockNumber!).gt(BigInt.fromI32(0))) {
-      let fetch1Price = getUsdPricePerToken(Address.fromString(token0.id), blockNumber);
+      let fetch1Price = getUsdPricePerToken(Address.fromString(token1.id), blockNumber);
       if (!fetch1Price.reverted) {
         token1.lastPriceUSD = fetch1Price.usdPrice.div(fetch1Price.decimals.toBigDecimal());
       } else {

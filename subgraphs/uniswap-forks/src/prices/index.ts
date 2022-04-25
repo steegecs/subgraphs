@@ -21,6 +21,7 @@ export function getUsdPricePerToken(tokenAddr: Address, blockNumber: BigInt): Cu
 
   // 1. ChainLink Feed Registry
   if (blockNumber > BigInt.fromI32(12864088)) {
+    log.warning("CHAINLINK", []);
     let chainLinkPrice = getTokenPriceFromChainLink(tokenAddr, network);
     if (!chainLinkPrice.reverted) {
       log.warning("[ChainLinkFeed] tokenAddress: {}, Price: {}", [tokenAddr.toHexString(), chainLinkPrice.usdPrice.div(decimals).toString()]);
