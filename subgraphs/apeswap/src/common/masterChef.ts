@@ -2,7 +2,7 @@ import { BigDecimal, BigInt, ethereum, log } from "@graphprotocol/graph-ts";
 import { NetworkConfigs } from "../../config/_networkConfig";
 import { MasterChef } from "../../generated/MasterChef/MasterChef";
 import { MasterChefV2 } from "../../generated/MasterChef/MasterChefV2";
-import { BIGINT_ZERO, INT_ZERO, ZERO_ADDRESS } from "./constants";
+import { BIGINT_ONE, BIGINT_ZERO, INT_ZERO, ZERO_ADDRESS } from "./constants";
 import { getLiquidityPool, getOrCreateToken } from "./getters";
 import { findNativeTokenPerToken, updateNativeTokenPriceInUSD } from "./price/price";
 import { getRewardsPerDay } from "./rewards";
@@ -36,18 +36,10 @@ export function handleRewardV2(event: ethereum.Event, pid: BigInt): void {
 
   // Calculate Reward Emission per sec
   let time = event.block.timestamp.minus(lastRewardTime);
-  let rewardTokenRate = time
-    .times(rewardTokenPerSecond)
-    .times(poolAllocPoint)
-    .div(totalAllocPoint);
+  let rewardTokenRate = time.times(rewardTokenPerSecond).times(poolAllocPoint).div(totalAllocPoint);
 
   let rewardTokenRateBigDecimal = BigDecimal.fromString(rewardTokenRate.toString());
-  let rewardTokenPerDay = getRewardsPerDay(
-    event.block.timestamp,
-    event.block.number,
-    rewardTokenRateBigDecimal,
-    NetworkConfigs.REWARD_INTERVAL_TYPE,
-  );
+  let rewardTokenPerDay = getRewardsPerDay(event.block.timestamp, event.block.number, rewardTokenRateBigDecimal, NetworkConfigs.REWARD_INTERVAL_TYPE);
 
   let nativeToken = updateNativeTokenPriceInUSD();
 
@@ -86,7 +78,7 @@ export function handleReward(event: ethereum.Event, pid: BigInt): void {
 
   let getMultiplier = poolContract.try_getMultiplier(lastRewardBlock, event.block.number);
 
-  let multiplier: BigInt = BIGINT_ZERO;
+  let multiplier: BigInt = BIGINT_ONE;
   if (!getMultiplier.reverted) {
     multiplier = getMultiplier.value;
   }
@@ -98,18 +90,10 @@ export function handleReward(event: ethereum.Event, pid: BigInt): void {
   }
 
   // Calculate Reward Emission per Block
-  let rewardTokenRate = multiplier
-    .times(rewardTokenPerBlock)
-    .times(poolAllocPoint)
-    .div(totalAllocPoint);
+  let rewardTokenRate = multiplier.times(rewardTokenPerBlock).times(poolAllocPoint).div(totalAllocPoint);
 
   let rewardTokenRateBigDecimal = BigDecimal.fromString(rewardTokenRate.toString());
-  let rewardTokenPerDay = getRewardsPerDay(
-    event.block.timestamp,
-    event.block.number,
-    rewardTokenRateBigDecimal,
-    NetworkConfigs.REWARD_INTERVAL_TYPE,
-  );
+  let rewardTokenPerDay = getRewardsPerDay(event.block.timestamp, event.block.number, rewardTokenRateBigDecimal, NetworkConfigs.REWARD_INTERVAL_TYPE);
 
   let nativeToken = updateNativeTokenPriceInUSD();
 
