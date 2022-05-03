@@ -1,4 +1,4 @@
-import { Address, BigDecimal, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { Account, ActiveAccount, DexAmmProtocol, LiquidityPool, Token, _HelperStore, _TokenWhitelist } from "../../generated/schema";
 import {
   getLiquidityPool,
@@ -34,8 +34,7 @@ export function updateFinancials(event: ethereum.Event): void {
 }
 
 // Update usage metrics entities
-export function updateUsageMetrics(event: ethereum.Event, fromAddress: Address, usageType: string): void {
-  let from = fromAddress.toHexString();
+export function updateUsageMetrics(event: ethereum.Event, from: Bytes, usageType: string): void {
 
   let usageMetricsDaily = getOrCreateUsageMetricDailySnapshot(event);
   let usageMetricsHourly = getOrCreateUsageMetricHourlySnapshot(event);
@@ -66,11 +65,8 @@ export function updateUsageMetrics(event: ethereum.Event, fromAddress: Address, 
   let day = event.block.timestamp.toI32() / SECONDS_PER_DAY;
   let hour = event.block.timestamp.toI32() / SECONDS_PER_HOUR;
 
-  let dayId = day.toString();
-  let hourId = hour.toString();
-
   // Combine the id and the user address to generate a unique user id for the day
-  let dailyActiveAccountId = from.concat("-").concat(dayId);
+  let dailyActiveAccountId = from.concatI32(day);
   let dailyActiveAccount = ActiveAccount.load(dailyActiveAccountId);
   if (!dailyActiveAccount) {
     dailyActiveAccount = new ActiveAccount(dailyActiveAccountId);
@@ -78,7 +74,7 @@ export function updateUsageMetrics(event: ethereum.Event, fromAddress: Address, 
     dailyActiveAccount.save();
   }
 
-  let hourlyActiveAccountId = from.concat("-").concat(hourId);
+  let hourlyActiveAccountId = from.concatI32(hour);
   let hourlyActiveAccount = ActiveAccount.load(hourlyActiveAccountId);
   if (!hourlyActiveAccount) {
     hourlyActiveAccount = new ActiveAccount(hourlyActiveAccountId);
@@ -106,7 +102,7 @@ export function updatePoolMetrics(event: ethereum.Event): void {
   let poolMetricsDaily = getOrCreateLiquidityPoolDailySnapshot(event);
   let poolMetricsHourly = getOrCreateLiquidityPoolHourlySnapshot(event);
 
-  let pool = getLiquidityPool(event.address.toHexString());
+  let pool = getLiquidityPool(event.address);
 
   // Update the block number and timestamp to that of the last transaction of that day
   poolMetricsDaily.totalValueLockedUSD = pool.totalValueLockedUSD;
@@ -132,7 +128,7 @@ export function updatePoolMetrics(event: ethereum.Event): void {
 }
 
 // These whiteslists are used to track what pools the tokens are a part of. Used in price calculations.
-export function updateTokenWhitelists(token0: Token, token1: Token, poolAddress: string): void {
+export function updateTokenWhitelists(token0: Token, token1: Token, poolAddress: Bytes): void {
   let tokenWhitelist0 = getOrCreateTokenWhitelist(token0.id);
   let tokenWhitelist1 = getOrCreateTokenWhitelist(token1.id);
 
@@ -153,7 +149,7 @@ export function updateTokenWhitelists(token0: Token, token1: Token, poolAddress:
 }
 
 // Upate token balances based on reserves emitted from the sync event.
-export function updateInputTokenBalances(poolAddress: string, reserve0: BigInt, reserve1: BigInt): void {
+export function updateInputTokenBalances(poolAddress: Bytes, reserve0: BigInt, reserve1: BigInt): void {
   let pool = getLiquidityPool(poolAddress);
   let poolAmounts = getLiquidityPoolAmounts(poolAddress);
 
@@ -171,7 +167,7 @@ export function updateInputTokenBalances(poolAddress: string, reserve0: BigInt, 
 }
 
 // Update tvl an token prices
-export function updateTvlAndTokenPrices(poolAddress: string, blockNumber: BigInt): void {
+export function updateTvlAndTokenPrices(poolAddress: Bytes, blockNumber: BigInt): void {
   let pool = getLiquidityPool(poolAddress);
 
   let protocol = getOrCreateDex();
@@ -283,7 +279,7 @@ export function updateVolumeAndFees(
 
 // Update store that tracks the deposit count per pool
 export function updateDepositHelper(poolAddress: Address): void {
-  let poolDeposits = _HelperStore.load(poolAddress.toHexString())!;
+  let poolDeposits = _HelperStore.load(poolAddress)!;
   poolDeposits.valueInt = poolDeposits.valueInt + INT_ONE;
   poolDeposits.save();
 }

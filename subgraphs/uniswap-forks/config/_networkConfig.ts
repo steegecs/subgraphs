@@ -11,7 +11,7 @@ export namespace Protocol {
 }
 
 // Choose which protocol you are indexing. The deployed network will already be determined
-let PROTOCOL_NAME_TEMP = Protocol.SUSHISWAP;
+let PROTOCOL_NAME_TEMP = Protocol.UNISWAPV2;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -487,7 +487,7 @@ export namespace NetworkConfigs {
   export const PROTOCOL_SLUG = PROTOCOL_SLUG_TEMP;
   export const NETWORK = NETWORK_TEMP;
 
-  export const FACTORY_ADDRESS = FACTORY_ADDRESS_TEMP;
+  export const FACTORY_ADDRESS = Bytes.fromHexString(FACTORY_ADDRESS_TEMP);
   export const FACTORY_CONTRACT = FACTORY_CONTRACT_TEMP;
 
   export const TRADING_FEE = TRADING_FEE_TEMP;
@@ -499,10 +499,10 @@ export namespace NetworkConfigs {
 
   export const REWARD_INTERVAL_TYPE = REWARD_INTERVAL_TYPE_TEMP;
 
-  export const NATIVE_TOKEN = NATIVE_TOKEN_TEMP;
-  export const REWARD_TOKENS = REWARD_TOKENS_TEMP;
-  export const WHITELIST_TOKENS = WHITELIST_TOKENS_TEMP;
-  export const STABLE_COINS = STABLE_COINS_TEMP;
-  export const STABLE_ORACLE_POOLS = STABLE_ORACLE_POOLS_TEMP;
-  export const UNTRACKED_PAIRS = UNTRACKED_PAIRS_TEMP;
+  export const NATIVE_TOKEN = Bytes.fromHexString(NATIVE_TOKEN_TEMP);
+  export const REWARD_TOKENS = toBytesArray(REWARD_TOKENS_TEMP);
+  export const WHITELIST_TOKENS = toBytesArray(WHITELIST_TOKENS_TEMP);
+  export const STABLE_COINS = toBytesArray(STABLE_COINS_TEMP);
+  export const STABLE_ORACLE_POOLS = toBytesArray(STABLE_ORACLE_POOLS_TEMP);
+  export const UNTRACKED_PAIRS = toBytesArray(UNTRACKED_PAIRS_TEMP);
 }

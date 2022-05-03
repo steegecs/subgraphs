@@ -1,4 +1,4 @@
-// import { log } from "@graphprotocol/graph-ts";
+import { Bytes, log } from "@graphprotocol/graph-ts";
 import { _HelperStore } from "../../generated/schema";
 import { Mint, Burn, Swap, Transfer, Sync } from "../../generated/templates/Pair/Pair";
 import { createDeposit, createWithdraw, createSwapHandleVolumeAndFees } from "../common/creators";
@@ -14,25 +14,25 @@ export function handleTransfer(event: Transfer): void {
 
   // mints
   if (event.params.from.toHexString() == ZERO_ADDRESS) {
-    handleTransferMint(event, event.params.value, event.params.to.toHexString());
+    handleTransferMint(event, event.params.value, event.params.to);
   }
   // Case where direct send first on native token withdrawls.
   // For burns, mint tokens are first transferred to the pool before transferred for burn.
   // This gets the EOA that made the burn loaded into the _Transfer.
 
   if (event.params.to == event.address) {
-    handleTransferToPoolBurn(event, event.params.from.toHexString());
+    handleTransferToPoolBurn(event, event.params.from);
   }
 
   // burn
   if (event.params.to.toHexString() == ZERO_ADDRESS && event.params.from == event.address) {
-    handleTransferBurn(event, event.params.value, event.params.from.toHexString());
+    handleTransferBurn(event, event.params.value, event.params.from);
   }
 }
 
 export function handleSync(event: Sync): void {
-  updateInputTokenBalances(event.address.toHexString(), event.params.reserve0, event.params.reserve1);
-  updateTvlAndTokenPrices(event.address.toHexString(), event.block.number);
+  updateInputTokenBalances(event.address, event.params.reserve0, event.params.reserve1);
+  updateTvlAndTokenPrices(event.address, event.block.number);
 }
 
 export function handleMint(event: Mint): void {
@@ -52,8 +52,8 @@ export function handleBurn(event: Burn): void {
 export function handleSwap(event: Swap): void {
   createSwapHandleVolumeAndFees(
     event,
-    event.params.to.toHexString(),
-    event.params.sender.toHexString(),
+    event.params.to,
+    event.params.sender,
     event.params.amount0In,
     event.params.amount1In,
     event.params.amount0Out,

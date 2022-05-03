@@ -1,10 +1,10 @@
-import { ethereum, BigInt } from "@graphprotocol/graph-ts";
+import { ethereum, BigInt, Bytes } from "@graphprotocol/graph-ts";
 import { getLiquidityPool, getOrCreateTransfer } from "./getters";
 import { TransferType } from "./constants";
 
 // Handle data from transfer event for mints. Used to populate deposit entity in the mint event.
-export function handleTransferMint(event: ethereum.Event, value: BigInt, to: string): void {
-  let pool = getLiquidityPool(event.address.toHexString());
+export function handleTransferMint(event: ethereum.Event, value: BigInt, to: Bytes): void {
+  let pool = getLiquidityPool(event.address);
   let transfer = getOrCreateTransfer(event);
 
   // Tracks supply of minted LP tokens
@@ -30,7 +30,7 @@ export function handleTransferMint(event: ethereum.Event, value: BigInt, to: str
 }
 
 // Handle data from transfer event for burns. Used to populate deposit entity in the burn event.
-export function handleTransferToPoolBurn(event: ethereum.Event, from: string): void {
+export function handleTransferToPoolBurn(event: ethereum.Event, from: Bytes): void {
   let transfer = getOrCreateTransfer(event);
 
   transfer.type = TransferType.BURN;
@@ -40,8 +40,8 @@ export function handleTransferToPoolBurn(event: ethereum.Event, from: string): v
 }
 
 // Handle data from transfer event for burns. Used to populate deposit entity in the burn event.
-export function handleTransferBurn(event: ethereum.Event, value: BigInt, from: string): void {
-  let pool = getLiquidityPool(event.address.toHexString());
+export function handleTransferBurn(event: ethereum.Event, value: BigInt, from: Bytes): void {
+  let pool = getLiquidityPool(event.address);
   let transfer = getOrCreateTransfer(event);
 
   // Tracks supply of minted LP tokens

@@ -1,4 +1,4 @@
-import { log, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
+import { log, BigDecimal, BigInt, Bytes } from "@graphprotocol/graph-ts";
 
 ////////////////////
 ///// Versions /////
@@ -64,15 +64,10 @@ export namespace RewardTokenType {
   export const BORROW = "BORROW";
 }
 
-export namespace HelperStoreType {
-  export const NATIVE_TOKEN = "NATIVE_TOKEN";
-  export const USERS = "USERS";
-  // Pool addresses are also stored in the HelperStore
-}
 
 export namespace TransferType {
-  export const MINT = "MINT";
-  export const BURN = "BURN";
+  export const MINT = Bytes.fromHexString('MINT')
+  export const BURN = Bytes.fromHexString('BURN')
   // Pool addresses are also stored in the HelperStore
 }
 
