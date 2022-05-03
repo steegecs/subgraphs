@@ -163,6 +163,7 @@ export function createDeposit(event: ethereum.Event, amount0: BigInt, amount1: B
   deposit.inputTokenAmounts = [amount0, amount1];
   deposit.outputTokenAmount = transfer.liquidity;
   deposit.amountUSD = tokenTracker0.derivedUSD.times(token0Amount).plus(tokenTracker1.derivedUSD.times(token1Amount));
+  deposit.pool = pool.id;
 
   updateDepositHelper(event.address);
 
@@ -201,6 +202,7 @@ export function createWithdraw(event: ethereum.Event, amount0: BigInt, amount1: 
   withdrawal.inputTokenAmounts = [amount0, amount1];
   withdrawal.outputTokenAmount = transfer.liquidity;
   withdrawal.amountUSD = tokenTracker0.derivedUSD.times(token0Amount).plus(tokenTracker1.derivedUSD.times(token1Amount));
+  withdrawal.pool = pool.id;
 
   store.remove("_Transfer", transfer.id.toHexString());
 
