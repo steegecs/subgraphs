@@ -716,13 +716,13 @@ type Swap implements Event @entity (immutable: true) {
 
 # An account is a unique Ethereum address
 # Helps to accumulate total unique users
-type Account @entity {
+type Account @entity (immutable: true) {
   " Address of the account "
   id: Bytes!
 }
 
 # Helper entity for calculating daily/hourly active users
-type ActiveAccount @entity {
+type ActiveAccount @entity (immutable: true) {
   " { Address of the account }-{ Days since Unix epoch }-{ [Optional] HH: hour of the day } "
   id: Bytes!
 }
