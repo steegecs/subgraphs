@@ -11,13 +11,18 @@ export function handleTransfer(event: Transfer): void {
 
   // ignore initial transfers for first adds
   if (event.params.to.toHexString() == ZERO_ADDRESS && event.params.value.equals(BIGINT_THOUSAND)) {
+    log.warning("HELLO2.1", [])
+
     return;
   }
 
   log.warning("HELLO3", [])
   // mints
   if (event.params.from.toHexString() == ZERO_ADDRESS) {
+    log.warning("HELLO3.1", [])
     handleTransferMint(event, event.params.value, event.params.to.toHexString());
+    log.warning("HELLO3.2", [])
+
   }
   // Case where direct send first on native token withdrawls.
   // For burns, mint tokens are first transferred to the pool before transferred for burn.

@@ -7,6 +7,8 @@ export function handleTransferMint(event: ethereum.Event, value: BigInt, to: str
   let pool = getLiquidityPool(event.address.toHexString());
   let transfer = getOrCreateTransfer(event);
 
+  log.warning("HELLO3.11", [])
+
   // Tracks supply of minted LP tokens
   pool.outputTokenSupply = pool.outputTokenSupply!.plus(value);
 
