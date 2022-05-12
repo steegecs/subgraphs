@@ -6,11 +6,11 @@ on:
     types: [closed]
 jobs:
   Deploy:
+    name: Pull Request
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - name: Pull Request
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v3
       - run: echo "Github Action - Deploying subgraphs to Messari Hosted Service"
 
 
