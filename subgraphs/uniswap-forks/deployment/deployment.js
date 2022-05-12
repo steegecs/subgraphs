@@ -1,37 +1,8 @@
 import * as protocolNetworkData from './deploymentConfigurations.json' assert {type: "json"}
-import { exec } from 'child_process';
-
+import {runCommands, scripts} from './execution.js'
 
 const protocolNetworkMap = JSON.parse(JSON.stringify(protocolNetworkData))['default']['protocols'] 
 const configurations = JSON.parse(JSON.stringify(protocolNetworkData))['default']['configurations'] 
-
-
-function runCommands(array, callback) {
-
-    var index = 0;
-    var results = [];
-
-    function next() {
-        if (index < array.length) {
-            exec(array[index++], function(error, stdout, stderr) {
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
-            if (error !== null) {
-                console.log('exec error: ' + error);
-            } 
-            if (error) return callback(error);
-            // do the next iteration
-            results.push(stdout);
-            next();
-           });
-       } else {
-           // all done here
-           callback(null, results);
-       }
-    }
-    // start the first iteration
-    next();
-}
 
 if (process.argv.length == 2) {
     console.log('Error: please at least specify hosted service account to deploy all subgraphs (i.e. messari, steegecs, etc.)')
@@ -45,14 +16,7 @@ if (process.argv.length == 2) {
                 let template = protocolNetworkMap[process.argv[2]][process.argv[3]]['template']
                 let location = protocolNetworkMap[process.argv[2]][process.argv[3]][process.argv[4]]
 
-                let prepareYaml = 'npm run prepare:yaml --PROTOCOL=' + protocol + ' --NETWORK=' + network + ' --TEMPLATE=' + template
-                let prepareConstants = 'npm run prepare:constants --PROTOCOL=' + protocol + ' --NETWORK=' + network
-                let prepareBuild = 'yarn codegen && yarn build'
-                let deployment = 'npm run deploy:subgraph --LOCATION=' + location
-
-                let commands = [prepareYaml, prepareConstants, prepareBuild, deployment]
-
-                runCommands(commands, function() {});
+                runCommands(scripts(protocol, network, template, location), function() {});
             }
         }
     }
@@ -69,14 +33,7 @@ if (process.argv.length == 2) {
             let template = protocolNetworkMap[protocol][network]['template']
             let location = protocolNetworkMap[protocol][network][process.argv[3]]
 
-            let prepareYaml = 'npm run prepare:yaml --PROTOCOL=' + protocol + ' --NETWORK=' + network + ' --TEMPLATE=' + template
-            let prepareConstants = 'npm run prepare:constants --PROTOCOL=' + protocol + ' --NETWORK=' + network
-            let prepareBuild = 'yarn codegen && yarn build'
-            let deployment = 'npm run deploy:subgraph --LOCATION=' + location
-
-            let commands = [prepareYaml, prepareConstants, prepareBuild, deployment]
-
-            runCommands(commands, function() {});
+            runCommands(scripts(protocol, network, template, location), function() {});
         }
     }
  } else if (process.argv.length == 5) {
@@ -95,14 +52,7 @@ if (process.argv.length == 2) {
         let template = protocolNetworkMap[process.argv[2]][process.argv[3]]['template']
         let location = protocolNetworkMap[process.argv[2]][process.argv[3]][process.argv[4]]
 
-        let prepareYaml = 'npm run prepare:yaml --PROTOCOL=' + protocol + ' --NETWORK=' + network + ' --TEMPLATE=' + template
-        let prepareConstants = 'npm run prepare:constants --PROTOCOL=' + protocol + ' --NETWORK=' + network
-        let prepareBuild = 'yarn codegen && yarn build'
-        let deployment = 'npm run deploy:subgraph --LOCATION=' + location
-
-        let commands = [prepareYaml, prepareConstants, prepareBuild, deployment]
-
-        runCommands(commands, function() {});
+        runCommands(scripts(protocol, network, template, location), function() {});
     }
 } else {
     console.log('Error: Too many arguments')
