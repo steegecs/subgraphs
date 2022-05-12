@@ -6,7 +6,7 @@ import { exec } from 'child_process';
  * @param {string} network - Network that the protocol is being deployed to
  * @param {string} template - Template location that will be used to create subgraph.yaml
 */
-async function executePrepareYaml(protocol, network, template) {
+function executePrepareYaml(protocol, network, template) {
     exec('npm run prepare:yaml --PROTOCOL=' + protocol + ' --NETWORK=' + network + ' --TEMPLATE=' + template,
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -21,7 +21,7 @@ async function executePrepareYaml(protocol, network, template) {
  * @param {string} protocol - Protocol that is being deployed
  * @param {string} network - Network that the protocol is being deployed to
 */
-async function executePrepareConstants(protocol, network) {
+function executePrepareConstants(protocol, network) {
     exec('npm run prepare:constants --PROTOCOL=' + protocol + ' --NETWORK=' + network,
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -32,7 +32,7 @@ async function executePrepareConstants(protocol, network) {
         });
 }
 
-async function executePrepareBuild() {
+function executePrepareBuild() {
     exec('yarn codegen && yarn build',
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -46,7 +46,7 @@ async function executePrepareBuild() {
 /**
  * @param {string} location - Location in the subgraph will be deployed to {e.g. messari/uniswap-v2-ethereum}
  */
-async function executeDeployment(location) {
+function executeDeployment(location) {
     exec('npm run deploy:subgraph --LOCATION=' + location,
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -63,7 +63,7 @@ async function executeDeployment(location) {
  * @param {string} template - Template location that will be used to create subgraph.yaml
  * @param {string} location - Location in the subgraph will be deployed to {e.g. messari/uniswap-v2-ethereum}
 */
-export async function execute(protocol, network, template, location) {
+export function execute(protocol, network, template, location) {
     console.log('Deploying ' + protocol + ' on ' + network + ' to ' + location + '...')
     await executePrepareYaml(protocol, network, template);
     await executePrepareConstants(protocol, network);
