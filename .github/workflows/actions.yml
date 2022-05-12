@@ -1,6 +1,6 @@
 name: Actions
 on: merge
-  pul_request: 
+  pull_request: 
     branches:
       - master
     types: [closed]
