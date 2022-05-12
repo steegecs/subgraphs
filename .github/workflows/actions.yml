@@ -1,34 +1,32 @@
 name: Actions
 on: 
-  pull_request: 
+  push: 
     branches:
       - master
-    types: [closed]
 jobs:
-  Deploy:
+  Deployment:
     name: Pull Request
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - id: get-id
-        uses: actions/github-script@0.9.0
-        with:
-          script: |
-            const branch = ${{ github.head_ref }}
-            const id = branch.split('/')[0]
-            core.setOutput('id', id)
-      - run: echo "${{steps.get-id.outputs.id}}"
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
-      - run: npm install -g @graphprotocol/graph-cli
-      - run: npm install --dev @graphprotocol/graph-ts
-      - run: npm install mustache
-      - run: yarn install
-      - run: graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
-      - run: cd subgraphs/uniswap-forks
-      - run: npm run deploy uniswap-v2 steegecs
-        working-directory: subgraphs/uniswap-forks
+    - id: files
+      uses: jitterbit/get-changed-files@v1
+    - run: |
+      for changed_file in ${{ steps.files.outputs.all }}; do
+        echo "Do something with this ${changed_file}."
+      done
+    
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+    - run: echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
+    - run: npm install -g @graphprotocol/graph-cli
+    - run: npm install --dev @graphprotocol/graph-ts
+    - run: npm install mustache
+    - run: yarn install
+    - run: graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
+    - run: cd subgraphs/uniswap-forks
+    - run: npm run deploy uniswap-v2 steegecs
+      working-directory: subgraphs/uniswap-forks
 
 
 
