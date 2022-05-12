@@ -12,12 +12,17 @@ function runCommands(array, callback) {
     var results = [];
 
     function next() {
-       if (index < array.length) {
-           exec(array[index++], function(err, stdout) {
-               if (err) return callback(err);
-               // do the next iteration
-               results.push(stdout);
-               next();
+        if (index < array.length) {
+            exec(array[index++], function(error, stdout, stderr) {
+            console.log('stdout: ' + stdout);
+            console.log('stderr: ' + stderr);
+            if (error !== null) {
+                console.log('exec error: ' + error);
+            } 
+            if (error) return callback(error);
+            // do the next iteration
+            results.push(stdout);
+            next();
            });
        } else {
            // all done here
@@ -47,9 +52,7 @@ if (process.argv.length == 2) {
 
                 let commands = [prepareYaml, prepareConstants, prepareBuild, deployment]
 
-                runCommands(commands, function(err, results) {
-                    // error or results here
-                });
+                runCommands(commands, function() {});
             }
         }
     }
@@ -73,9 +76,7 @@ if (process.argv.length == 2) {
 
             let commands = [prepareYaml, prepareConstants, prepareBuild, deployment]
 
-            runCommands(commands, function(err, results) {
-                // error or results here
-            });
+            runCommands(commands, function() {});
         }
     }
  } else if (process.argv.length == 5) {
@@ -101,9 +102,7 @@ if (process.argv.length == 2) {
 
         let commands = [prepareYaml, prepareConstants, prepareBuild, deployment]
 
-        runCommands(commands, function(err, results) {
-            // error or results here
-        });
+        runCommands(commands, function() {});
     }
 } else {
     console.log('Error: Too many arguments')
