@@ -13,9 +13,12 @@ jobs:
     - id: files
       uses: jitterbit/get-changed-files@v1
       continue-on-error: true
-    - run: |
+
+    - id: get-id
+      run: |
         for changed_file in ${{ steps.files.outputs.all }}; do
-          echo "Do something with this ${changed_file}."
+          id=$(echo ${{ steps.files.outputs.all }} | cut -d- -f2)
+          echo "::set-output name=id::$id"
         done
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
