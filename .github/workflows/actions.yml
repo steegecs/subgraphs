@@ -17,7 +17,7 @@ jobs:
     - id: get-id
       run: |
         for changed_file in ${{ steps.files.outputs.all }}; do
-          id=$(echo ${{ steps.files.outputs.all }} | cut -d / -f 0)
+          id=$(echo ${{ steps.files.outputs.all }} | cut -d / -f 1)
           echo "::set-output name=id::$id"
         done
     - run: echo "${{steps.get-id.outputs.id}}"
