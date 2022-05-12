@@ -13,11 +13,7 @@ jobs:
       - name: Pull Request
         uses: actions/checkout@v3
         uses: actions/setup-node@v3
-      - run: |
-	      echo "Github Action - Deploying subgraphs to Messari Hosted Service"
-        npm install -g @graphprotocol/graph-cli
-        graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
-        cd subgraphs/uniswap-forks
-        npm run deploy uniswap-v2 steegecs
+      - run: echo "Github Action - Deploying subgraphs to Messari Hosted Service"
+
 
  
