@@ -15,8 +15,8 @@ jobs:
       - run: echo "Github Action - Deploying subgraphs to Messari"
       - run: npm install -g @graphprotocol/graph-cli
       - run: graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
-      - run: cd subgraphs/uniswap-forks
       - run: npm run deploy uniswap-v2 steegecs
+        working-directory: subgraphs/uniswap-forks
 
 
 
