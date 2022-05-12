@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Request
-        uses: [actions/checkout@v3, actions/setup-node@v3]
+        uses: actions/setup-node@v3
       - run: echo "Github Action - Deploying subgraphs to Messari Hosted Service"
 
 
