@@ -6,7 +6,7 @@ import { exec } from 'child_process';
  * @param {string} network - Network that the protocol is being deployed to
  * @param {string} template - Template location that will be used to create subgraph.yaml
 */
-function executePrepareYaml(protocol, network, template) {
+function getPrepareYaml(protocol, network, template) {
     exec('npm run prepare:yaml --PROTOCOL=' + protocol + ' --NETWORK=' + network + ' --TEMPLATE=' + template,
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -21,7 +21,7 @@ function executePrepareYaml(protocol, network, template) {
  * @param {string} protocol - Protocol that is being deployed
  * @param {string} network - Network that the protocol is being deployed to
 */
-function executePrepareConstants(protocol, network) {
+function getPrepareConstants(protocol, network) {
     exec('npm run prepare:constants --PROTOCOL=' + protocol + ' --NETWORK=' + network,
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -32,7 +32,7 @@ function executePrepareConstants(protocol, network) {
         });
 }
 
-function executePrepareBuild() {
+function getPrepareBuild() {
     exec('yarn codegen && yarn build',
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
@@ -46,7 +46,7 @@ function executePrepareBuild() {
 /**
  * @param {string} location - Location in the subgraph will be deployed to {e.g. messari/uniswap-v2-ethereum}
  */
-function executeDeployment(location) {
+function getDeployment(location) {
     exec('npm run deploy:subgraph --LOCATION=' + location,
         function (error, stdout, stderr) {
         console.log('stdout: ' + stdout);
