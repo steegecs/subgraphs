@@ -63,10 +63,10 @@ async function executeDeployment(location) {
  * @param {string} template - Template location that will be used to create subgraph.yaml
  * @param {string} location - Location in the subgraph will be deployed to {e.g. messari/uniswap-v2-ethereum}
 */
-export function execute(protocol, network, template, location) {
+export async function execute(protocol, network, template, location) {
     console.log('Deploying ' + protocol + ' on ' + network + ' to ' + location + '...')
-    executePrepareYaml(protocol, network, template);
-    executePrepareConstants(protocol, network);
-    executePrepareBuild();
-    executeDeployment(location);
+    await executePrepareYaml(protocol, network, template);
+    await executePrepareConstants(protocol, network);
+    await executePrepareBuild();
+    await executeDeployment(location);
 }
