@@ -59,6 +59,9 @@ export function handleTransferBurn(event: ethereum.Event, value: BigInt, from: s
     transfer.liquidity = value;
   }
 
+  log.warning(from + " from", [])
+  log.warning(transfer.sender + " sender", [])
+
   transfer.save();
   pool.save();
 }
