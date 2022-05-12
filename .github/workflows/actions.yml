@@ -19,7 +19,7 @@ jobs:
         for changed_file in ${{ steps.files.outputs.all }}; do
           if [[ changed_file == *"/src/"* ]]; then
             echo "Hi";
-            id=$(echo ${{ steps.files.outputs.all }} | rev | cut -d '/src/ -f 1| rev)
+            id=$(echo ${changed_file%/src/*}
             echo "::set-output name=id::$id"; fi;
         done
     - run: echo "${{steps.get-id.outputs.id}}"
