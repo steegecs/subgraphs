@@ -119,7 +119,7 @@ export function createDeposit(event: ethereum.Event, amount0: BigInt, amount1: B
   deposit.logIndex = logIndexI32;
   deposit.protocol = NetworkConfigs.getFactoryAddress();
   deposit.to = pool.id;
-  deposit.from = transfer.sender;
+  deposit.from = transfer.sender!;
   deposit.blockNumber = event.block.number;
   deposit.timestamp = event.block.timestamp;
   deposit.inputTokens = [pool.inputTokens[INT_ZERO], pool.inputTokens[INT_ONE]];
@@ -153,7 +153,7 @@ export function createWithdraw(event: ethereum.Event, amount0: BigInt, amount1: 
   withdrawal.hash = transactionHash;
   withdrawal.logIndex = event.logIndex.toI32();
   withdrawal.protocol = NetworkConfigs.getFactoryAddress();
-  withdrawal.to = transfer.sender;
+  withdrawal.to = transfer.sender!;
   withdrawal.from = pool.id;
   withdrawal.blockNumber = event.block.number;
   withdrawal.timestamp = event.block.timestamp;

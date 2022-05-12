@@ -4,14 +4,8 @@ import { TransferType } from "./constants";
 
 // Handle data from transfer event for mints. Used to populate deposit entity in the mint event.
 export function handleTransferMint(event: ethereum.Event, value: BigInt, to: string): void {
-  log.warning("HELLO3.11", [])
-
   let pool = getLiquidityPool(event.address.toHexString());
-  log.warning("HELLO3.12", [])
-
   let transfer = getOrCreateTransfer(event);
-
-  log.warning("HELLO3.13", [])
 
   // Tracks supply of minted LP tokens
   pool.outputTokenSupply = pool.outputTokenSupply!.plus(value);
@@ -30,8 +24,6 @@ export function handleTransferMint(event: ethereum.Event, value: BigInt, to: str
     transfer.sender = to;
     transfer.liquidity = value;
   }
-  log.warning(to + " to", [])
-  log.warning(transfer.sender + " sender", [])
 
 
   transfer.save();
@@ -64,9 +56,6 @@ export function handleTransferBurn(event: ethereum.Event, value: BigInt, from: s
     transfer.sender = from;
     transfer.liquidity = value;
   }
-
-  log.warning(from + " from", [])
-  log.warning(transfer.sender + " sender", [])
 
   transfer.save();
   pool.save();
