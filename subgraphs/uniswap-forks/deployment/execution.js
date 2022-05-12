@@ -65,8 +65,8 @@ function executeDeployment(location) {
 */
 export function execute(protocol, network, template, location) {
     console.log('Deploying ' + protocol + ' on ' + network + ' to ' + location + '...')
-    await executePrepareYaml(protocol, network, template);
-    await executePrepareConstants(protocol, network);
-    await executePrepareBuild();
-    await executeDeployment(location);
+    executePrepareYaml(protocol, network, template);
+    executePrepareConstants(protocol, network);
+    executePrepareBuild();
+    executeDeployment(location);
 }
