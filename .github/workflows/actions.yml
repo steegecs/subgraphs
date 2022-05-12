@@ -1,8 +1,9 @@
 name: Actions
 on: 
-  push: 
+  pull_request: 
     branches:
       - master
+    types: [closed]
 jobs:
   Deployment:
     name: Pull Request
