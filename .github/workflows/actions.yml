@@ -1,5 +1,5 @@
 name: Actions
-on: merge
+on: 
   pull_request: 
     branches:
       - master
