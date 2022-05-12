@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
-      - run: echo "Github Action - Deploying subgraphs to Messari"
+      - run: echo "${GITHUB_REF##*/} Github Action - Deploying subgraphs to Messari"
       - run: npm install -g @graphprotocol/graph-cli
       - run: npm install --dev @graphprotocol/graph-ts
       - run: npm install mustache
