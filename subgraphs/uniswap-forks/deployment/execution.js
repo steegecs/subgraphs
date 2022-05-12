@@ -12,40 +12,6 @@ export function scripts(protocol, network, template, location) {
     let prepareBuild = 'yarn codegen && yarn build'
     let deployment = 'npm run deploy:subgraph --LOCATION=' + location
     return [prepareYaml, prepareConstants, prepareBuild, deployment]
-<<<<<<< HEAD
-=======
-}
-
-/**
- * @param {string[]} array - Protocol that is being deployed
- * @param {string} callback 
-*/
-export function runCommands(array, callback) {
-
-    var index = 0;
-    var results = [];
-
-    function next() {
-        if (index < array.length) {
-            exec(array[index++], function(error, stdout, stderr) {
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
-            if (error !== null) {
-                console.log('exec error: ' + error);
-            } 
-            if (error) return callback(error);
-            // do the next iteration
-            results.push(stdout);
-            next();
-           });
-       } else {
-           // all done here
-           callback(null, results);
-       }
-    }
-    // start the first iteration
-    next();
->>>>>>> steegecs/uniswap-forks
 }
 
 /**

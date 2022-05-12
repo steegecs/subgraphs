@@ -127,11 +127,7 @@ export function createDeposit(event: ethereum.Event, amount0: BigInt, amount1: B
   deposit.inputTokenAmounts = [amount0, amount1];
   deposit.outputTokenAmount = transfer.liquidity;
   deposit.amountUSD = token0.lastPriceUSD!.times(token0Amount).plus(token1.lastPriceUSD!.times(token1Amount));
-<<<<<<< HEAD
   deposit.pool = pool.id;
-=======
-  deposit.pool = pool.id
->>>>>>> steegecs/uniswap-forks
 
   updateDepositHelper(event.address);
 
