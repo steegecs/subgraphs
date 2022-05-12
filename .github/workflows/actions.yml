@@ -14,10 +14,10 @@ jobs:
       - name: pull request
         if: github.event.pull_request.merged == true
       - run: |
-	      echo "Github Action - Deploying subgraphs to Messari Hosted Service"
-        npm install -g @graphprotocol/graph-cli
-        graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
-        cd subgraphs/uniswap-forks
-        npm run deploy uniswap-v2 steegecs
+	        echo "Github Action - Deploying subgraphs to Messari Hosted Service"
+          npm install -g @graphprotocol/graph-cli
+          graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
+          cd subgraphs/uniswap-forks
+          npm run deploy uniswap-v2 steegecs
 
  
