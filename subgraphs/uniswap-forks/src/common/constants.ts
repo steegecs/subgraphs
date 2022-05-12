@@ -25,7 +25,7 @@ export namespace Protocol {
 // They are mainly intended for convenience on the data consumer side.
 // The enum values are derived from Coingecko slugs (converted to uppercase
 // and replaced hyphens with underscores for Postgres enum compatibility)
-log.warning("HELLO", [])
+
 export namespace Network {
   export const ARBITRUM_ONE = "ARBITRUM_ONE";
   export const AVALANCHE = "AVALANCHE";
