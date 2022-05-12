@@ -17,8 +17,8 @@ jobs:
     - id: get-id
       run: |
         for changed_file in ${{ steps.files.outputs.all }}; do
-          if [[ changed_file == *"/src/"* ]]; then
-            echo changed_file;
+          if [[ ${changed_file} == *"/src/"* ]]; then
+            echo ${changed_file};
             id=$(echo ${changed_file%/src/*})
             echo "::set-output name=id::$id"; fi;
         done
