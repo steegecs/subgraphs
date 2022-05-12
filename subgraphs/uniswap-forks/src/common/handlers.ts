@@ -1,4 +1,4 @@
-import { ethereum, BigInt } from "@graphprotocol/graph-ts";
+import { ethereum, BigInt, log } from "@graphprotocol/graph-ts";
 import { getLiquidityPool, getOrCreateTransfer } from "./getters";
 import { TransferType } from "./constants";
 
@@ -24,6 +24,9 @@ export function handleTransferMint(event: ethereum.Event, value: BigInt, to: str
     transfer.sender = to;
     transfer.liquidity = value;
   }
+  log.warning(to + " to", [])
+  log.warning(transfer.sender + " sender", [])
+
 
   transfer.save();
   pool.save();

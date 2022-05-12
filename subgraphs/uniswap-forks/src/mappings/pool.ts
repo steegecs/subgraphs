@@ -15,7 +15,6 @@ export function handleTransfer(event: Transfer): void {
   }
 
   log.warning("HELLO3", [])
-
   // mints
   if (event.params.from.toHexString() == ZERO_ADDRESS) {
     handleTransferMint(event, event.params.value, event.params.to.toHexString());
