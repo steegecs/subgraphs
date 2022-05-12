@@ -15,7 +15,7 @@ jobs:
         with:
           script: |
             const branch = ${{ github.head_ref }}
-            const id = branch.split('/')[1]
+            const id = branch.split('/')[0]
             core.setOutput('id', id)
       - run: echo "${{steps.get-id.outputs.id}}"
       - uses: actions/checkout@v3
