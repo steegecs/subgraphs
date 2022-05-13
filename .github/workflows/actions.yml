@@ -59,16 +59,18 @@ jobs:
         echo "DEPLOY_NETWORK_ENV=$deploy_network" >> $GITHUB_ENV
 
     - if: $DEPLOY_ANY_ENV == 1
-      name: Install Dependencies and Authorize
+    - name: Install Dependencies and Authorize
       run: |
-        echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
-        npm install -g @graphprotocol/graph-cli
-        npm install --dev @graphprotocol/graph-ts
-        npm install mustache
-        yarn install
-        graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
-        cd subgraphs/uniswap-forks
-        npm run deploy uniswap-v2 steegecs
+        if [ $DEPLOY_ANY_ENV == 1 ]; then
+          echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
+          npm install -g @graphprotocol/graph-cli
+          npm install --dev @graphprotocol/graph-ts
+          npm install mustache
+          yarn install
+          graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
+          cd subgraphs/uniswap-forks
+          npm run deploy uniswap-v2 steegecs
+        fi;
       # working-directory: subgraphs/uniswap-forks
 
 
