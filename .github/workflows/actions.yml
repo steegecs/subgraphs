@@ -88,6 +88,8 @@ jobs:
           graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
           cd subgraphs/$(echo ${{ github.head_ref }} | cut -d / -f 2)
 
+          echo subgraphs/$(echo ${{ github.head_ref }} | rev | cut -d / -f 1| rev)
+
           if [[ $deploy_all == 1 ]]; then
             npm run deploy;
           else 
