@@ -1,2 +1,2 @@
 import { log } from '@graphprotocol/graph-ts';
-log.warning("HELLO6", [])
+log.warning("HELLO7", [])
