@@ -17,7 +17,7 @@ jobs:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
 
-      name: Get Updated Files Indicating Deployment
+    - name: Get Updated Files Indicating Deployment
       run: |
         declare -i deploy_any
         declare -i deploy_all
