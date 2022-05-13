@@ -48,6 +48,7 @@ jobs:
                 protocol_network="$ref_folder$hyphen$ref_folder2"
                 deploy_protocol[${protocol_network}]=1
                 deploy_any=1;
+                echo ${deploy_any}
               fi;
             else 
               echo "Warning: config/ folder should be located at subgraphs/**subgraph**/protocols/config/";
