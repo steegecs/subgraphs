@@ -61,7 +61,9 @@ jobs:
                 echo $network
 
                 protocol_network=$(echo ${protocol}_${network})
-                deploy_protocol[${protocol_network}]=1
+                deploy_network[$protocol_network]=1
+
+                echo ${deploy_network[$protocol_network]}
                 deploy_any=1;
               fi;
             else 
@@ -100,6 +102,7 @@ jobs:
               fi;
             done
 
+            echo "HELLO4"
             for protocol_network in "${!deploy_network[@]}"; do
               echo ${protocol_network}
               if [[ ${deploy_network[$protocol_network]} == 1 ]]; then
