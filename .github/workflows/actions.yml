@@ -45,6 +45,7 @@ jobs:
               ref_folder2=$( echo ${changed_file} | rev | cut -d / -f 2| rev);
               if [[ $ref_folder2 != config ]]; then
                 hyphen="/"
+                echo ${deploy_any}
                 protocol_network="$ref_folder$hyphen$ref_folder2"
                 deploy_protocol[${protocol_network}]=1
                 deploy_any=1;
