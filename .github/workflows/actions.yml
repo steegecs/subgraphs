@@ -63,17 +63,7 @@ jobs:
           fi;
         done
 
-        echo ${deploy_any}
-
-        echo "DEPLOY_ANY_ENV=$deploy_any" >> $GITHUB_ENV
-        echo "DEPLOY_ALL_ENV=$deploy_all" >> $GITHUB_ENV
-        echo "DEPLOY_PROTOCOL_ALL_ENV=$deploy_protocol_all" >> $GITHUB_ENV
-        echo "DEPLOY_NETWORK_ENV=$deploy_network" >> $GITHUB_ENV
-
-    - name: Install Dependencies and Authorize
-      run: |
-
-        if [[ $DEPLOY_ANY_ENV == 1 ]]; then
+        if [[ $deploy_any == 1 ]]; then
           echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
           npm install -g @graphprotocol/graph-cli
           npm install --dev @graphprotocol/graph-ts
@@ -82,30 +72,34 @@ jobs:
           graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
           cd subgraphs/uniswap-forks
 
-          if [[ $DEPLOY_ALL_ENV == 1 ]]; then
+          if [[ $deploy_all == 1 ]]; then
             npm run deploy;
           else 
             echo "HELLO"
-            for protocol in "${!DEPLOY_PROTOCOL_ALL_ENV[@]}"; do
+            for protocol in "${!deploy_protocol_all[@]}"; do
               echo ${protocol}
-              if [[ $DEPLOY_PROTOCOL_ALL_ENV[$protocol] == 1 ]]; then
+              if [[ $deploy_protocol_all[$protocol] == 1 ]]; then
                 npm run deploy ${protocol} steegecs;
               fi;
             done
 
-            for protocol_network in "${!DEPLOY_NETWORK_ENV[@]}"; do
+            for protocol_network in "${!deploy_network[@]}"; do
               echo ${protocol_network}
-              if [[ $DEPLOY_NETWORK_ENV[$protocol_network] == 1 ]]; then
+              if [[ $deploy_network[$protocol_network] == 1 ]]; then
                 protocol=$( echo ${protocol_network} | cut -d _ -f 1);
                 network=$( echo ${protocol_network} | cut -d _ -f 2);
-                if ! [[ $DEPLOY_PROTOCOL_ENV[$protocol] ]]; then
+                if ! [[ $deploy_protocol[$protocol] ]]; then
                   npm run deploy ${protocol} ${netowork} steegecs;
                 fi;
               fi;
             done
           fi;
         fi;
-      # working-directory: subgraphs/uniswap-forks
+
+        echo "DEPLOY_ANY_ENV=$deploy_any" >> $GITHUB_ENV
+        echo "DEPLOY_ALL_ENV=$deploy_all" >> $GITHUB_ENV
+        echo "DEPLOY_PROTOCOL_ALL_ENV=$deploy_protocol_all" >> $GITHUB_ENV
+        echo "DEPLOY_NETWORK_ENV=$deploy_network" >> $GITHUB_ENV
 
 
 
