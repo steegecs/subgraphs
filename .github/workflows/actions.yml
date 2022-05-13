@@ -16,11 +16,29 @@ jobs:
 
     - id: get-id
       run: |
+        declare -i deploy_all
+        declare -A deploy_protocol
+        declare -A deploy_network
+        deploy_all=0
+
         for changed_file in ${{ steps.files.outputs.all }}; do
           if [[ ${changed_file} == *"/src/"* ]]; then
-            echo ${changed_file};
-            id=$(echo ${changed_file%/src/*} | rev | cut -d / -f 1| rev)
-            echo "::set-output name=id::$id"; fi;
+            ref_folder=$(${changed_file%/src/*} | rev | cut -d / -f 2| rev)
+            if [[ref_folder == subgraphs]]; do
+              deploy_all=1
+            elif [[ref_folder == protocols]]; do
+              deploy_protocol[protocol]=1;
+            else 
+              echo "Warning: src/ folder should be located at subgraphs/**subgraph**/protocols/src/ or subgraphs/**subgraph**/src/"
+          elif [[ ${changed_file} == *"/config/"* ]]; then
+            ref_folder=$(${changed_file%/config/*} | rev | cut -d / -f 2| rev)
+            if [[ref_folder == protocols]]; do
+              ref_folder2=(${changed_file} | rev | cut -d / -f 2| rev)
+              if [[ref_folder2 != config]]
+                deploy_network[ref_folder, ref_folder2] = 1
+            else 
+              echo "Warning: config/ folder should be located at subgraphs/**subgraph**/protocols/config/"
+
         done
     - run: echo "${{steps.get-id.outputs.id}}"
     - uses: actions/checkout@v3
