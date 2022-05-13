@@ -44,9 +44,8 @@ jobs:
             if [[ $ref_folder == protocols ]]; then
               ref_folder2=$( echo ${changed_file} | rev | cut -d / -f 2| rev);
               if [[ $ref_folder2 != config ]]; then
-                hyphen="/"
                 echo ${deploy_any}
-                protocol_network=$(echo ${ref_folder}${hyphen}${ref_folder2})
+                protocol_network=$(echo ${ref_folder}_${ref_folder2})
                 deploy_protocol[${protocol_network}]=1
                 deploy_any=1;
                 echo ${deploy_any}
@@ -87,8 +86,8 @@ jobs:
 
             for protocol_network in "${!DEPLOY_NETWORK_ENV[@]}"; do
               if [[ $DEPLOY_NETWORK_ENV[$protocol_network] == 1 ]]; then
-                protocol=$( echo ${protocol_network} | cut -d / -f 1);
-                network=$( echo ${protocol_network} | cut -d / -f 2);
+                protocol=$( echo ${protocol_network} | cut -d _ -f 1);
+                network=$( echo ${protocol_network} | cut -d _ -f 2);
                 echo ${protocol}
                 echo ${protocol}
                 if ! [[ $DEPLOY_PROTOCOL_ENV[$protocol] ]]; then
