@@ -27,17 +27,18 @@ jobs:
             echo $(echo ${changed_file%/src/*} | rev | cut -d / -f 2| rev)
             ref_folder=$( echo ${changed_file%/src/*} | rev | cut -d / -f 2| rev)
             if [[ $ref_folder == subgraphs ]]; then
-              deploy_all=1
+              deploy_all=1; fi;
             elif [[ ref_folder == protocols ]]; then
-              deploy_protocol[protocol]=1;
+              deploy_protocol[protocol]=1; fi;
             else 
-              echo "Warning: src/ folder should be located at subgraphs/**subgraph**/protocols/src/ or subgraphs/**subgraph**/src/"
+              echo "Warning: src/ folder should be located at subgraphs/**subgraph**/protocols/src/ or subgraphs/**subgraph**/src/"; esle;
           elif [[ ${changed_file} == *"/config/"* ]]; then
             ref_folder=$(${changed_file%/config/*} | rev | cut -d / -f 2| rev)
             if [[ ref_folder == protocols ]]; then
               ref_folder2=(${changed_file} | rev | cut -d / -f 2| rev)
               if [[ ref_folder2 != config ]]
-                deploy_network[ref_folder, ref_folder2] = 1
+                deploy_network[ref_folder, ref_folder2] = 1; fi;
+            fi;
             else 
               echo "Warning: config/ folder should be located at subgraphs/**subgraph**/protocols/config/"
         done
