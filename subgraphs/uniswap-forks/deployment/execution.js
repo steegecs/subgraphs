@@ -7,10 +7,10 @@ import { exec } from 'child_process';
  * @param {string} location - Location in the subgraph will be deployed to {e.g. messari/uniswap-v2-ethereum}
 */
 export function scripts(protocol, network, template, location) {
-    let prepareYaml = 'npm run prepare:yaml --PROTOCOL=' + protocol + ' --NETWORK=' + network + ' --TEMPLATE=' + template
-    let prepareConstants = 'npm run prepare:constants --PROTOCOL=' + protocol + ' --NETWORK=' + network
-    let prepareBuild = 'yarn codegen && yarn build'
-    let deployment = 'npm run deploy:subgraph --LOCATION=' + location
+    let prepareYaml = "npm run prepare:yaml --PROTOCOL=" + protocol + " --NETWORK=" + network + " --TEMPLATE=" + template
+    let prepareConstants = "npm run prepare:constants --PROTOCOL=" + protocol + " --NETWORK=" + network
+    let prepareBuild = "graph codegen && graph build"
+    let deployment = "npm run deploy:subgraph --LOCATION=" + location
     return [prepareYaml, prepareConstants, prepareBuild, deployment]
 }
 
