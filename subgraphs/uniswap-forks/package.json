@@ -8,8 +8,8 @@
     "codegen": "graph codegen",
     "build": "graph build",
 
-    "prepare:yaml": "mustache protocols/${npm_config_protocol}/config/${npm_config_network}/${npm_config_network}.json protocols/${npm_config_protocol}/config/${npm_config_template} > subgraph.yaml",
-    "prepare:constants": "mustache protocols/${npm_config_protocol}/config/${npm_config_network}/${npm_config_network}.json configurations/configure.template.ts > configurations/configure.ts",
+    "prepare:yaml": "mustache protocols/${npm_config_protocol}/config/networks/${npm_config_network}/${npm_config_network}.json protocols/${npm_config_protocol}/config/templates/${npm_config_template} > subgraph.yaml",
+    "prepare:constants": "mustache protocols/${npm_config_protocol}/config/networks/${npm_config_network}/${npm_config_network}.json configurations/configure.template.ts > configurations/configure.ts",
     "prepare:build": "yarn codegen && yarn build",
     "deploy:subgraph": "graph deploy --product hosted-service ${npm_config_location}",
 

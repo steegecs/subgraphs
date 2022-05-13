@@ -1,11 +1,11 @@
 import { Address, BigDecimal } from '@graphprotocol/graph-ts';
-import { Factory } from '../../../../generated/Factory/Factory';
-import { FeeSwitch, Network, RewardIntervalType } from '../../../../src/common/constants';
-import { Configurations } from '../../../../configurations/configurations/interface';
+import { Factory } from '../../../../../generated/Factory/Factory';
+import { FeeSwitch, Network, RewardIntervalType } from '../../../../../src/common/constants';
+import { Configurations } from '../../../../../configurations/configurations/interface';
 
-export class SushiswapXdaiConfigurations implements Configurations {
+export class SushiswapCeloConfigurations implements Configurations {
   getNetwork(): string {
-    return Network.XDAI;
+    return Network.CELO;
   }
   getProtocolName(): string {
     return "Sushiswap";
@@ -41,34 +41,34 @@ export class SushiswapXdaiConfigurations implements Configurations {
     return RewardIntervalType.TIMESTAMP;
   }
   getReferenceToken(): string {
-    return "0x6A023CCd1ff6F2045C3309768eAd9E68F978f6e1";
+    return "0x122013fd7dF1C6F636a5bb8f03108E876548b455";
   }
   getRewardToken(): string {
-    return "0x2995D1317DcD4f0aB89f4AE60F3f020A4F17C7CE";
+    return "0x29dFce9c22003A4999930382Fd00f9Fd6133Acd1";
   }
   getWhitelistTokens(): string[] {
     return [
-      "0x6a023ccd1ff6f2045c3309768ead9e68f978f6e1",
-      "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d",
-      "0x8e5bbbb09ed1ebde8674cda39a0c169401db4252",
-      "0xddafbb505ad214d7b80b1f830fccc89b60fb7a83",
-      "0x4ecaba5870353805a9f068101a40e0f32ed605c6",
-      "0x82dfe19164729949fd66da1a37bc70dd6c4746ce",
-      "0x44fa8e6f47987339850636f88629646662444217",
-      "0xfe7ed09c4956f7cdb54ec4ffcb9818db2d7025b8"
+      "0x471ece3750da237f93b8e339c536989b8978a438",
+      "0x765de816845861e75a25fca122bb6898b8b1282a",
+      "0xef4229c8c3250c675f21bcefa42f58efbff6002a",
+      "0x88eec49252c8cbc039dcdb394c0c2ba2f1637ea0",
+      "0x90ca507a5d4458a4c6c6249d186b6dcb02a5bccd",
+      "0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73",
+      "0xbaab46e28388d2779e6e31fd00cf0e5ad95e327b"
     ];
   }
   getStableCoins(): string[] {
     return [
-      "0xDDAfbb505ad214D7b80b1f830fcCc89B60fb7A83", // USDC
-      "0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d", // DAI
-      "0x4ECaBa5870353805a9F068101A40E0f32ed605C6", // USDT
+      "0xef4229c8c3250C675F21BCefa42f58EfbfF6002a", // USDC
+      "0x90Ca507a5D4458a4C6C6249d186b6dCb02a5BCCd", // DAI
+      "0x88eeC49252c8cbc039DCdB394c0c2BA2f1637EA0", // USDT
     ];
   }
   getStableOraclePools(): string[] {
     return [
-      "0xa227c72a4055a9dc949cae24f54535fe890d3663", // wETH/USDC
-      "0x6685c047eab042297e659bfaa7423e94b4a14b9e", // wETH/USDT
+      "0x93887e0fa9f6c375b2765a6fe885593f16f077f9", // wETH/USDC
+      "0xc77398cfb7b0f7ab42bafc02abc20a69ce8cef7f", // wETH/USDT
+      "0xccd9d850ef40f19566cd8df950765e9a1a0b9ef2", // wETH/DAI
     ];
   }
   getUntrackedPairs(): string[] {

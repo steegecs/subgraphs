@@ -1,7 +1,7 @@
 import { Address, BigDecimal } from '@graphprotocol/graph-ts';
-import { Factory } from '../../../../generated/Factory/Factory';
-import { FeeSwitch, Network, RewardIntervalType } from '../../../../src/common/constants';
-import { Configurations } from '../../../../configurations/configurations/interface';
+import { Factory } from '../../../../../generated/Factory/Factory';
+import { FeeSwitch, Network, RewardIntervalType } from '../../../../../src/common/constants';
+import { Configurations } from '../../../../../configurations/configurations/interface';
 
 export class SushiswapFuseConfigurations implements Configurations {
   getNetwork(): string {
