@@ -48,7 +48,7 @@ jobs:
           fi;
         done
       
-    - run: echo ${deploy_all}
+    - run: echo "${deploy_all}"
     - run: echo "${{steps.get-id.outputs.id}}"
     - run: echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
     - run: npm install -g @graphprotocol/graph-cli
