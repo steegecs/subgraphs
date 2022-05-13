@@ -44,7 +44,7 @@ jobs:
             if [[ $ref_folder == protocols ]]; then
               ref_folder2=$( echo ${changed_file} | rev | cut -d / -f 2| rev);
               if [[ $ref_folder2 != config ]]; then
-                protocol_network="${ref_folder}"/"${ref_folder2}"
+                protocol_network="${ref_folder}${/}${ref_folder2}"
                 deploy_protocol[$protocol_network]=1
                 deploy_any=1;
               fi;
@@ -53,6 +53,8 @@ jobs:
             fi;
           fi;
         done
+
+        echo ${deploy_any}
 
         echo "DEPLOY_ANY_ENV=$deploy_any" >> $GITHUB_ENV
         echo "DEPLOY_ALL_ENV=$deploy_all" >> $GITHUB_ENV
