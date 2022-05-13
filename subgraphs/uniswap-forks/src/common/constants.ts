@@ -17,7 +17,7 @@ export namespace Protocol {
   export const SUSHISWAP = "Sushiswap";
 }
 
-log.warning("HELLO9", [])
+log.warning("HELLO10", [])
 
 ////////////////////////
 ///// Schema Enums /////
