@@ -86,6 +86,8 @@ jobs:
             for protocol in "${!deploy_protocol_all[@]}"; do
               echo ${protocol}
               if [[ $deploy_protocol_all[$protocol] == 1 ]]; then
+                echo "DEPLOYING"
+                echo $deploy_protocol_all[$protocol]
                 npm run deploy ${protocol} steegecs;
               fi;
             done
