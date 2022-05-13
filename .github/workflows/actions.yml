@@ -40,6 +40,7 @@ jobs:
               echo deploy_protocol_all[$protocol]
               for protocol in "${!deploy_protocol_all[@]}"; do
                 echo ${protocol}
+              done
               deploy_any=1;
             else 
               echo "Warning: src/ folder should be located at subgraphs/**subgraph**/protocols/src/ or subgraphs/**subgraph**/src/"; 
