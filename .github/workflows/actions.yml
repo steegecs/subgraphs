@@ -86,7 +86,7 @@ jobs:
           npm install mustache
           yarn install
           graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
-          cd subgraphs/$(echo ${{ github.head_ref }} | cut -d / -f 2)
+          cd subgraphs/$(echo ${{ github.head_ref }} | cut -d / -f 1)
 
           echo subgraphs/$(echo ${{ github.head_ref }} | rev | cut -d / -f 1| rev)
 
