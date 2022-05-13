@@ -84,7 +84,8 @@ jobs:
               if [[ $DEPLOY_NETWORK_ENV[protocol_network] == 1 ]]; then
                 protocol=$( echo ${protocol_network} | cut -d / -f 1);
                 network=$( echo ${protocol_network} | cut -d / -f 2);
-
+                echo ${protocol}
+                echo ${protocol}
                 if ! [[ $DEPLOY_PROTOCOL_ENV[protocol] ]]; then
                   npm run deploy ${protocol} ${netowork} steegecs;
                 fi;
