@@ -24,8 +24,7 @@ jobs:
 
         for changed_file in ${{ steps.files.outputs.all }}; do
           if [[ ${changed_file} == *"/src/"* ]]; then
-            echo $(echo ${changed_file%/src/*} | rev | cut -d / -f 2| rev)
-            ref_folder=$( echo ${changed_file%/src/*} | rev | cut -d / -f 2| rev)
+            ref_folder=$( echo ${changed_file%/src/*} | rev | cut -d / -f 2| rev);
             if [[ $ref_folder == subgraphs ]]; then
               deploy_all=1;
             elif [[ $ref_folder == protocols ]]; then
@@ -34,7 +33,15 @@ jobs:
               echo "Warning: src/ folder should be located at subgraphs/**subgraph**/protocols/src/ or subgraphs/**subgraph**/src/"; 
             fi;
           elif [[ ${changed_file} == *"/config/"* ]]; then
-            ref_folder=$( echo ${changed_file%/config/*} | rev | cut -d / -f 2| rev)
+            ref_folder=$( echo ${changed_file%/config/*} | rev | cut -d / -f 2| rev);
+            if [[ $ref_folder == protocols ]]; then
+              ref_folder2=( echo ${changed_file} | rev | cut -d / -f 2| rev);
+              if [[ $ref_folder2 != config ]]
+                deploy_network[$ref_folder, $ref_folder2] = 1;
+              fi;
+            else 
+              echo "Warning: config/ folder should be located at subgraphs/**subgraph**/protocols/config/";
+            fi;
           fi;
         done
     - run: echo "${{steps.get-id.outputs.id}}"
