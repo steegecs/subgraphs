@@ -63,10 +63,11 @@ jobs:
           fi;
         done
 
+        echo "DEPLOYMENTS"
         echo $deploy_any
         echo $deploy_all
         echo $deploy_protocol_all
-        ech0 $deploy_protocol
+        echo $deploy_protocol
         echo $deploy_network
 
         if [[ $deploy_any == 1 ]]; then
