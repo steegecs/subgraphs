@@ -75,18 +75,18 @@ jobs:
             npm run deploy;
           else 
             for protocol in "${!DEPLOY_PROTOCOL_ALL_ENV[@]}"; do
-              if [[ $DEPLOY_PROTOCOL_ALL_ENV[protocol] == 1 ]]; then
+              if [[ $DEPLOY_PROTOCOL_ALL_ENV[$protocol] == 1 ]]; then
                 npm run deploy ${protocol} steegecs;
               fi;
             done
 
             for protocol_network in "${!DEPLOY_NETWORK_ENV[@]}"; do
-              if [[ $DEPLOY_NETWORK_ENV[protocol_network] == 1 ]]; then
+              if [[ $DEPLOY_NETWORK_ENV[$protocol_network] == 1 ]]; then
                 protocol=$( echo ${protocol_network} | cut -d / -f 1);
                 network=$( echo ${protocol_network} | cut -d / -f 2);
                 echo ${protocol}
                 echo ${protocol}
-                if ! [[ $DEPLOY_PROTOCOL_ENV[protocol] ]]; then
+                if ! [[ $DEPLOY_PROTOCOL_ENV[$protocol] ]]; then
                   npm run deploy ${protocol} ${netowork} steegecs;
                 fi;
               fi;
