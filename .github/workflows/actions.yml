@@ -47,11 +47,17 @@ jobs:
             fi;
           elif [[ ${changed_file} == *"/config/"* ]]; then
             ref_folder=$( echo ${changed_file%/config/*} | rev | cut -d / -f 2| rev);
+            echo "HELLO1"
             if [[ $ref_folder == protocols ]]; then
-              ref_folder2=$( echo ${changed_file*/config/%} | rev | cut -d / -f 1| rev);
+              echo "HELLO2"
+              ref_folder2=$( echo ${changed_file*/config/%} | cut -d / -f 1 );
               if [[ $ref_folder2 == networks ]]; then
+                echo "HELLO3"
                 protocol=$( echo ${changed_file%/config/*} | rev | cut -d / -f 1| rev);
                 network=$( echo ${changed_file*/config/%} | rev | cut -d / -f 2| rev);
+
+                echo $protocol
+                echo $network
 
                 protocol_network=$(echo ${protocol}_${network})
                 deploy_protocol[${protocol_network}]=1
