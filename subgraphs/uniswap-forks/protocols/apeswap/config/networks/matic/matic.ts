@@ -3,7 +3,7 @@ import { Factory } from '../../../../../generated/Factory/Factory';
 import { FeeSwitch, Network, RewardIntervalType } from '../../../../../src/common/constants';
 import { Configurations } from '../../../../../configurations/configurations/interface';
 
-log.warning("HELLO", [])
+log.warning("HELLO1", [])
 export class ApeswapMaticConfigurations implements Configurations {
   getNetwork(): string {
     return Network.MATIC;
