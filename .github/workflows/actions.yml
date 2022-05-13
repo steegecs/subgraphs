@@ -21,7 +21,7 @@ jobs:
       run: |
         declare -i deploy_any
         declare -i deploy_all
-        declare -A deploy_protocol
+        declare -A deploy_protocol_all
         declare -A deploy_network
         deploy_any=0
         deploy_all=0
@@ -34,7 +34,7 @@ jobs:
               deploy_all=1;
               deploy_any=1;
             elif [[ $ref_folder == protocols ]]; then
-              deploy_protocol[protocol]=1;
+              deploy_protocol_all[protocol]=1;
               deploy_any=1;
             else 
               echo "Warning: src/ folder should be located at subgraphs/**subgraph**/protocols/src/ or subgraphs/**subgraph**/src/"; 
@@ -44,7 +44,8 @@ jobs:
             if [[ $ref_folder == protocols ]]; then
               ref_folder2=$( echo ${changed_file} | rev | cut -d / -f 2| rev);
               if [[ $ref_folder2 != config ]]; then
-                deploy_network[$ref_folder, $ref_folder2] = 1;
+                protocol_network "${ref_folder}/${ref_folder2}"
+                deploy_protocol[$protocol_network] = 1
                 deploy_any=1;
               fi;
             else 
@@ -55,11 +56,12 @@ jobs:
 
         echo "DEPLOY_ANY_ENV=$deploy_any" >> $GITHUB_ENV
         echo "DEPLOY_ALL_ENV=$deploy_all" >> $GITHUB_ENV
-        echo "DEPLOY_PROTOCOL_ENV=$deploy_protocol" >> $GITHUB_ENV
+        echo "DEPLOY_PROTOCOL_ALL_ENV=$deploy_protocol_all" >> $GITHUB_ENV
         echo "DEPLOY_NETWORK_ENV=$deploy_network" >> $GITHUB_ENV
 
     - name: Install Dependencies and Authorize
       run: |
+
         if [[ $DEPLOY_ANY_ENV == 1 ]]; then
           echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
           npm install -g @graphprotocol/graph-cli
@@ -68,7 +70,27 @@ jobs:
           yarn install
           graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
           cd subgraphs/uniswap-forks
-          npm run deploy uniswap-v2 steegecs
+
+          if [[ $DEPLOY_ALL_ENV == 1 ]]; then
+            npm run deploy;
+          else 
+            for protocol in "${!DEPLOY_PROTOCOL_ALL_ENV[@]}"; do
+              if [[ $DEPLOY_PROTOCOL_ALL_ENV[protocol] == 1 ]]; then
+                npm run deploy ${protocol} steegecs;
+              fi;
+            done
+
+            for protocol_network in "${!DEPLOY_NETWORK_ENV[@]}"; do
+              if [[ $DEPLOY_NETWORK_ENV[protocol_network] == 1 ]]; then
+                protocol=$( echo ${protocol_network} | cut -d / -f 1);
+                network=$( echo ${protocol_network} | cut -d / -f 2);
+
+                if ! [[ $DEPLOY_PROTOCOL_ENV[protocol] ]]; then
+                  npm run deploy ${protocol} ${netowork} steegecs;
+                fi;
+              fi;
+            done
+          fi;
         fi;
       # working-directory: subgraphs/uniswap-forks
 
