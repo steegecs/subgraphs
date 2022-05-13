@@ -51,6 +51,7 @@ jobs:
             if [[ $ref_folder == protocols ]]; then
               echo "HELLO2"
               ref_folder2=$( echo ${changed_file*/config/%} | cut -d / -f 1 );
+              echo $ref_folder2
               if [[ $ref_folder2 == networks ]]; then
                 echo "HELLO3"
                 protocol=$( echo ${changed_file%/config/*} | rev | cut -d / -f 1| rev);
