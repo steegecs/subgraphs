@@ -46,7 +46,7 @@ jobs:
               if [[ $ref_folder2 != config ]]; then
                 hyphen="/"
                 echo ${deploy_any}
-                protocol_network=$(echo $ref_folder/$ref_folder2)
+                protocol_network=$(echo ${ref_folder}${hyphen}${ref_folder2})
                 deploy_protocol[${protocol_network}]=1
                 deploy_any=1;
                 echo ${deploy_any}
