@@ -37,6 +37,9 @@ jobs:
               protocol=$( echo ${changed_file%/src/*} | rev | cut -d / -f 1| rev);
               echo $protocol
               deploy_protocol_all[$protocol]=1;
+              echo deploy_protocol_all[$protocol]
+              for protocol in "${!deploy_protocol_all[@]}"; do
+                echo ${protocol}
               deploy_any=1;
             else 
               echo "Warning: src/ folder should be located at subgraphs/**subgraph**/protocols/src/ or subgraphs/**subgraph**/src/"; 
