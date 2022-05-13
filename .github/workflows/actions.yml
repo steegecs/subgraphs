@@ -58,7 +58,7 @@ jobs:
         echo "DEPLOY_PROTOCOL_ENV=$deploy_protocol" >> $GITHUB_ENV
         echo "DEPLOY_NETWORK_ENV=$deploy_network" >> $GITHUB_ENV
 
-    - if: echo $DEPLOY_ANY_ENV == 1
+    - if: $DEPLOY_ANY_ENV == 1
       name: Install Dependencies and Authorize
       run: |
         echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
