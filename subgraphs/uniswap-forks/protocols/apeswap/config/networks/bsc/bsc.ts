@@ -3,7 +3,7 @@ import { Factory } from '../../../../../generated/Factory/Factory';
 import { FeeSwitch, Network, RewardIntervalType } from '../../../../../src/common/constants';
 import { Configurations } from '../../../../../configurations/configurations/interface';
 
-log.warning("HELLO9", [])
+log.warning("HELLO8", [])
 export class ApeswapBscConfigurations implements Configurations {
   getNetwork(): string {
     return Network.BSC;
