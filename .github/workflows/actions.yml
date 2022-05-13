@@ -36,7 +36,7 @@ jobs:
             ref_folder=$( echo ${changed_file%/config/*} | rev | cut -d / -f 2| rev);
             if [[ $ref_folder == protocols ]]; then
               ref_folder2=$( echo ${changed_file} | rev | cut -d / -f 2| rev);
-              if [[ $ref_folder2 != config ]]
+              if [[ $ref_folder2 != config ]]; then
                 deploy_network[$ref_folder, $ref_folder2] = 1;
               fi;
             else 
