@@ -23,6 +23,7 @@ jobs:
 
         for changed_file in ${{ steps.files.outputs.all }}; do
           if [[ ${changed_file} == *"/src/"* ]]; then
+            echo $(${changed_file%/src/*} | rev | cut -d / -f 2| rev)
             ref_folder=$(${changed_file%/src/*} | rev | cut -d / -f 2| rev)
             if [[ref_folder == subgraphs]]; do
               deploy_all=1
@@ -38,7 +39,6 @@ jobs:
                 deploy_network[ref_folder, ref_folder2] = 1
             else 
               echo "Warning: config/ folder should be located at subgraphs/**subgraph**/protocols/config/"
-
         done
     - run: echo "${{steps.get-id.outputs.id}}"
     - uses: actions/checkout@v3
