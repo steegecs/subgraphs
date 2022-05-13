@@ -14,6 +14,9 @@ jobs:
       uses: jitterbit/get-changed-files@v1
       continue-on-error: true
 
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+
     - id: get-id
       run: |
         declare -i deploy_all
@@ -44,9 +47,10 @@ jobs:
             fi;
           fi;
         done
+      
+    - run: echo deploy_all
+
     - run: echo "${{steps.get-id.outputs.id}}"
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
     - run: echo "${{ github.head_ref }} Github Action - Deploying subgraphs to Messari"
     - run: npm install -g @graphprotocol/graph-cli
     - run: npm install --dev @graphprotocol/graph-ts
