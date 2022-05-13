@@ -2,7 +2,7 @@ import { Address, BigDecimal, log } from '@graphprotocol/graph-ts';
 import { Factory } from '../../../../../generated/Factory/Factory';
 import { FeeSwitch, Network, RewardIntervalType } from '../../../../../src/common/constants';
 import { Configurations } from '../../../../../configurations/configurations/interface';
-log.warning("HELLO1", [])
+log.warning("HELLO2", [])
 
 export class UniswapV2MainnetConfigurations implements Configurations {
   getNetwork(): string {
