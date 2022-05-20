@@ -1,12 +1,9 @@
 name: Deployment
 on: 
-  pull_request: 
-    branches:
-      - master
-    types: [closed]
+  push: 
+
 jobs:
   Deployment:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
     - id: files
@@ -68,11 +65,11 @@ jobs:
           cd subgraphs/$(echo ${{ github.head_ref }} | cut -d / -f 1)
 
           if [[ $deploy_all == 1 ]]; then
-            npm run deploy;
+            npm run deploy steegecs;
           else 
             for protocol in "${!deploy_protocol_all[@]}"; do
               if [[ ${deploy_protocol_all[$protocol]} == 1 ]]; then
-                npm run deploy ${protocol} messari;
+                npm run deploy ${protocol} steegecs;
               fi;
             done
 
@@ -82,7 +79,7 @@ jobs:
                 network=$( echo ${protocol_network} | cut -d _ -f 2);
 
                 if ! [[ ${deploy_protocol[$protocol]} ]]; then
-                  npm run deploy ${protocol} ${network} messari;
+                  npm run deploy ${protocol} ${network} steegecs;
                 fi;
               fi;
             done
