@@ -68,7 +68,7 @@ jobs:
           cd subgraphs/$(echo ${{ github.head_ref }} | cut -d / -f 1)
 
           if [[ $deploy_all == 1 ]]; then
-            npm run deploy steegecs;
+            npm run deploy;
           else 
             for protocol in "${!deploy_protocol_all[@]}"; do
               if [[ ${deploy_protocol_all[$protocol]} == 1 ]]; then

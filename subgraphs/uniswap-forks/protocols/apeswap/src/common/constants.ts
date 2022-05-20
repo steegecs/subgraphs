@@ -4,7 +4,7 @@
 
 import { log } from "@graphprotocol/graph-ts";
 
-log.warning("HELLO2", [])
+log.warning("HELLO34", [])
 export const PROTOCOL_SUBGRAPH_VERSION = "1.1.1";
 export const PROTOCOL_METHODOLOGY_VERSION = "1.0.0";
 export const PROTOCOL_NAME = "Apeswap";
