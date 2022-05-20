@@ -65,7 +65,7 @@ jobs:
           npm install mustache
           yarn install
           graph auth --product hosted-service ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
-          cd subgraphs/$(echo ${{ github.head_ref }} | cut -d / -f 1)
+          cd subgraphs/$(echo ${{ github.head_ref }} | rev | cut -d / -f 1 | rev)
 
           if [[ $deploy_all == 1 ]]; then
             npm run deploy;
