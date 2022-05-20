@@ -5,4 +5,4 @@ jobs:
   Deployment:
     runs-on: ubuntu-latest
     steps:
-      run: echo ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
+      - run: echo ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
