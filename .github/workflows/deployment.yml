@@ -64,15 +64,15 @@ jobs:
           npm install --dev @graphprotocol/graph-ts
           npm install mustache
           yarn install
-          graph auth --product hosted-service ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
+          graph auth --product hosted-service 0845de8b9d834db8b16b5c97ba33ec53
           cd subgraphs/$(echo ${{ github.head_ref }} | cut -d / -f 1)
 
           if [[ $deploy_all == 1 ]]; then
-            npm run deploy;
+            npm run deploy steegecs;
           else 
             for protocol in "${!deploy_protocol_all[@]}"; do
               if [[ ${deploy_protocol_all[$protocol]} == 1 ]]; then
-                npm run deploy ${protocol} messari;
+                npm run deploy ${protocol} steegecs;
               fi;
             done
 
@@ -82,7 +82,7 @@ jobs:
                 network=$( echo ${protocol_network} | cut -d _ -f 2);
 
                 if ! [[ ${deploy_protocol[$protocol]} ]]; then
-                  npm run deploy ${protocol} ${network} messari;
+                  npm run deploy ${protocol} ${network} steegecs;
                 fi;
               fi;
             done
