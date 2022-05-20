@@ -10,76 +10,90 @@
       "bsc": {
         "template": "apeswap.template.yaml",
         "steegecs": "steegecs/apeswap-bsc",
-        "messari": "messari/apeswap-bsc"
+        "messari": "messari/apeswap-bsc",
+        "messari-deploy-lock": false
       },
       "matic": {
         "template": "apeswap.template.yaml",
         "steegecs": "steegecs/apeswap-matic",
-        "messari": "messari/apeswap-polygon"
+        "messari": "messari/apeswap-polygon",
+        "messari-deploy-lock": false
       }
     },
     "uniswap-v2": {
       "mainnet": {
         "template": "uniswap.v2.template.yaml",
         "steegecs": "steegecs/uniswap-v2",
-        "messari": "messari/uniswap-v2-ethereum"
+        "messari": "messari/uniswap-v2-ethereum",
+        "messari-deploy-lock": true
       }
     },
     "sushiswap": {
       "arbitrum": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-arbitrum",
-        "messari": "messari/sushiswap-arbitrum"
+        "messari": "messari/sushiswap-arbitrum",
+        "messari-deploy-lock": false
       },
       "avalanche": {
         "template": "uniswap.v2.template.yaml",
         "steegecs": "steegecs/sushiswap-avalanche",
-        "messari": "messari/sushiswap-avalanche"
+        "messari": "messari/sushiswap-avalanche",
+        "messari-deploy-lock": false
       },
       "bsc": {
         "template": "uniswap.v2.template.yaml",
         "steegecs": "steegecs/sushiswap-bsc",
-        "messari": "messari/sushiswap-bsc"
+        "messari": "messari/sushiswap-bsc",
+        "messari-deploy-lock": false
       },
       "celo": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-celo",
-        "messari": "messari/sushiswap-celo"
+        "messari": "messari/sushiswap-celo",
+        "messari-deploy-lock": false
       },
       "fantom": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-fantom",
-        "messari": "messari/sushiswap-fantom"
+        "messari": "messari/sushiswap-fantom",
+        "messari-deploy-lock": false
       },
       "fuse": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-fuse",
-        "messari": "messari/sushiswap-fuse"
+        "messari": "messari/sushiswap-fuse",
+        "messari-deploy-lock": false
       },
       "mainnet": {
         "template": "uniswap.v2.template.yaml",
         "steegecs": "steegecs/sushiswap-mainnet",
-        "messari": "messari/sushiswap-ethereum"
+        "messari": "messari/sushiswap-ethereum",
+        "messari-deploy-lock": false
       },
       "matic": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-matic",
-        "messari": "messari/sushiswap-polygon"
+        "messari": "messari/sushiswap-polygon",
+        "messari-deploy-lock": false
       },
       "moonbeam": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-moonbeam",
-        "messari": "messari/sushiswap-moonbeam"
+        "messari": "messari/sushiswap-moonbeam",
+        "messari-deploy-lock": false
       },
       "moonriver": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-moonriver",
-        "messari": "messari/sushiswap-moonriver"
+        "messari": "messari/sushiswap-moonriver",
+        "messari-deploy-lock": false
       },
       "xdai": {
         "template": "sushiswap.alt.template.yaml",
         "steegecs": "steegecs/sushiswap-xdai",
-        "messari": "messari/sushiswap-xdai"
+        "messari": "messari/sushiswap-xdai",
+        "messari-deploy-lock": false
       }
     }
   }
