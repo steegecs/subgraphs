@@ -6,12 +6,6 @@ const configurations = JSON.parse(JSON.stringify(protocolNetworkData))['default'
 
 let allScripts = []
 
-console.log(process.argv[0])
-console.log(process.argv[1])
-console.log(process.argv[2])
-console.log(process.argv[3])
-
-
 if (process.argv.length == 2) {
     console.log('Error: please at least specify hosted service account to deploy all subgraphs (i.e. messari, steegecs, etc.)')
 } else if (process.argv.length == 3) {
