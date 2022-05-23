@@ -16,6 +16,22 @@ export function scripts(protocol, network, template, location) {
     return [removeConfig, removeSubgraphYaml, prepareYaml, prepareConstants, prepareBuild, deployment]
 }
 
+export function getDeploymentNetwork(network) {
+    let deployNetwork = "";
+    switch (network) {
+        case "mainnet":
+            deployNetwork = "ethereum"
+        case "xdai":
+            deployNetwork = "gnosis"
+        case "matic":
+            deployNetwork = "polygon"
+        default: 
+            deployNetwork = network
+    }
+    return deployNetwork
+}
+            
+
 /**
  * @param {string[]} array - Protocol that is being deployed
  * @param {string} callback 

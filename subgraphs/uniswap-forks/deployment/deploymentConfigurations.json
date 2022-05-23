@@ -1,85 +1,60 @@
 {
   "configurations": {
     "deployment": {
-      "locations": ["steegecs", "messari"],
-      "service": "graph deploy --product hosted-service "
+      "locations": ["steegecs", "messari"]
     }
   },
   "protocols": {
     "apeswap": {
       "bsc": {
-        "template": "apeswap.template.yaml",
-        "steegecs": "steegecs/apeswap-bsc",
-        "messari": "messari/apeswap-bsc"
+        "template": "apeswap.template.yaml"
       },
       "matic": {
         "template": "apeswap.template.yaml",
-        "steegecs": "steegecs/apeswap-matic",
-        "messari": "messari/apeswap-polygon"
+        "steegecs": "steegecs/apeswap-matic"
       }
     },
     "uniswap-v2": {
       "mainnet": {
         "template": "uniswap.v2.template.yaml",
-        "steegecs": "steegecs/uniswap-v2",
-        "messari": "messari/uniswap-v2-ethereum"
+        "steegecs": "steegecs/uniswap-v2"
       }
     },
     "sushiswap": {
       "arbitrum": {
-        "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-arbitrum",
-        "messari": "messari/sushiswap-arbitrum"
+        "template": "sushiswap.alt.template.yaml"
       },
       "avalanche": {
-        "template": "uniswap.v2.template.yaml",
-        "steegecs": "steegecs/sushiswap-avalanche",
-        "messari": "messari/sushiswap-avalanche"
+        "template": "uniswap.v2.template.yaml"
       },
       "bsc": {
-        "template": "uniswap.v2.template.yaml",
-        "steegecs": "steegecs/sushiswap-bsc",
-        "messari": "messari/sushiswap-bsc"
+        "template": "uniswap.v2.template.yaml"
       },
       "celo": {
-        "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-celo",
-        "messari": "messari/sushiswap-celo"
+        "template": "sushiswap.alt.template.yaml"
       },
       "fantom": {
-        "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-fantom",
-        "messari": "messari/sushiswap-fantom"
+        "template": "sushiswap.alt.template.yaml"
       },
       "fuse": {
-        "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-fuse",
-        "messari": "messari/sushiswap-fuse"
+        "template": "sushiswap.alt.template.yaml"
       },
       "mainnet": {
         "template": "uniswap.v2.template.yaml",
-        "steegecs": "steegecs/sushiswap-mainnet",
-        "messari": "messari/sushiswap-ethereum"
+        "steegecs": "steegecs/sushiswap-mainnet"
       },
       "matic": {
         "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-matic",
-        "messari": "messari/sushiswap-polygon"
+        "steegecs": "steegecs/sushiswap-matic"
       },
       "moonbeam": {
-        "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-moonbeam",
-        "messari": "messari/sushiswap-moonbeam"
+        "template": "sushiswap.alt.template.yaml"
       },
       "moonriver": {
-        "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-moonriver",
-        "messari": "messari/sushiswap-moonriver"
+        "template": "sushiswap.alt.template.yaml"
       },
       "xdai": {
-        "template": "sushiswap.alt.template.yaml",
-        "steegecs": "steegecs/sushiswap-xdai",
-        "messari": "messari/sushiswap-xdai"
+        "template": "sushiswap.alt.template.yaml"
       }
     }
   }
