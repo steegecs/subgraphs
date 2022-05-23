@@ -1,4 +1,3 @@
-// import { log } from "@graphprotocol/graph-ts/index";
 import { BigDecimal } from "@graphprotocol/graph-ts/index";
 import { getLiquidityPool, getLiquidityPoolAmounts, getOrCreateToken, getOrCreateTokenWhitelist } from "../common/getters";
 import { Token, _HelperStore, _LiquidityPoolAmount } from "../../generated/schema";
