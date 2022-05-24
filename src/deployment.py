@@ -62,7 +62,6 @@ if deployAny == 1:
     # Deploy all protocols in the directory
     for subgraphDir in deployAllDirectory:
       path = absolutePath + '/subgraphs/' + subgraphDir
-      os.system('cd ' + absolutePath + '/subgraphs/' + subgraphDir)
       os.system('npm --prefix ' + path + ' run deploy steegecs')
 
     # Deploy a specific protocol in the directory
