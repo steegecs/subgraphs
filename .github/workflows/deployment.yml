@@ -1,25 +1,22 @@
-name: Deployment
+name: Test
+
 on: 
   push:
+
 jobs:
-  Deployment:
+  test: 
     runs-on: ubuntu-latest
-    steps:
-    - id: files
-      uses: jitterbit/get-changed-files@v1
-      continue-on-error: true
+    steps: 
+      - id: files
+        uses: jitterbit/get-changed-files@v1
+        continue-on-error: true
 
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
-
-    - name: Setup Python
-      uses: actions/setup-python@v2.2.2
-      with:
-        python-version: 3.8
-
-    - name: Deploy all relevant subgraph to the messari Hosted Service
-      run: | 
-        CHANGED_FILES="${{ steps.files.outputs.all }}" ABSOLUTE_PATH=${GITHUB_WORKSPACE} HOSTED_SERVICE_ACCESS_TOKEN=${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }} python3 src/deployment.py
+      - uses: actions/checkout@v2
+      - uses: steegecs/Action-Subgraph-Deployment
+        with: 
+          HOSTED_SERVICE_ACCESS_TOKEN: ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
+          CHANGED_FILES: "${{ steps.files.outputs.all }}"
+          ABSOLUTE_PATH: ${GITHUB_WORKSPACE}
       
 
 
