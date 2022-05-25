@@ -23,11 +23,11 @@ if (process.argv.length == 2) {
                     location = process.argv[2] + '/' + protocol + '-' + getDeploymentNetwork(network)
                 }
 
-                allScripts.set(protocol + '-' + network, scripts(protocol, network, template, location))
+                allScripts.set(location, scripts(protocol, network, template, location))
             }
         } 
 
-        runCommands(allScripts, function(results) {console.log("Results" + results)});
+        runCommands(allScripts, function(results) {});
 
     }
 } else if (process.argv.length == 4) {
@@ -48,10 +48,10 @@ if (process.argv.length == 2) {
                 location = process.argv[3] + '/' + protocol + '-' + getDeploymentNetwork(network)
             }
 
-            allScripts.set(protocol + '-' + network, scripts(protocol, network, template, location))
+            allScripts.set(location, scripts(protocol, network, template, location))
         } 
 
-        runCommands(allScripts, function(results) {console.log("Results" + results)});
+        runCommands(allScripts, function(results) {});
     }
  } else if (process.argv.length == 5) {
     if (!process.argv[2] in protocolNetworkMap) {
@@ -74,8 +74,8 @@ if (process.argv.length == 2) {
             location = process.argv[4] + '/' + protocol + '-' + getDeploymentNetwork(network)
         }
 
-        allScripts.set(protocol + '-' + network, scripts(protocol, network, template, location))
-        runCommands(allScripts, function(results) {console.log(results)});
+        allScripts.set(location, scripts(protocol, network, template, location))
+        runCommands(allScripts, function(results) {});
     } 
 } else {
     console.log('Error: Too many arguments')

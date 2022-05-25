@@ -1,4 +1,5 @@
 import { exec } from 'child_process';
+import fs from 'fs';
 
 /**
  * @param {string} protocol - Protocol that is being deployed
@@ -39,6 +40,7 @@ export function getDeploymentNetwork(network) {
 export async function runCommands(allScripts, callback) {
 
     let results = []
+    let logs = ""
     var index = 0;
     var index2 = 0;
     let protocols = Array.from( allScripts.keys() );
@@ -46,10 +48,10 @@ export async function runCommands(allScripts, callback) {
     function next() {
         if (index < protocols.length) {
             exec(allScripts.get(protocols[index])[index2++], function(error, stdout, stderr) {
-            console.log('stdout: ' + stdout);
-            console.log('stderr: ' + stderr);
+            logs = logs + "stdout: "  + stdout.replace(/\u001b[^m]*?m/g,"")
+            logs = logs + "stderr: "  + stderr.replace(/\u001b[^m]*?m/g,"")
             if (error !== null) {
-                console.log('exec error: ' + error);
+                logs = logs + "Exec error: "  + error.replace(/\u001b[^m]*?m/g,"")
                 results.push('Deployment Failed: ' + protocols[index])
                 index++;
                 index2 = 0;
@@ -64,6 +66,10 @@ export async function runCommands(allScripts, callback) {
         });
         } else {
             // all done here
+            fs.writeFile('deployment/results.txt', logs, function (err) {
+                if (err) throw err;
+                console.log('See deployment/results.txt for details!');
+              });
             console.log(results)
             callback(results);
         }
