@@ -11,7 +11,7 @@
       },
       "matic": {
         "template": "apeswap.template.yaml",
-        "steegecs": "steegecs/apeswap-mati"
+        "steegecs": "steegecs/apeswap-matic"
       }
     },
     "uniswap-v2": {
