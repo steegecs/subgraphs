@@ -39,7 +39,7 @@ export function getDeploymentNetwork(network) {
 */
 export async function runCommands(allScripts, callback) {
 
-    let results = "RESULTS:\n"
+    let results = ""
     let logs = ""
     var index = 0;
     var index2 = 0;
@@ -69,7 +69,7 @@ export async function runCommands(allScripts, callback) {
             fs.writeFile('deployment/results.txt', logs.replace(/\u001b[^m]*?m/g,""), function (err) {
                 if (err) throw err;
               });
-            console.log(results + "END")
+            console.log(results)
             callback(results);
         }
     }
