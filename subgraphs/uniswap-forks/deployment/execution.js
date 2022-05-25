@@ -39,7 +39,7 @@ export function getDeploymentNetwork(network) {
 */
 export async function runCommands(allScripts, callback) {
 
-    let results = []
+    let results = "RESULTS:\n"
     let logs = ""
     var index = 0;
     var index2 = 0;
@@ -52,11 +52,11 @@ export async function runCommands(allScripts, callback) {
             logs = logs + "stderr: "  + stderr
             if (error !== null) {
                 logs = logs + "Exec error: "  + error
-                results.push('Deployment Failed: ' + protocols[index])
+                results += 'Deployment Failed: ' + protocols[index] + '\n'
                 index++;
                 index2 = 0;
             } else if (index2 == allScripts.get(protocols[index]).length) {
-                results.push('Deployment Successful: ' + protocols[index])
+                results += 'Deployment Successful: ' + protocols[index] + '\n'
                 index++;
                 index2 = 0;
             }
@@ -69,7 +69,7 @@ export async function runCommands(allScripts, callback) {
             fs.writeFile('deployment/results.txt', logs.replace(/\u001b[^m]*?m/g,""), function (err) {
                 if (err) throw err;
               });
-            console.log(results)
+            console.log(results + "END")
             callback(results);
         }
     }
