@@ -19,6 +19,43 @@
         "template": "uniswap.v2.template.yaml",
         "steegecs": "steegecs/uniswap-v2"
       }
+    },
+    "sushiswap": {
+      "arbitrum": {
+        "template": "sushiswap.alt.template.yaml"
+      },
+      "avalanche": {
+        "template": "uniswap.v2.template.yaml"
+      },
+      "bsc": {
+        "template": "uniswap.v2.template.yaml"
+      },
+      "celo": {
+        "template": "sushiswap.alt.template.yaml"
+      },
+      "fantom": {
+        "template": "sushiswap.alt.template.yaml"
+      },
+      "fuse": {
+        "template": "sushiswap.alt.template.yaml"
+      },
+      "mainnet": {
+        "template": "uniswap.v2.template.yaml",
+        "steegecs": "steegecs/sushiswap-mainnet"
+      },
+      "matic": {
+        "template": "sushiswap.alt.template.yaml",
+        "steegecs": "steegecs/sushiswap-matic"
+      },
+      "moonbeam": {
+        "template": "sushiswap.alt.template.yaml"
+      },
+      "moonriver": {
+        "template": "sushiswap.alt.template.yaml"
+      },
+      "xdai": {
+        "template": "sushiswap.alt.template.yaml"
+      }
     }
   }
 }

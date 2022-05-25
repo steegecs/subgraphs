@@ -36,34 +36,39 @@ export function getDeploymentNetwork(network) {
  * @param {string[]} array - Protocol that is being deployed
  * @param {string} callback 
 */
-export async function runCommands(array, callback) {
+export async function runCommands(allScripts, callback) {
 
+    let results = []
     var index = 0;
     var index2 = 0;
-    var results = [];
+    let protocols = Array.from( allScripts.keys() );
 
     function next() {
-        if (index < array.length) {
-            exec(array[index][index2++], function(error, stdout, stderr) {
+        if (index < protocols.length) {
+            exec(allScripts.get(protocols[index])[index2++], function(error, stdout, stderr) {
             console.log('stdout: ' + stdout);
             console.log('stderr: ' + stderr);
             if (error !== null) {
                 console.log('exec error: ' + error);
+                results.push('Deployment Failed: ' + protocols[index])
                 index++;
                 index2 = 0;
-            } else if (index2 == 6) {
+            } else if (index2 == allScripts.get(protocols[index]).length) {
+                results.push('Deployment Successful: ' + protocols[index])
                 index++;
                 index2 = 0;
             }
+
             // do the next iteration
-            results.push(stdout);
             next();
-           });
-       } else {
+        });
+        } else {
             // all done here
-            callback(null, results);
-       }
+            console.log(results)
+            callback(results);
+        }
     }
+
     // start the first iteration
     next();
 }

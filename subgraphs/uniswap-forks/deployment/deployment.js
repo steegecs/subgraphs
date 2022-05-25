@@ -4,7 +4,7 @@ import {getDeploymentNetwork, runCommands, scripts} from './execution.js'
 const protocolNetworkMap = JSON.parse(JSON.stringify(protocolNetworkData))['default']['protocols'] 
 const configurations = JSON.parse(JSON.stringify(protocolNetworkData))['default']['configurations'] 
 
-let allScripts = []
+let allScripts = new Map()
 
 if (process.argv.length == 2) {
     console.log('Error: please at least specify hosted service account to deploy all subgraphs (i.e. messari, steegecs, etc.)')
@@ -23,9 +23,11 @@ if (process.argv.length == 2) {
                     location = process.argv[2] + '/' + protocol + '-' + getDeploymentNetwork(network)
                 }
 
-                allScripts.push(scripts(protocol, network, template, location))
+                allScripts.set(protocol + '-' + network, scripts(protocol, network, template, location))
             }
-        } runCommands(allScripts, function() {});
+        } 
+
+        runCommands(allScripts, function(results) {console.log("Results" + results)});
 
     }
 } else if (process.argv.length == 4) {
@@ -46,8 +48,10 @@ if (process.argv.length == 2) {
                 location = process.argv[3] + '/' + protocol + '-' + getDeploymentNetwork(network)
             }
 
-            allScripts.push(scripts(protocol, network, template, location))
-        } runCommands(allScripts, function() {});
+            allScripts.set(protocol + '-' + network, scripts(protocol, network, template, location))
+        } 
+
+        runCommands(allScripts, function(results) {console.log("Results" + results)});
     }
  } else if (process.argv.length == 5) {
     if (!process.argv[2] in protocolNetworkMap) {
@@ -70,8 +74,8 @@ if (process.argv.length == 2) {
             location = process.argv[4] + '/' + protocol + '-' + getDeploymentNetwork(network)
         }
 
-        allScripts.push(scripts(protocol, network, template, location))
-        runCommands(allScripts, function() {});
+        allScripts.set(protocol + '-' + network, scripts(protocol, network, template, location))
+        runCommands(allScripts, function(results) {console.log(results)});
     } 
 } else {
     console.log('Error: Too many arguments')
