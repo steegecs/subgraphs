@@ -27,7 +27,7 @@ if (process.argv.length == 2) {
             }
         } 
 
-        runCommands(allScripts, function(results) {console.log(results)});
+        runCommands(allScripts, function(results) {});
 
     }
 } else if (process.argv.length == 4) {
@@ -51,7 +51,7 @@ if (process.argv.length == 2) {
             allScripts.set(location, scripts(protocol, network, template, location))
         } 
 
-        runCommands(allScripts, function(results) {console.log(results)});
+        runCommands(allScripts, function(results) {});
     }
  } else if (process.argv.length == 5) {
     if (!process.argv[2] in protocolNetworkMap) {
@@ -75,7 +75,7 @@ if (process.argv.length == 2) {
         }
 
         allScripts.set(location, scripts(protocol, network, template, location))
-        runCommands(allScripts, function(results) {console.log(results)});
+        runCommands(allScripts, function(results) {});
     } 
 } else {
     console.log('Error: Too many arguments')
