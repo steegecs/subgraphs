@@ -19,4 +19,3 @@ jobs:
           ABSOLUTE_PATH: ${{ github.workspace }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GRAPH_DEPLOYMENT_LOCATION: steegecs
-      

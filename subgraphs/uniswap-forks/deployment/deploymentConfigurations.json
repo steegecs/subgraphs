@@ -52,9 +52,6 @@
       },
       "moonriver": {
         "template": "sushiswap.alt.template.yaml"
-      },
-      "xdai": {
-        "template": "sushiswap.alt.template.yaml"
       }
     }
   }
