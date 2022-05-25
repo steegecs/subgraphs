@@ -48,10 +48,10 @@ export async function runCommands(allScripts, callback) {
     function next() {
         if (index < protocols.length) {
             exec(allScripts.get(protocols[index])[index2++], function(error, stdout, stderr) {
-            logs = logs + "stdout: "  + stdout.replace(/\u001b[^m]*?m/g,"")
-            logs = logs + "stderr: "  + stderr.replace(/\u001b[^m]*?m/g,"")
+            logs = logs + "stdout: "  + stdout
+            logs = logs + "stderr: "  + stderr
             if (error !== null) {
-                logs = logs + "Exec error: "  + error.replace(/\u001b[^m]*?m/g,"")
+                logs = logs + "Exec error: "  + error
                 results.push('Deployment Failed: ' + protocols[index])
                 index++;
                 index2 = 0;
@@ -66,9 +66,8 @@ export async function runCommands(allScripts, callback) {
         });
         } else {
             // all done here
-            fs.writeFile('deployment/results.txt', logs, function (err) {
+            fs.writeFile('deployment/results.txt', logs.replace(/\u001b[^m]*?m/g,""), function (err) {
                 if (err) throw err;
-                console.log('See deployment/results.txt for details!');
               });
             console.log(results)
             callback(results);
