@@ -22,8 +22,9 @@ if (process.argv.length == 2) {
                 } else {
                     location = process.argv[2] + '/' + protocol + '-' + getDeploymentNetwork(network)
                 }
-
-                allScripts.set(location, scripts(protocol, network, template, location))
+                if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | location != 'messari') {
+                    allScripts.set(location, scripts(protocol, network, template, location))
+                }
             }
         } 
 
@@ -48,7 +49,9 @@ if (process.argv.length == 2) {
                 location = process.argv[3] + '/' + protocol + '-' + getDeploymentNetwork(network)
             }
 
-            allScripts.set(location, scripts(protocol, network, template, location))
+            if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | location != 'messari') {
+                allScripts.set(location, scripts(protocol, network, template, location))
+            }
         } 
 
         runCommands(allScripts, function(results) {});
@@ -74,7 +77,9 @@ if (process.argv.length == 2) {
             location = process.argv[4] + '/' + protocol + '-' + getDeploymentNetwork(network)
         }
 
-        allScripts.set(location, scripts(protocol, network, template, location))
+        if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | location != 'messari') {
+            allScripts.set(location, scripts(protocol, network, template, location))
+        }
         runCommands(allScripts, function(results) {});
     } 
 } else {

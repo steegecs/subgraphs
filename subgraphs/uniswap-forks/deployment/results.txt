@@ -27,55 +27,19 @@ stderr: - Apply migrations
 - Load subgraph from subgraph.yaml
 ✔ Load subgraph from subgraph.yaml
 - Load contract ABIs
-  Load contract ABI from abis/apeswap/Factory.json
+  Load contract ABI from abis/uniswap-v2/Factory.json
 - Load contract ABIs
-  Load contract ABI from abis/apeswap/IERC20.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/MasterChefSushiswap.json
-- Load contract ABIs
-  Load contract ABI from abis/apeswap/MasterChefApeswap.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/ERC20.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/MasterChefV2Sushiswap.json
-- Load contract ABIs
-  Load contract ABI from abis/apeswap/MasterChefV2Apeswap.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/ERC20.json
+  Load contract ABI from abis/uniswap-v2/ERC20.json
 - Load contract ABIs
 ✔ Load contract ABIs
 - Generate types for contract ABIs
-  Generate types for contract ABI: Factory (abis/apeswap/Factory.json)
+  Generate types for contract ABI: Factory (abis/uniswap-v2/Factory.json)
 - Generate types for contract ABIs
   Write types to generated/Factory/Factory.ts
 - Generate types for contract ABIs
-  Generate types for contract ABI: TokenABI (abis/apeswap/IERC20.json)
+  Generate types for contract ABI: TokenABI (abis/uniswap-v2/ERC20.json)
 - Generate types for contract ABIs
   Write types to generated/Factory/TokenABI.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefSushiswap (abis/sushiswap/MasterChefSushiswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChef/MasterChefSushiswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefApeswap (abis/apeswap/MasterChefApeswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChef/MasterChefApeswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: TokenABI (abis/sushiswap/ERC20.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChef/TokenABI.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefV2Sushiswap (abis/sushiswap/MasterChefV2Sushiswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChefV2/MasterChefV2Sushiswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefV2Apeswap (abis/apeswap/MasterChefV2Apeswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChefV2/MasterChefV2Apeswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: TokenABI (abis/sushiswap/ERC20.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChefV2/TokenABI.ts
 - Generate types for contract ABIs
 ✔ Generate types for contract ABIs
 - Generate types for data source templates
@@ -85,23 +49,23 @@ stderr: - Apply migrations
 - Generate types for data source templates
 ✔ Generate types for data source templates
 - Load data source template ABIs
-  Load data source template ABI from abis/apeswap/Pair.json
+  Load data source template ABI from abis/uniswap-v2/Pair.json
 - Load data source template ABIs
-  Load data source template ABI from abis/apeswap/Factory.json
+  Load data source template ABI from abis/uniswap-v2/Factory.json
 - Load data source template ABIs
-  Load data source template ABI from abis/apeswap/IERC20.json
+  Load data source template ABI from abis/uniswap-v2/ERC20.json
 - Load data source template ABIs
 ✔ Load data source template ABIs
 - Generate types for data source template ABIs
-  Generate types for data source template ABI: Pair > Pair (abis/apeswap/Pair.json)
+  Generate types for data source template ABI: Pair > Pair (abis/uniswap-v2/Pair.json)
 - Generate types for data source template ABIs
   Write types to generated/templates/Pair/Pair.ts
 - Generate types for data source template ABIs
-  Generate types for data source template ABI: Pair > Factory (abis/apeswap/Factory.json)
+  Generate types for data source template ABI: Pair > Factory (abis/uniswap-v2/Factory.json)
 - Generate types for data source template ABIs
   Write types to generated/templates/Pair/Factory.ts
 - Generate types for data source template ABIs
-  Generate types for data source template ABI: Pair > TokenABI (abis/apeswap/IERC20.json)
+  Generate types for data source template ABI: Pair > TokenABI (abis/uniswap-v2/ERC20.json)
 - Generate types for data source template ABIs
   Write types to generated/templates/Pair/TokenABI.ts
 - Generate types for data source template ABIs
@@ -129,37 +93,21 @@ stderr: - Apply migrations
 - Compile subgraph
   Compile data source: Factory => build/Factory/Factory.wasm
 - Compile subgraph
-  Compile data source: MasterChef => build/MasterChef/MasterChef.wasm
-- Compile subgraph
-  Compile data source: MasterChefV2 => build/MasterChefV2/MasterChefV2.wasm
-- Compile subgraph
   Compile data source template: Pair => build/templates/Pair/Pair.wasm
 - Compile subgraph
 ✔ Compile subgraph
 - Write compiled subgraph to build/
   Copy schema file build/schema.graphql
 - Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/Factory.json
+  Write subgraph file build/Factory/abis/uniswap-v2/Factory.json
 - Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/IERC20.json
+  Write subgraph file build/Factory/abis/uniswap-v2/ERC20.json
 - Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/MasterChefSushiswap.json
+  Write subgraph file build/Pair/abis/uniswap-v2/Pair.json
 - Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/apeswap/MasterChefApeswap.json
+  Write subgraph file build/Pair/abis/uniswap-v2/Factory.json
 - Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/MasterChefV2Sushiswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/apeswap/MasterChefV2Apeswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Pair.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Factory.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/IERC20.json
+  Write subgraph file build/Pair/abis/uniswap-v2/ERC20.json
 - Write compiled subgraph to build/
   Write subgraph manifest build/subgraph.yaml
 - Write compiled subgraph to build/
@@ -169,13 +117,13 @@ stdout:
 > graph deploy --product hosted-service ${npm_config_location}
 
 
-Build completed: QmYorqZ7eipvhgHmYBVtPM8pfYmY6FYyzgTNh2oqjvpxSa
+Build completed: QmVVNEobtPh4a9MUK3TxWRDE5cCT3nGoqW6iCRY4v8LsV8
 
-Deployed to https://thegraph.com/explorer/subgraph/steegecs/apeswap-bsc
+Deployed to https://thegraph.com/explorer/subgraph/steegecs/uniswap-v2
 
 Subgraph endpoints:
-Queries (HTTP):     https://api.thegraph.com/subgraphs/name/steegecs/apeswap-bsc
-Subscriptions (WS): wss://api.thegraph.com/subgraphs/name/steegecs/apeswap-bsc
+Queries (HTTP):     https://api.thegraph.com/subgraphs/name/steegecs/uniswap-v2
+Subscriptions (WS): wss://api.thegraph.com/subgraphs/name/steegecs/uniswap-v2
 
 stderr: - Apply migrations
   Skip migration: Bump mapping apiVersion from 0.0.1 to 0.0.2
@@ -194,37 +142,21 @@ stderr: - Apply migrations
 - Compile subgraph
   Compile data source: Factory => build/Factory/Factory.wasm
 - Compile subgraph
-  Compile data source: MasterChef => build/MasterChef/MasterChef.wasm
-- Compile subgraph
-  Compile data source: MasterChefV2 => build/MasterChefV2/MasterChefV2.wasm
-- Compile subgraph
   Compile data source template: Pair => build/templates/Pair/Pair.wasm
 - Compile subgraph
 ✔ Compile subgraph
 - Write compiled subgraph to build/
   Copy schema file build/schema.graphql
 - Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/Factory.json
+  Write subgraph file build/Factory/abis/uniswap-v2/Factory.json
 - Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/IERC20.json
+  Write subgraph file build/Factory/abis/uniswap-v2/ERC20.json
 - Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/MasterChefSushiswap.json
+  Write subgraph file build/Pair/abis/uniswap-v2/Pair.json
 - Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/apeswap/MasterChefApeswap.json
+  Write subgraph file build/Pair/abis/uniswap-v2/Factory.json
 - Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/MasterChefV2Sushiswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/apeswap/MasterChefV2Apeswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Pair.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Factory.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/IERC20.json
+  Write subgraph file build/Pair/abis/uniswap-v2/ERC20.json
 - Write compiled subgraph to build/
   Write subgraph manifest build/subgraph.yaml
 - Write compiled subgraph to build/
@@ -234,363 +166,33 @@ stderr: - Apply migrations
 - Upload subgraph to IPFS
                 .. QmbsFMKZju2hVheTioYnxiXPV96v9EhyQjradummxvHACL
 - Upload subgraph to IPFS
-  Add file to IPFS build/Factory/abis/apeswap/Factory.json
+  Add file to IPFS build/Factory/abis/uniswap-v2/Factory.json
 - Upload subgraph to IPFS
-                .. QmQ28FujgvGMvHrVucaaGtmZqmHBim7iNGQvgccaDyNK84
+                .. QmZ55G1yYFzde8Vcq4cpLfNgPSEibpLi9aYCqS1jEvCKQ9
 - Upload subgraph to IPFS
-  Add file to IPFS build/Factory/abis/apeswap/IERC20.json
+  Add file to IPFS build/Factory/abis/uniswap-v2/ERC20.json
 - Upload subgraph to IPFS
                 .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2
 - Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/abis/sushiswap/MasterChefSushiswap.json
-- Upload subgraph to IPFS
-                .. QmWLfDwGJ6u4oS1Qr5DKFJY8T5W8gvpSMLjRykpfVdZBVa
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/abis/apeswap/MasterChefApeswap.json
-- Upload subgraph to IPFS
-                .. QmZyi1H8dqqueaQQeUp2kdh26WDF4HE2cGFNo7ddnCGYM1
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/abis/sushiswap/ERC20.json
-- Upload subgraph to IPFS
-                .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2 (already uploaded)
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/abis/sushiswap/MasterChefV2Sushiswap.json
-- Upload subgraph to IPFS
-                .. QmXaKUopdv8YVqBbq1kpPzpcfxgEnXTXGkbMrjTFKY9q2H
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/abis/apeswap/MasterChefV2Apeswap.json
-- Upload subgraph to IPFS
-                .. QmXzXYZnGsBpUCjzYnFNKdTBXaWmkMKqBFLeXdhdQr2P4p
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/abis/sushiswap/ERC20.json
-- Upload subgraph to IPFS
-                .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2 (already uploaded)
-- Upload subgraph to IPFS
   Add file to IPFS build/Factory/Factory.wasm
 - Upload subgraph to IPFS
-                .. Qmc5q6BKaiVgKLmsEgPgpzdyVn1tH4XZk5dH3dyhArajS5
+                .. Qmd43auSZG3MC6Lmf3owNGrfNB8haVh3awtT2Tw5vzWLmF
 - Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/MasterChef.wasm
-- Upload subgraph to IPFS
-                .. QmVga3gfj5B6kB4Fh9PbMWFG3DPxnsSKmwyjfgqfQnT5Nm
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/MasterChefV2.wasm
-- Upload subgraph to IPFS
-                .. QmZPAuw5eCz4n8uUXopCahwe1V8W6HuGBrs8j95B7JY7z1
-- Upload subgraph to IPFS
-  Add file to IPFS build/Pair/abis/apeswap/Pair.json
+  Add file to IPFS build/Pair/abis/uniswap-v2/Pair.json
 - Upload subgraph to IPFS
                 .. QmbPLMADBP8L6LBVP3ZBQ8RgG7ghamD8DvbdUxHAjZrLgm
 - Upload subgraph to IPFS
-  Add file to IPFS build/Pair/abis/apeswap/Factory.json
+  Add file to IPFS build/Pair/abis/uniswap-v2/Factory.json
 - Upload subgraph to IPFS
-                .. QmQ28FujgvGMvHrVucaaGtmZqmHBim7iNGQvgccaDyNK84 (already uploaded)
+                .. QmZ55G1yYFzde8Vcq4cpLfNgPSEibpLi9aYCqS1jEvCKQ9 (already uploaded)
 - Upload subgraph to IPFS
-  Add file to IPFS build/Pair/abis/apeswap/IERC20.json
+  Add file to IPFS build/Pair/abis/uniswap-v2/ERC20.json
 - Upload subgraph to IPFS
                 .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2 (already uploaded)
 - Upload subgraph to IPFS
   Add file to IPFS build/templates/Pair/Pair.wasm
 - Upload subgraph to IPFS
-                .. QmXkExWDSm954oCoZTU9NZzADsCtkQk54nXAJ11LS7eh1N
-- Upload subgraph to IPFS
-✔ Upload subgraph to IPFS
-- Deploying to Graph node https://api.thegraph.com/deploy/
-stdout: stderr: stdout: stderr: stdout: 
-> prepare:yaml
-> mustache protocols/${npm_config_protocol}/config/networks/${npm_config_network}/${npm_config_network}.json protocols/${npm_config_protocol}/config/templates/${npm_config_template} > subgraph.yaml
-
-stderr: stdout: 
-> prepare:constants
-> mustache protocols/${npm_config_protocol}/config/networks/${npm_config_network}/${npm_config_network}.json configurations/configure.template.ts > configurations/configure.ts
-
-stderr: stdout: 
-Types generated successfully
-
-
-Build completed: /Users/chris/repos/subgraphs/subgraphs/uniswap-forks/build/subgraph.yaml
-
-stderr: - Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.1 to 0.0.2
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.2 to 0.0.3
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.3 to 0.0.4
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.4 to 0.0.5
-- Apply migrations
-  Skip migration: Bump mapping specVersion from 0.0.1 to 0.0.2
-- Apply migrations
-✔ Apply migrations
-- Load subgraph from subgraph.yaml
-✔ Load subgraph from subgraph.yaml
-- Load contract ABIs
-  Load contract ABI from abis/apeswap/Factory.json
-- Load contract ABIs
-  Load contract ABI from abis/apeswap/IERC20.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/MasterChefSushiswap.json
-- Load contract ABIs
-  Load contract ABI from abis/apeswap/MasterChefApeswap.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/ERC20.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/MasterChefV2Sushiswap.json
-- Load contract ABIs
-  Load contract ABI from abis/apeswap/MasterChefV2Apeswap.json
-- Load contract ABIs
-  Load contract ABI from abis/sushiswap/ERC20.json
-- Load contract ABIs
-✔ Load contract ABIs
-- Generate types for contract ABIs
-  Generate types for contract ABI: Factory (abis/apeswap/Factory.json)
-- Generate types for contract ABIs
-  Write types to generated/Factory/Factory.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: TokenABI (abis/apeswap/IERC20.json)
-- Generate types for contract ABIs
-  Write types to generated/Factory/TokenABI.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefSushiswap (abis/sushiswap/MasterChefSushiswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChef/MasterChefSushiswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefApeswap (abis/apeswap/MasterChefApeswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChef/MasterChefApeswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: TokenABI (abis/sushiswap/ERC20.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChef/TokenABI.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefV2Sushiswap (abis/sushiswap/MasterChefV2Sushiswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChefV2/MasterChefV2Sushiswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: MasterChefV2Apeswap (abis/apeswap/MasterChefV2Apeswap.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChefV2/MasterChefV2Apeswap.ts
-- Generate types for contract ABIs
-  Generate types for contract ABI: TokenABI (abis/sushiswap/ERC20.json)
-- Generate types for contract ABIs
-  Write types to generated/MasterChefV2/TokenABI.ts
-- Generate types for contract ABIs
-✔ Generate types for contract ABIs
-- Generate types for data source templates
-  Generate types for data source template Pair
-- Generate types for data source templates
-  Write types for templates to generated/templates.ts
-- Generate types for data source templates
-✔ Generate types for data source templates
-- Load data source template ABIs
-  Load data source template ABI from abis/apeswap/Pair.json
-- Load data source template ABIs
-  Load data source template ABI from abis/apeswap/Factory.json
-- Load data source template ABIs
-  Load data source template ABI from abis/apeswap/IERC20.json
-- Load data source template ABIs
-✔ Load data source template ABIs
-- Generate types for data source template ABIs
-  Generate types for data source template ABI: Pair > Pair (abis/apeswap/Pair.json)
-- Generate types for data source template ABIs
-  Write types to generated/templates/Pair/Pair.ts
-- Generate types for data source template ABIs
-  Generate types for data source template ABI: Pair > Factory (abis/apeswap/Factory.json)
-- Generate types for data source template ABIs
-  Write types to generated/templates/Pair/Factory.ts
-- Generate types for data source template ABIs
-  Generate types for data source template ABI: Pair > TokenABI (abis/apeswap/IERC20.json)
-- Generate types for data source template ABIs
-  Write types to generated/templates/Pair/TokenABI.ts
-- Generate types for data source template ABIs
-✔ Generate types for data source template ABIs
-- Load GraphQL schema from schema.graphql
-✔ Load GraphQL schema from schema.graphql
-- Generate types for GraphQL schema
-  Write types to generated/schema.ts
-- Generate types for GraphQL schema
-✔ Generate types for GraphQL schema
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.1 to 0.0.2
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.2 to 0.0.3
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.3 to 0.0.4
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.4 to 0.0.5
-- Apply migrations
-  Skip migration: Bump mapping specVersion from 0.0.1 to 0.0.2
-- Apply migrations
-✔ Apply migrations
-- Load subgraph from subgraph.yaml
-✔ Load subgraph from subgraph.yaml
-- Compile subgraph
-  Compile data source: Factory => build/Factory/Factory.wasm
-- Compile subgraph
-  Compile data source: MasterChef => build/MasterChef/MasterChef.wasm
-- Compile subgraph
-  Compile data source: MasterChefV2 => build/MasterChefV2/MasterChefV2.wasm
-- Compile subgraph
-  Compile data source template: Pair => build/templates/Pair/Pair.wasm
-- Compile subgraph
-✔ Compile subgraph
-- Write compiled subgraph to build/
-  Copy schema file build/schema.graphql
-- Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/Factory.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/IERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/MasterChefSushiswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/apeswap/MasterChefApeswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/MasterChefV2Sushiswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/apeswap/MasterChefV2Apeswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Pair.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Factory.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/IERC20.json
-- Write compiled subgraph to build/
-  Write subgraph manifest build/subgraph.yaml
-- Write compiled subgraph to build/
-✔ Write compiled subgraph to build/
-stdout: 
-> deploy:subgraph
-> graph deploy --product hosted-service ${npm_config_location}
-
-
-Build completed: QmUmQbTuQsWZJzWAtGR7hgpecmfSTN2hYyNPNnUDDzUdRy
-
-Deployed to https://thegraph.com/explorer/subgraph/steegecs/apeswap-matic
-
-Subgraph endpoints:
-Queries (HTTP):     https://api.thegraph.com/subgraphs/name/steegecs/apeswap-matic
-Subscriptions (WS): wss://api.thegraph.com/subgraphs/name/steegecs/apeswap-matic
-
-stderr: - Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.1 to 0.0.2
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.2 to 0.0.3
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.3 to 0.0.4
-- Apply migrations
-  Skip migration: Bump mapping apiVersion from 0.0.4 to 0.0.5
-- Apply migrations
-  Skip migration: Bump mapping specVersion from 0.0.1 to 0.0.2
-- Apply migrations
-✔ Apply migrations
-- Load subgraph from subgraph.yaml
-✔ Load subgraph from subgraph.yaml
-- Compile subgraph
-  Compile data source: Factory => build/Factory/Factory.wasm
-- Compile subgraph
-  Compile data source: MasterChef => build/MasterChef/MasterChef.wasm
-- Compile subgraph
-  Compile data source: MasterChefV2 => build/MasterChefV2/MasterChefV2.wasm
-- Compile subgraph
-  Compile data source template: Pair => build/templates/Pair/Pair.wasm
-- Compile subgraph
-✔ Compile subgraph
-- Write compiled subgraph to build/
-  Copy schema file build/schema.graphql
-- Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/Factory.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Factory/abis/apeswap/IERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/MasterChefSushiswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/apeswap/MasterChefApeswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChef/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/MasterChefV2Sushiswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/apeswap/MasterChefV2Apeswap.json
-- Write compiled subgraph to build/
-  Write subgraph file build/MasterChefV2/abis/sushiswap/ERC20.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Pair.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/Factory.json
-- Write compiled subgraph to build/
-  Write subgraph file build/Pair/abis/apeswap/IERC20.json
-- Write compiled subgraph to build/
-  Write subgraph manifest build/subgraph.yaml
-- Write compiled subgraph to build/
-✔ Write compiled subgraph to build/
-- Upload subgraph to IPFS
-  Add file to IPFS build/schema.graphql
-- Upload subgraph to IPFS
-                .. QmbsFMKZju2hVheTioYnxiXPV96v9EhyQjradummxvHACL
-- Upload subgraph to IPFS
-  Add file to IPFS build/Factory/abis/apeswap/Factory.json
-- Upload subgraph to IPFS
-                .. QmQ28FujgvGMvHrVucaaGtmZqmHBim7iNGQvgccaDyNK84
-- Upload subgraph to IPFS
-  Add file to IPFS build/Factory/abis/apeswap/IERC20.json
-- Upload subgraph to IPFS
-                .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/abis/sushiswap/MasterChefSushiswap.json
-- Upload subgraph to IPFS
-                .. QmWLfDwGJ6u4oS1Qr5DKFJY8T5W8gvpSMLjRykpfVdZBVa
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/abis/apeswap/MasterChefApeswap.json
-- Upload subgraph to IPFS
-                .. QmZyi1H8dqqueaQQeUp2kdh26WDF4HE2cGFNo7ddnCGYM1
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/abis/sushiswap/ERC20.json
-- Upload subgraph to IPFS
-                .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2 (already uploaded)
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/abis/sushiswap/MasterChefV2Sushiswap.json
-- Upload subgraph to IPFS
-                .. QmXaKUopdv8YVqBbq1kpPzpcfxgEnXTXGkbMrjTFKY9q2H
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/abis/apeswap/MasterChefV2Apeswap.json
-- Upload subgraph to IPFS
-                .. QmXzXYZnGsBpUCjzYnFNKdTBXaWmkMKqBFLeXdhdQr2P4p
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/abis/sushiswap/ERC20.json
-- Upload subgraph to IPFS
-                .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2 (already uploaded)
-- Upload subgraph to IPFS
-  Add file to IPFS build/Factory/Factory.wasm
-- Upload subgraph to IPFS
-                .. QmRPVpWnyHBELVb4cjj2N9pJkSKjnST2fwL8TTrqpmoyu2
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChef/MasterChef.wasm
-- Upload subgraph to IPFS
-                .. QmaNNU3JcYMf4CKHKrDDEv6DTteUgwvvjnBMBC9jDWwMee
-- Upload subgraph to IPFS
-  Add file to IPFS build/MasterChefV2/MasterChefV2.wasm
-- Upload subgraph to IPFS
-                .. QmdiUtLq4VZdCP7iR3ZACxCYa7aaUNi4agVuxHM17s7wDo
-- Upload subgraph to IPFS
-  Add file to IPFS build/Pair/abis/apeswap/Pair.json
-- Upload subgraph to IPFS
-                .. QmbPLMADBP8L6LBVP3ZBQ8RgG7ghamD8DvbdUxHAjZrLgm
-- Upload subgraph to IPFS
-  Add file to IPFS build/Pair/abis/apeswap/Factory.json
-- Upload subgraph to IPFS
-                .. QmQ28FujgvGMvHrVucaaGtmZqmHBim7iNGQvgccaDyNK84 (already uploaded)
-- Upload subgraph to IPFS
-  Add file to IPFS build/Pair/abis/apeswap/IERC20.json
-- Upload subgraph to IPFS
-                .. QmXuTbDkNrN27VydxbS2huvKRk62PMgUTdPDWkxcr2w7j2 (already uploaded)
-- Upload subgraph to IPFS
-  Add file to IPFS build/templates/Pair/Pair.wasm
-- Upload subgraph to IPFS
-                .. QmXacwTe9T4e2bcLHShdhSFwbFwaXdBGgAzXa9qFxr5uzQ
+                .. QmXhZAFxLL1d4PtjeBFHFYPFNinea5yk8HeRDb7s16dB5G
 - Upload subgraph to IPFS
 ✔ Upload subgraph to IPFS
 - Deploying to Graph node https://api.thegraph.com/deploy/

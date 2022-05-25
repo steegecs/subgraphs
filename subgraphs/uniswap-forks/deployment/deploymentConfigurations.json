@@ -7,7 +7,9 @@
   "protocols": {
     "apeswap": {
       "bsc": {
-        "template": "apeswap.template.yaml"
+        "template": "apeswap.template.yaml",
+        "steegecs": "steegecs/apeswap-bsc"
+
       },
       "matic": {
         "template": "apeswap.template.yaml",
@@ -17,7 +19,8 @@
     "uniswap-v2": {
       "mainnet": {
         "template": "uniswap.v2.template.yaml",
-        "steegecs": "steegecs/uniswap-v2"
+        "steegecs": "steegecs/uniswap-v2",
+        "deploy": "false"
       }
     },
     "sushiswap": {
