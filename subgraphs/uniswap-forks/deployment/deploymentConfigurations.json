@@ -20,7 +20,7 @@
       "mainnet": {
         "template": "uniswap.v2.template.yaml",
         "steegecs": "steegecs/uniswap-v2",
-        "deploy": "false"
+        "deploy-on-merge": "false"
       }
     },
     "sushiswap": {

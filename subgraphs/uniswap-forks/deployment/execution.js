@@ -37,9 +37,8 @@ export function getDeploymentNetwork(network) {
  * @param {string[]} array - Protocol that is being deployed
  * @param {string} callback 
 */
-export async function runCommands(allScripts, callback) {
+export async function runCommands(allScripts, results, callback) {
 
-    let results = "RESULTS:\n"
     let logs = ""
     var index = 0;
     var index2 = 0;

@@ -5,6 +5,7 @@ const protocolNetworkMap = JSON.parse(JSON.stringify(protocolNetworkData))['defa
 const configurations = JSON.parse(JSON.stringify(protocolNetworkData))['default']['configurations'] 
 
 let allScripts = new Map()
+let results = "RESULTS:\n"
 
 if (process.argv.length == 2) {
     console.log('Error: please at least specify hosted service account to deploy all subgraphs (i.e. messari, steegecs, etc.)')
@@ -17,18 +18,24 @@ if (process.argv.length == 2) {
 
                 let template = protocolNetworkMap[protocol][network]['template']
                 let location = ""
+
+                // Get location for configurations or derive using standard naming convention
                 if (process.argv[2] in protocolNetworkMap[protocol][network]) {
                     location = protocolNetworkMap[protocol][network][process.argv[2]]
                 } else {
                     location = process.argv[2] + '/' + protocol + '-' + getDeploymentNetwork(network)
                 }
-                if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | process.argv[2] != 'steegecs') {
+                
+                // Check if deployment is ignored in configurations
+                if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy-on-merge']) | process.argv[2] != 'steegecs') {
                     allScripts.set(location, scripts(protocol, network, template, location))
+                } else {
+                    results += "Deployment Ignored in Configurations: " + location + '\n'
                 }
             }
         } 
 
-        runCommands(allScripts, function(results) {});
+        runCommands(allScripts, results, function(results) {});
 
     }
 } else if (process.argv.length == 4) {
@@ -43,18 +50,23 @@ if (process.argv.length == 2) {
         for (const network in protocolNetworkMap[protocol]) {
             let template = protocolNetworkMap[protocol][network]['template']
             let location = ""
+
+            // Get location for configurations or derive using standard naming convention
             if (process.argv[3] in protocolNetworkMap[protocol][network]) {
                 location = protocolNetworkMap[protocol][network][process.argv[3]]
             } else {
                 location = process.argv[3] + '/' + protocol + '-' + getDeploymentNetwork(network)
             }
-
-            if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | process.argv[3] != 'steegecs') {
+            
+            // Check if deployment is ignored in configurations
+            if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy-on-merge']) | process.argv[3] != 'steegecs') {
                 allScripts.set(location, scripts(protocol, network, template, location))
+            } else {
+                results += "Deployment Ignored in Configurations: " + location + '\n'
             }
         } 
 
-        runCommands(allScripts, function(results) {});
+        runCommands(allScripts, results, function(results) {});
     }
  } else if (process.argv.length == 5) {
     if (!process.argv[2] in protocolNetworkMap) {
@@ -71,16 +83,21 @@ if (process.argv.length == 2) {
         let network = process.argv[3]
         let template = protocolNetworkMap[protocol][network]['template']
         let location = ""
+        
+        // Get location for configurations or derive using standard naming convention
         if (process.argv[4] in protocolNetworkMap[protocol][network]) {
             location = protocolNetworkMap[protocol][network][process.argv[4]]
         } else {
             location = process.argv[4] + '/' + protocol + '-' + getDeploymentNetwork(network)
         }
 
-        if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | process.argv[4] != 'steegecs') {
+        // Check if deployment is ignored in configurations
+        if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy-on-merge']) | process.argv[4] != 'steegecs') {
             allScripts.set(location, scripts(protocol, network, template, location))
+        }else {
+            results += "Deployment Ignored in Configurations: " + location + '\n'
         }
-        runCommands(allScripts, function(results) {});
+        runCommands(allScripts, results, function(results) {});
     } 
 } else {
     console.log('Error: Too many arguments')
