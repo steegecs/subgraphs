@@ -32,7 +32,6 @@ export function getDeploymentNetwork(network) {
     return deployNetwork
 }
             
-
 /**
  * @param {string[]} array - Protocol that is being deployed
  * @param {string} callback 
@@ -69,7 +68,6 @@ export async function runCommands(allScripts, results, callback) {
                 if (err) throw err;
               });
             console.log(results + "END")
-            console.log(logs)
             callback(results);
         }
     }

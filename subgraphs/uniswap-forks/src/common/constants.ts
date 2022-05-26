@@ -1,5 +1,6 @@
 import { log, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 
+
 ////////////////////
 ///// Versions /////
 ////////////////////
