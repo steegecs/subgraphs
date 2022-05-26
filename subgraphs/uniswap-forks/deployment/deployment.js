@@ -30,7 +30,7 @@ if (process.argv.length == 2) {
                 if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy-on-merge']) | process.argv[2] != 'steegecs') {
                     allScripts.set(location, scripts(protocol, network, template, location))
                 } else {
-                    results += "Deployment Ignored in Configurations: " + location + '\n'
+                    results += "Ignored in Deployment Configurations: " + location + '\n'
                 }
             }
         } 
@@ -62,7 +62,7 @@ if (process.argv.length == 2) {
             if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy-on-merge']) | process.argv[3] != 'steegecs') {
                 allScripts.set(location, scripts(protocol, network, template, location))
             } else {
-                results += "Deployment Ignored in Configurations: " + location + '\n'
+                results += "Ignored in Deployment Configurations: " + location + '\n'
             }
         } 
 
@@ -95,7 +95,7 @@ if (process.argv.length == 2) {
         if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy-on-merge']) | process.argv[4] != 'steegecs') {
             allScripts.set(location, scripts(protocol, network, template, location))
         }else {
-            results += "Deployment Ignored in Configurations: " + location + '\n'
+            results += "Ignored in Deployment Configurations: " + location + '\n'
         }
         runCommands(allScripts, results, function(results) {});
     } 
