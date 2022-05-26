@@ -22,7 +22,7 @@ if (process.argv.length == 2) {
                 } else {
                     location = process.argv[2] + '/' + protocol + '-' + getDeploymentNetwork(network)
                 }
-                if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | location != 'steegecs') {
+                if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | process.argv[2] != 'steegecs') {
                     allScripts.set(location, scripts(protocol, network, template, location))
                 }
             }
@@ -49,7 +49,7 @@ if (process.argv.length == 2) {
                 location = process.argv[3] + '/' + protocol + '-' + getDeploymentNetwork(network)
             }
 
-            if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | location != 'steegecs') {
+            if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | process.argv[3] != 'steegecs') {
                 allScripts.set(location, scripts(protocol, network, template, location))
             }
         } 
@@ -77,7 +77,7 @@ if (process.argv.length == 2) {
             location = process.argv[4] + '/' + protocol + '-' + getDeploymentNetwork(network)
         }
 
-        if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | location != 'steegecs') {
+        if ([true, undefined].includes(protocolNetworkMap[protocol][network]['deploy']) | process.argv[4] != 'steegecs') {
             allScripts.set(location, scripts(protocol, network, template, location))
         }
         runCommands(allScripts, function(results) {});
