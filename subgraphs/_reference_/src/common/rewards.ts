@@ -214,33 +214,33 @@ function getStartingBlockRate(): BigDecimal {
     }
   }
 
-  if (networkFormatted == Network.MAINNET) {
+  if (networkFormatted == Network.MAINNET.toLowerCase()) {
     return BigDecimal.fromString("13.39");
-  } else if (networkFormatted == Network.ARBITRUM_ONE) {
+  } else if (networkFormatted == Network.ARBITRUM_ONE.toLowerCase()) {
     return BigDecimal.fromString("15");
-  } else if (networkFormatted == Network.AURORA) {
+  } else if (networkFormatted == Network.AURORA.toLowerCase()) {
     return BigDecimal.fromString("1.03");
-  } else if (networkFormatted == Network.BSC) {
+  } else if (networkFormatted == Network.BSC.toLowerCase()) {
     return BigDecimal.fromString("5");
-  } else if (networkFormatted == Network.CELO) {
+  } else if (networkFormatted == Network.CELO.toLowerCase()) {
     return BigDecimal.fromString("5");
-  } else if (networkFormatted == Network.FANTOM) {
+  } else if (networkFormatted == Network.FANTOM.toLowerCase()) {
     return BigDecimal.fromString("1");
-  } else if (networkFormatted == Network.FUSE) {
+  } else if (networkFormatted == Network.FUSE.toLowerCase()) {
     return BigDecimal.fromString("1");
-  } else if (networkFormatted == Network.OPTIMISM) {
+  } else if (networkFormatted == Network.OPTIMISM.toLowerCase()) {
     return BigDecimal.fromString("12.5");
-  } else if (networkFormatted == Network.MATIC) {
+  } else if (networkFormatted == Network.MATIC.toLowerCase()) {
     return BigDecimal.fromString("2");
-  } else if (networkFormatted == Network.XDAI) {
+  } else if (networkFormatted == Network.XDAI.toLowerCase()) {
     return BigDecimal.fromString("5");
-  } else if (networkFormatted == Network.MOONBEAM) {
+  } else if (networkFormatted == Network.MOONBEAM.toLowerCase()) {
     return BigDecimal.fromString("13.84")
-  } else if (networkFormatted == Network.MOONRIVER) { // Unconfirmed
+  } else if (networkFormatted == Network.MOONRIVER.toLowerCase()) { // Unconfirmed
     return BigDecimal.fromString("13.39")
-  } else if (networkFormatted == Network.AVALANCHE) { // Unconfirmed
+  } else if (networkFormatted == Network.AVALANCHE.toLowerCase()) { // Unconfirmed
     return BigDecimal.fromString("13.39")
-  } else if (networkFormatted == Network.CRONOS) {
+  } else if (networkFormatted == Network.CRONOS.toLowerCase()) {
     return BigDecimal.fromString("5.5")
   } else {
     log.warning("getStartingBlockRate(): Network not found", []);
