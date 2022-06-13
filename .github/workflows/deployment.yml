@@ -2,10 +2,11 @@ name: Deployment
 
 on: 
   pull_request:
+    types: [closed]
 
 jobs:
   Deployment: 
-    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == 'true'
     runs-on: ubuntu-latest
     steps: 
       - id: files
