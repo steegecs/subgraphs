@@ -26,7 +26,12 @@ export const PoolNames: Record<string, string> = {
   LENDING: "markets",
   YIELD: "vaults",
 };
-export const ProtocolTypeEntity: Record<string, string> = {
+export const ProtocolTypeEntityName: Record<string, string> = {
+  EXCHANGE: "dexAmmProtocol",
+  LENDING: "lendingProtocol",
+  YIELD: "yieldAggregator",
+};
+export const ProtocolTypeEntityNames: Record<string, string> = {
   EXCHANGE: "dexAmmProtocols",
   LENDING: "lendingProtocols",
   YIELD: "yieldAggregators",
@@ -34,76 +39,27 @@ export const ProtocolTypeEntity: Record<string, string> = {
 export interface Schema {
   entities: string[];
   entitiesData: { [x: string]: { [x: string]: string } };
-  query: string;
   poolData: { [x: string]: string };
   events: string[];
   protocolFields: { [x: string]: string };
+  query: string;
+  financialsQuery: string;
+  hourlyUsageQuery: string;
+  dailyUsageQuery: string;
+  protocolTableQuery: string;
+  poolsQuery: string;
+  poolTimeseriesQuery: string;
 }
-export const ProtocolsToQuery: { [name: string]: { [network: string]: string } } = {
-  aaveV2: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/aave-v2-ethereum",
-  },
-  abracadabra: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/abracadabra-money-ethereum",
-    avalanche: "https://api.thegraph.com/subgraphs/name/messari/abracadabra-money-avalanche",
-    bsc: "https://api.thegraph.com/subgraphs/name/messari/abracadabra-money-bsc",
-    arbitrum: "https://api.thegraph.com/subgraphs/name/messari/abracadabra-money-arbitrum",
-    fantom: "https://api.thegraph.com/subgraphs/name/messari/abracadabra-money-fantom",
-  },
-  balancerV2: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/balancer-v2-ethereum",
-    arbitrum: "https://api.thegraph.com/subgraphs/name/messari/balancer-v2-arbitrum",
-    matic: "https://api.thegraph.com/subgraphs/name/messari/balancer-v2-polygon",
-  },
-  saddleFinance: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/saddle-finance-ethereum",
-    arbitrum: "https://api.thegraph.com/subgraphs/name/messari/saddle-finance-arbitrum",
-    fantom: "https://api.thegraph.com/subgraphs/name/messari/saddle-finance-fantom",
-    optimism: "https://api.thegraph.com/subgraphs/name/messari/saddle-finance-optimism"
-  },
-  bastion: {
-    aurora: "https://api.thegraph.com/subgraphs/name/messari/bastion-protocol-aurora",
-  },
-  moonwell: {
-    moonriver: "https://api.thegraph.com/subgraphs/name/messari/moonwell-moonriver",
-  },
-  apeswap: {
-    matic: "https://api.thegraph.com/subgraphs/name/messari/apeswap-polygon",
-    bsc: "https://api.thegraph.com/subgraphs/name/messari/apeswap-bsc",
-  },
-  BENQI: {
-    avalanche: "https://api.thegraph.com/subgraphs/name/messari/benqi-avalanche"
-  },
-  uniswapV2: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/uniswap-v2-ethereum",
-  },
-  uniswapV3: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-ethereum",
-    matic: "https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-polygon",
-    optimism: "https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-optimism",
-    arbitrum: "https://api.thegraph.com/subgraphs/name/messari/uniswap-v3-arbitrum",
-  },
-  compound: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/compound-ethereum",
-  },
-  liquity: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/liquity-ethereum",
-  },
-  makerDAO: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/makerdao-ethereum",
-  },
-  beltFinance: {
-    bsc: "https://api.thegraph.com/subgraphs/name/messari/belt-finance-bsc",
-  },
-  stakeDAO: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/stake-dao-ethereum",
-  },
-  tokemak: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/tokemak-ethereum",
-  },
-  yearnV2: {
-    mainnet: "https://api.thegraph.com/subgraphs/name/messari/yearn-v2-ethereum",
-    arbitrum: "https://api.thegraph.com/subgraphs/name/messari/yearn-v2-arbitrum",
-    fantom: "https://api.thegraph.com/subgraphs/name/messari/yearn-v2-fantom"
-  }
-};
+export const percentageFieldList = [
+  "rates",
+  "rewardAPR",
+  "maximumLTV",
+  "liquidationThreshold",
+  "liquidationPenalty",
+  "inputTokenWeights",
+  "baseYield",
+  "fee",
+  "percentage",
+];
+// negativeFieldList contains field names that can be negative
+export const negativeFieldList = [];

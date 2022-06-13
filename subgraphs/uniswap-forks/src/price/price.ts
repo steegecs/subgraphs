@@ -1,5 +1,4 @@
-// import { log } from "@graphprotocol/graph-ts/index";
-import { BigDecimal, log } from "@graphprotocol/graph-ts/index";
+import { BigDecimal } from "@graphprotocol/graph-ts/index";
 import { getLiquidityPool, getLiquidityPoolAmounts, getOrCreateToken, getOrCreateTokenWhitelist } from "../common/getters";
 import { Token, _HelperStore, _LiquidityPoolAmount } from "../../generated/schema";
 import { BIGDECIMAL_ZERO, BIGDECIMAL_ONE, BIGDECIMAL_TWO, BIGINT_ZERO, MINIMUM_USD_THRESHOLD_NEW_PAIRS } from "../common/constants";
@@ -64,7 +63,6 @@ export function findNativeTokenPerToken(token: Token, nativeToken: Token): BigDe
           // get the derived NativeToken in pool
           let whitelistTokenLocked = poolAmounts.inputTokenBalances[1].times(whitelistToken.lastPriceUSD!);
           if (whitelistTokenLocked.gt(largestLiquidityWhitelistTokens)) {
-            log.warning("HELLO2", [])
             largestLiquidityWhitelistTokens = whitelistTokenLocked;
             // token1 per our token * nativeToken per token1
             priceSoFar = safeDiv(poolAmounts.inputTokenBalances[1], poolAmounts.inputTokenBalances[0]).times(whitelistToken.lastPriceUSD! as BigDecimal);
@@ -75,8 +73,6 @@ export function findNativeTokenPerToken(token: Token, nativeToken: Token): BigDe
           // get the derived nativeToken in pool
           let whitelistTokenLocked = poolAmounts.inputTokenBalances[0].times(whitelistToken.lastPriceUSD!);
           if (whitelistTokenLocked.gt(largestLiquidityWhitelistTokens)) {
-            log.warning("HELLO3", [])
-
             largestLiquidityWhitelistTokens = whitelistTokenLocked;
             // token0 per our token * NativeToken per token0
             priceSoFar = safeDiv(poolAmounts.inputTokenBalances[0], poolAmounts.inputTokenBalances[1]).times(whitelistToken.lastPriceUSD! as BigDecimal);

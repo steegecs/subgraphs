@@ -1,57 +1,64 @@
 specVersion: 0.0.2
+repository: https://github.com/messari/subgraphs
 schema:
   file: ./schema.graphql
 dataSources:
-  - kind: ethereum
+  - kind: ethereum/contract
     name: Factory
-    network: xdai
+    network: mainnet
     source:
-      address: "0xc35dadb65012ec5796536bd9864ed8773abc74c4"
+      address: "0x3b44b2a187a7b3824131f8db5a74194d0a42fc15"
       abi: Factory
-      startBlock: 0
+      startBlock: 4100
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
-      entities: []
+      file: ./src/mappings/factory.ts
+      entities:
+        - Token
+        - DexAmmProtocol
+        - LiquidityPool
+        - LiquidityPoolFee
+        - Protocol
       abis:
         - name: Factory
-          file: ./abis/sushiswap/Factory.json
+          file: ./abis/vvs-finance/Factory.json
         - name: TokenABI
-          file: ./abis/sushiswap/ERC20.json
+          file: ./abis/vvs-finance/ERC20.json
       eventHandlers:
         - event: PairCreated(indexed address,indexed address,address,uint256)
           handler: handlePairCreated
       file: ./src/mappings/factory.ts
   - kind: ethereum
-    name: MiniChef
-    network: xdai
+    name: Craftsman
+    network: mainnet
     source:
-      address: "0xdDCbf776dF3dE60163066A5ddDF2277cB445E0F3"
-      abi: MiniChefSushiswap
-      startBlock: 0
+      address: "0xDccd6455AE04b03d785F12196B492b18129564bc"
+      abi: Craftsman
+      startBlock: 4100
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       entities: []
       abis:
-        - name: MiniChefSushiswap
-          file: ./abis/sushiswap/MiniChefSushiswap.json
+        - name: Craftsman
+          file: ./abis/vvs-finance/Craftsman.json
         - name: TokenABI
-          file: ./abis/sushiswap/ERC20.json
+          file: ./abis/vvs-finance/ERC20.json
       eventHandlers:
-        - event: Deposit(indexed address,indexed uint256,uint256,indexed address)
-          handler: handleDepositMini
-        - event: Withdraw(indexed address,indexed uint256,uint256,indexed address)
-          handler: handleWithdrawMini
-        - event: EmergencyWithdraw(indexed address,indexed uint256,uint256,indexed address)
-          handler: handleEmergencyWithdrawMini
-      file: ./src/mappings/masterChef/sushiswap/rewardMini.ts
+        - event: Deposit(indexed address,indexed uint256,uint256)
+          handler: handleDeposit
+        - event: Withdraw(indexed address,indexed uint256,uint256)
+          handler: handleWithdraw
+        - event: EmergencyWithdraw(indexed address,indexed uint256,uint256)
+          handler: handleEmergencyWithdraw
+      file: ./protocols/vvs-finance/src/mappings/craftsman/reward.ts
 templates:
   - kind: ethereum/contract
     name: Pair
-    network: xdai
+    network: mainnet
     source:
       abi: Pair
     mapping:
@@ -59,14 +66,33 @@ templates:
       apiVersion: 0.0.6
       language: wasm/assemblyscript
       file: ./src/mappings/pool.ts
-      entities: []
+      entities:
+        - LiqudityPool
+        - Token
+        - Deposit
+        - Withdraw
+        - Swap
+        - LiquidityPool
+        - LiquidityPoolFee
+        - DexAmmProtocol
+        - Token
+        - _Transaction
+        - _Mint
+        - _Burn
+        - _PricesUSD
+        - UsageMetricsDailySnapshot
+        - FinancialsDailySnapshot
+        - _Account
+        - _DailyActiveAccount
+        - PoolDailySnapshot
+        - _TokenTracker
       abis:
         - name: Pair
-          file: ./abis/sushiswap/Pair.json
+          file: ./abis/vvs-finance/Pair.json
         - name: Factory
-          file: ./abis/sushiswap/Factory.json
+          file: ./abis/vvs-finance/Factory.json
         - name: TokenABI
-          file: ./abis/sushiswap/ERC20.json
+          file: ./abis/vvs-finance/ERC20.json
       eventHandlers:
         - event: Mint(indexed address,uint256,uint256)
           handler: handleMint
