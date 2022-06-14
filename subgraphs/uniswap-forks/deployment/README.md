@@ -8,8 +8,10 @@
         - --PROTOCOL
         - --NETWORK
         - --LOCATION
-```
 
+- This works by taking the inputs from `npm run deploy` and using them to configure the subgraph.yaml, and optionally, configurations/configure.ts with a particulalar set of constants, and subsequently deploying to the specified hosted service account.
+
+```
 # Deploys uniswap-v2 from the uniswap-forks to mainnet in my hosted service.
 npm run deploy --SUBGRAPH=uniswap-forks --PROTOCOL=uniswap-v2 --NETWORK=mainnet --LOCATION=steegecs
 
@@ -22,7 +24,109 @@ npm run deploy --SUBGRAPH=uniswap-forks --LOCATION=steegecs
 
 ## How the CI/CD deployment works:
 - The CI/CD deployment scripts and actions are use to allow you to deployment multiple subgraphs at a time and deploy on merge if specified in the deployment/deploymentConfigurations.json file. 
+
 ### Directory Structure: 
 - Using these scripts requires a particular directory structure. This is because when the `npm` scripts are executed, the deployment scripts know where to look for configuration files and templates. Also, for the deploy-on-merge actions, the specific structure allows us to detect changes that may apply to specific subgraph (root directory of subgraph e.g. uniswap-forks), a specific subgraph and protocol, a specific subgraph protocol, and network, or some combination. This is then used to execute the particular subgraph deployments that have relevant changes if specified in deployment/deploymentConfigurations.json to the Hosted Service. 
-- Within 
 
+- The folder structure is a minimum requirement. You can add additional folders and files as long as the general pattern is adhered to: 
+    - First, you should have a `src/` folder and add any code or constants that applies to all subgraphs.
+        - Example Strucure:
+            - src/
+                - common/
+                    - constants.ts
+                - mappings/
+                    - ...
+                - price/
+                    - ...
+        - This constants file should contain all constants that do not conflict accross protocols and networks. See subgraphs/uniswap-forks/src/common/constants.ts as an example.  
+
+    - Additionally, within the particular subgraph folder, you should have a `Protocols/` folder. The directory structure should have each of these folders and files (configured by `protocol` and `network`).
+        - Protocols/ (contains a list of all protocols in developed in this directory) 
+            - `protocol`/
+                - config/
+                    - networks/
+                        - `network1`/
+                            - `network1`.json
+                        - `network2`/
+                            `network2`.json
+                    - templates/ (make sure there are not dashes (-) in `protocol` to help with programmatically accessing the file)
+                        - `protocol`.template.yaml
+                - src/
+                    - common/
+                        - constants.ts
+                    - mappings/
+                        - ...
+
+        - Protocols/`protocol`/config/networks/`network`/`network`.json contains all parameters used to configure the proper template in Protocols/`protocol`/config/templates using mustache
+
+    - (Option) If you want to introduce protocol and network specific configurations, add a `configurations` folder and add `network.ts` file to Protocols/`protocol`/config/networks/`network`/:
+        - configurations/
+            - configurations/
+                - configurations.ts
+                - deploy.ts
+                - interface.ts
+            - configure.template.ts
+
+### Files 
+- Protocols/`protocol`/config/networks/`network`/`network`.json
+    - {LINK TO IMAGE}
+    - This file contains all necessary mustache configurations for Protocols/`protocol`/config/templates/`template`.yaml and configurations/configure.template.ts
+    - If using a configurations/ folder for protocol and network specific constants, add a constant of the form: 
+        - "deployment": "{PROTOCOL_SLUG}_{NETWORK}"
+- Protocols/`protocol`/config/networks/`network`/`network`.ts
+    - {LINK TO IMAGE}
+    - Instantiates an object containing configurations for a specific protocol/network deployment. Recommended to use Protocols/`protocol`/src/constants.ts and src/constants.ts for imports if applicable (e.g. for importing PROTOCOL_SUBGRAPH_VERSION or PROTOCOL_FACTORY_ADDRESS).
+- Protocols/`protocol`/config/templates/`protocol`.template.yaml
+    - {LINK TO IMAGE}
+    - Contains the template that will be used to create the subgraph.yaml in the subgraph directory. 
+- package.json
+    - {LINK TO IMAGE}
+    - Contains the `npm` scripts necessary to succesfully run the deployment scripts as shown in the instructions above. 
+    - Should contain at least:
+        - prepare:yaml
+        - prepare:constants (Option)
+            - Use if you added a configuration/ folder
+        - prepare:build
+        - deploy:subgraph
+        - deploy
+    - see deployment/package.template.json at the head of the repo.
+- configurations/
+    - configurations/ 
+        - {LINK TO IMAGE}
+        - configurations.ts
+            - Contains imports for instantiated configuration objects in Protocols/`protocol`/config/networks/`network`/`network`.ts.
+            - Select configurations with a switch case.
+        - {LINK TO IMAGE}
+        - deploy.ts
+            - Contains a namespace for {PROTOCOL_SLUG}_{NETWORK} used in configure.template.ts
+        - {LINK TO IMAGE}
+        - interface.ts
+            - Contains an interface used to describe all configuration fields use for deploying these subgraphs.
+    - {LINK TO IMAGE}
+    - configure.template.ts
+        - This file is used to generate configure.ts which selects the proper configurations for a protocol/network deployment.
+
+- HEAD:/deployment/deploymentConfigurations.json
+    - This file contains deployment configurations for each protocol and network deployment. 
+    - {LINK TO IMAGE}
+    - Stick to the current structure of the json file
+        - `subgraph folder` (e.g. uniswap-forks)
+            - `protocol` (e.g. uniswap-v2)
+                - `network` (e.g. mainnet)
+                    - template (Required)
+                        - file name of the template used for this deployment (e.g. uniswap.v2.template.yaml)
+                    - `location` (Optional) (e.g. messari or steegecs)
+                    - deploy-on-merge (Optional)
+                        - true/false/null
+                        - Set to true if you want to deploy upon merging your branch with remote repo
+                        - Does not deploy unless true
+                    - prepare:constants (Optional)
+                        - true/false/null
+                        - Set to true if you are configuring constants in the configurations/ folder.
+                        - Does not use unless true
+
+
+
+
+
+    
