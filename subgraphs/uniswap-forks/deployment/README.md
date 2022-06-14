@@ -22,9 +22,6 @@ npm run deploy --SUBGRAPH=uniswap-forks --PROTOCOL=uniswap-v2 --LOCATION=steegec
 npm run deploy --SUBGRAPH=uniswap-forks --LOCATION=steegecs
 ```
 
-## How the CI/CD deployment works:
-- The CI/CD deployment scripts and actions are use to allow you to deployment multiple subgraphs at a time and deploy on merge if specified in the deployment/deploymentConfigurations.json file. 
-
 ### Directory Structure: 
 - Using these scripts requires a particular directory structure. This is because when the `npm` scripts are executed, the deployment scripts know where to look for configuration files and templates. Also, for the deploy-on-merge actions, the specific structure allows us to detect changes that may apply to specific subgraph (root directory of subgraph e.g. uniswap-forks), a specific subgraph and protocol, a specific subgraph protocol, and network, or some combination. This is then used to execute the particular subgraph deployments that have relevant changes if specified in deployment/deploymentConfigurations.json to the Hosted Service. 
 
@@ -67,47 +64,52 @@ npm run deploy --SUBGRAPH=uniswap-forks --LOCATION=steegecs
                 - interface.ts
             - configure.template.ts
 
-### Files 
-- Protocols/`protocol`/config/networks/`network`/`network`.json
+### Necessary Files 
+- *Protocols/`protocol`/config/networks/`network`/`network`.json*
     - {LINK TO IMAGE}
-    - This file contains all necessary mustache configurations for Protocols/`protocol`/config/templates/`template`.yaml and configurations/configure.template.ts
-    - If using a configurations/ folder for protocol and network specific constants, add a constant of the form: 
+    - Add all necessary mustache configurations for Protocols/`protocol`/config/templates/`template`.yaml and configurations/configure.template.ts
+    - If using a configurations/ folder for protocol and network specific constants, add a constant of the form to the `network`.josn file: 
         - "deployment": "{PROTOCOL_SLUG}_{NETWORK}"
-- Protocols/`protocol`/config/networks/`network`/`network`.ts
+- *Protocols/`protocol`/config/networks/`network`/`network`.ts*
     - {LINK TO IMAGE}
-    - Instantiates an object containing configurations for a specific protocol/network deployment. Recommended to use Protocols/`protocol`/src/constants.ts and src/constants.ts for imports if applicable (e.g. for importing PROTOCOL_SUBGRAPH_VERSION or PROTOCOL_FACTORY_ADDRESS).
-- Protocols/`protocol`/config/templates/`protocol`.template.yaml
+    - Add an object containing configurations for a specific protocol/network deployment. Recommended to use Protocols/`protocol`/src/constants.ts and src/constants.ts for imports if applicable (e.g. for importing PROTOCOL_SUBGRAPH_VERSION or PROTOCOL_FACTORY_ADDRESS).
+- *Protocols/`protocol`/config/templates/`protocol`.template.yaml*
     - {LINK TO IMAGE}
-    - Contains the template that will be used to create the subgraph.yaml in the subgraph directory. 
-- package.json
+    - Contains the template that will be used to create the subgraph.yaml in the subgraph directory - usually 1 per protocol but not always. 
+- *package.json*
     - {LINK TO IMAGE}
     - Contains the `npm` scripts necessary to succesfully run the deployment scripts as shown in the instructions above. 
     - Should contain at least:
-        - prepare:yaml
-        - prepare:constants (Option)
+        - `prepare:yaml`
+        - `prepare:constants` (Option)
             - Use if you added a configuration/ folder
-        - prepare:build
-        - deploy:subgraph
-        - deploy
-    - see deployment/package.template.json at the head of the repo.
-- configurations/
-    - configurations/ 
+        - `prepare:build`
+        - `deploy:subgraph`
+        - `deploy`
+    - see `deployment/package.template.json` at the head of the repo to get the scripts.
+    - The `prepare:yaml` and `prepare:constants` scripts take arguments the tell them the proper locations to look for configurations and configurable files and generates configurations from templates. The `subgraph:deploy` script takes a deployment location as an argument and deploys to the Hosted Service at that location. 
+    - All you have to do is pass the relavent paramters to the `deploy` script described in the instruction above, and other scripts are configured and run as needed.
+- *configurations/*
+    - *configurations/ *
         - {LINK TO IMAGE}
-        - configurations.ts
+        - **configurations.ts*
             - Contains imports for instantiated configuration objects in Protocols/`protocol`/config/networks/`network`/`network`.ts.
-            - Select configurations with a switch case.
+            - Import a configuration object for each particular protocol and network and add to switch case
         - {LINK TO IMAGE}
-        - deploy.ts
+        - *deploy.ts*
             - Contains a namespace for {PROTOCOL_SLUG}_{NETWORK} used in configure.template.ts
+            - Add a namespace for each deployment that uses the configurations/ folder.
         - {LINK TO IMAGE}
-        - interface.ts
-            - Contains an interface used to describe all configuration fields use for deploying these subgraphs.
+        - *interface.ts*
+            - Contains an interface used to describe all configuration fields use for deploying these subgraphs. 
+            - Add or delete fields as necessary. 
     - {LINK TO IMAGE}
     - configure.template.ts
         - This file is used to generate configure.ts which selects the proper configurations for a protocol/network deployment.
 
-- HEAD:/deployment/deploymentConfigurations.json
+- *HEAD:/deployment/deploymentConfigurations.json*
     - This file contains deployment configurations for each protocol and network deployment. 
+    - Add an entry to this file for each protocol and network deployment
     - {LINK TO IMAGE}
     - Stick to the current structure of the json file
         - `subgraph folder` (e.g. uniswap-forks)
@@ -125,8 +127,15 @@ npm run deploy --SUBGRAPH=uniswap-forks --LOCATION=steegecs
                         - Set to true if you are configuring constants in the configurations/ folder.
                         - Does not use unless true
 
-
-
+## How the CI/CD deployment works:
+- The CI/CD deployment scripts and actions are use to allow you to deploy multiple subgraphs at a time and deploy on merge if specified in the deployment/deploymentConfigurations.json file. 
+- The subgraphs that get deployed on merge depend upon 2 conditions: 
+    - The deploy-on-merge variable in the deploymentConfigurations.json should be present and set to `true` for that particular protocol and network deployment.
+    - A change in the codebase is detected that is relevant to a particualr subgraph. For example: 
+        - A change in the src/ folder has an expected impact on all subgraphs in the directory, so all subgraphs will satisfy this condition and deploy on merge if the above condition met.
+        - A change in a particular Protocols/`protocol`/src/ folder, will trigger all deployments for a particular protocol if the above condition is met. 
+        - A change in a particular Protocols/`protocol`/config/networks/`network` folder will deploy that specific protocol and network if the above condition is met.
+- Be careful to set the deploy-on-merge to its proper configuration each time you create a PR and merge it to the remote repository.
 
 
     
