@@ -39,7 +39,7 @@ if (!args.subgraph || !args.location) {
         }else {
             results += "Ignored in Deployment Configurations: " + location + '\n'
         }
-        runCommands(allScripts, results, function(results) {});
+        runCommands(allScripts, results, args, function(results) {});
     } 
 } else if (args.subgraph && args.protocol && args.location) {
     if (args.subgraph in protocolNetworkMap == false) {
@@ -71,7 +71,7 @@ if (!args.subgraph || !args.location) {
             }
         } 
 
-        runCommands(allScripts, results, function(results) {});
+        runCommands(allScripts, results, args, function(results) {});
     }
 } else if (args.subgraph && args.location) {
     if (args.subgraph in protocolNetworkMap == false) {
@@ -100,7 +100,7 @@ if (!args.subgraph || !args.location) {
             }
         } 
 
-        runCommands(allScripts, results, function(results) {});
+        runCommands(allScripts, results, args, function(results) {});
     }
 } else {
     console.log('UNKOWN - Please post issue on github.')
