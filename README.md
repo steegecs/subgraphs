@@ -85,6 +85,7 @@ This repo contains subgraphs defined using a set of standardized schemas. These 
 | [Trader Joe](https://traderjoexyz.com/home#/) | 🛠 | 1.2.1 / 1.0.0 / 1.0.0 | [![Trader Joe Avalanche](./docs/images/chains/avalanche.png)](https://thegraph.com/hosted-service/subgraph/messari/trader-joe-avalanche) |
 | [Uniswap v2](https://uniswap.org/) | 🛠 | 1.2.1 / 1.1.1 / 1.0.0 | [![Uniswap V2](./docs/images/chains/ethereum.png)](https://thegraph.com/hosted-service/subgraph/messari/uniswap-v2-ethereum) |
 | [Uniswap v3](https://uniswap.org/) | 🛠 | 1.2.1 / 1.1.0 / 1.0.0 | [![Uniswap V3](./docs/images/chains/ethereum.png)](https://thegraph.com/hosted-service/subgraph/messari/uniswap-v3-ethereum) [![Uniswap V3 Polygon](./docs/images/chains/matic.png)](https://thegraph.com/hosted-service/subgraph/messari/uniswap-v3-polygon) [![Uniswap V3 Optimism](./docs/images/chains/optimism.png)](https://thegraph.com/hosted-service/subgraph/messari/uniswap-v3-optimism) [![Uniswap V3 Arbtitrum](./docs/images/chains/arbitrum.png)](https://thegraph.com/hosted-service/subgraph/messari/uniswap-v3-arbitrum)|
+| [VVS Finance](https://vvs.finance/) | 🛠 | 1.2.1 / 1.0.0 / 1.0.0 | [![VVS Finance Cronos](./docs/images/chains/cronos.png)](https://graph.cronoslabs.com/subgraphs/name/vvs-finance-cronos/first-subgraph) |
 | **Lending Protocols** |    | |
 | [Aave v2](https://aave.com/) | 🛠 | 1.1.0 / 1.1.30 / 1.0.0 | [![Aave V2 Ethereum](./docs/images/chains/ethereum.png)](https://thegraph.com/hosted-service/subgraph/messari/aave-v2-ethereum) |
 | Aave v3 |  | | |
@@ -114,7 +115,7 @@ This repo contains subgraphs defined using a set of standardized schemas. These 
 | [Inverse Finance](https://www.inverse.finance/) | 🛠 | 1.2.1 / 1.2.1 / 1.0.0  | [![Inverse Finance Ethereum](./docs/images/chains/ethereum.png)](https://thegraph.com/hosted-service/subgraph/messari/inverse-finance-ethereum)|
 | [Liquity](https://www.liquity.org/) | 🛠 | 1.2.1 / 1.1.2 / 1.0.1 | [![Liquity Ethereum](./docs/images/chains/ethereum.png)](https://thegraph.com/hosted-service/subgraph/messari/liquity-ethereum) |
 | [MakerDAO](https://makerdao.com/en/) | 🛠 | 1.2.1 / 1.0.0 / 1.0.0 | [![MakerDAO Ethereum](./docs/images/chains/ethereum.png)](https://thegraph.com/hosted-service/subgraph/messari/makerdao-ethereum?selected=playground) |
-| QiDAO |   | | |
+| [QiDao](https://app.mai.finance/) | 🛠 | 1.2.1 / 1.0.0 / 1.0.0 | [![QiDao BSC](./docs/images/chains/bsc.png)](https://thegraph.com/hosted-service/subgraph/messari/qidao-bsc) [![QiDao Gnosis](./docs/images/chains/xdai.png)](https://thegraph.com/hosted-service/subgraph/messari/qidao-gnosis) [![QiDao Arbitrum](./docs/images/chains/arbitrum.png)](https://thegraph.com/hosted-service/subgraph/messari/qidao-arbitrum) [![QiDao Avalanche](./docs/images/chains/avalanche.png)](https://thegraph.com/hosted-service/subgraph/messari/qidao-avalanche) [![QiDao Optimism](./docs/images/chains/optimism.png)](https://thegraph.com/hosted-service/subgraph/messari/qidao-optimism) [![QiDao Fantom](./docs/images/chains/fantom.png)](https://thegraph.com/hosted-service/subgraph/messari/qidao-fantom) [![QiDao Polygon](./docs/images/chains/matic.png)](https://thegraph.com/hosted-service/subgraph/messari/qidao-polygon)|
 | **Yield Aggregators** |     | |
 | [Arrakis Finance](https://www.arrakis.finance/) |  | | |
 | Autofarm |  | | |
