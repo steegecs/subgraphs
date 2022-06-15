@@ -9,4 +9,4 @@ export const PROTOCOL_METHODOLOGY_VERSION = "1.0.0";
 export const PROTOCOL_NAME = "ApeSwap";
 export const PROTOCOL_SLUG = "apeswap";
 
-log.warning("HELLO9", [])
+log.warning("HELLO1", [])
