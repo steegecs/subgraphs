@@ -50,7 +50,7 @@ function getDeploymentNetwork(network) {
  * @param {string[]} array - Protocol that is being deployed
  * @param {string} callback 
 */
-async function runCommands(allScripts, results, callback) {
+async function runCommands(allScripts, results, args, callback) {
 
     let logs = ""
     var index = 0;
@@ -81,6 +81,12 @@ async function runCommands(allScripts, results, callback) {
             fs.writeFile('results.txt', logs.replace(/\u001b[^m]*?m/g,""), function (err) {
                 if (err) throw err;
               });
+
+            // Print the logs if printlogs is 't' or 'true'
+            console.log(args.printlogs.toLowerCase())
+            if (['true', 't'].includes(args.printlogs.toLowerCase())) {
+                console.log(logs)
+            }
             console.log(results + "END")
             callback(results);
         }

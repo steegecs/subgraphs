@@ -1,13 +1,14 @@
 ## Version 1.0
 
 ## Deployment Instructions:
-- Add/update configuraptions to the deployment/deploymentConfigurations.json file in order to add or update deployments.
-    - Need to include template location for the protocol/network deployment and the deployment locations in the Hosted Service
-    - Four Parameters:
-        - --SUBGRAPH
-        - --PROTOCOL
-        - --NETWORK
-        - --LOCATION
+- Five Parameters:
+    - --SUBGRAPH
+    - --PROTOCOL
+    - --NETWORK
+    - --LOCATION
+    - --PRINTLOGS  
+        - Set PRINTLOGS to 't' or 'true' to print all logs to the console instead of just to results.txt
+
 
 - This works by taking the inputs from `npm run deploy` and using them to configure the subgraph.yaml, and optionally, configurations/configure.ts with a particulalar set of constants, and subsequently deploying to the specified hosted service account.
 
