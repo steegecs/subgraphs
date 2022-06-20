@@ -140,7 +140,7 @@
         "bsc": {
           "template": "apeswap.template.yaml",
           "steegecs": "steegecs/apeswap-bsc",
-          "deploy-on-merge": false,
+          "deploy-on-merge": true,
           "prepare:constants": true
         },
         "matic": {
