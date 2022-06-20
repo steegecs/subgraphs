@@ -1,9 +1,4 @@
 {
-  "configurations": {
-    "deployment": {
-      "locations": ["messari"]
-    }
-  },
   "subgraphs": {
     "abracadabra": {
       "abracadabra": {
