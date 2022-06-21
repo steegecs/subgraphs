@@ -83,6 +83,30 @@
         }
       }
     },
+    "gamma-strategies": {
+      "gamma-strategies": {
+        "arbitrum": {
+          "template": "gamma.strategies.template.yaml",
+          "messari": "messari/gamma-arbitrum",
+          "deploy-on-merge": false
+        },
+        "mainnet": {
+          "template": "gamma.strategies.template.yaml",
+          "messari": "messari/gamma-ethereum",
+          "deploy-on-merge": true
+        },
+        "matic": {
+          "template": "gamma.strategies.template.yaml",
+          "messari": "messari/gamma-polygon",
+          "deploy-on-merge": true
+        },
+        "optimism": {
+          "template": "gamma.strategies.template.yaml",
+          "messari": "messari/gamma-optimism",
+          "deploy-on-merge": false
+        }
+      }
+    },
     "makerdao": {
       "makerdao": {
         "mainnet": {
@@ -95,35 +119,43 @@
       "qidao": {
         "arbitrum": {
           "template": "qidao.template.yaml",
+          "messari": "messari/qidao-arbitrum",
           "deploy-on-merge": false
         },
         "avalanche": {
           "template": "qidao.template.yaml",
+          "messari": "messari/qidao-avalanche",
           "deploy-on-merge": false
         },
         "bsc": {
           "template": "qidao.template.yaml",
+          "messari": "messari/qidao-bsc",
           "deploy-on-merge": false
         },
         "fantom": {
           "template": "qidao.template.yaml",
+          "messari": "messari/qidao-fantom",
           "deploy-on-merge": false
         },
         "matic": {
           "template": "qidao.template.yaml",
+          "messari": "messari/qidao-polygon",
           "deploy-on-merge": false
         },
         "moonriver": {
           "template": "qidao.template.yaml",
+          "messari": "messari/qidao-moonriver",
           "deploy-on-merge": false
         },
         "optimism": {
           "template": "qidao.template.yaml",
+          "messari": "messari/qidao-optimism",
           "deploy-on-merge": false
         },
         "xdai": {
           "template": "qidao.template.yaml",
-          "deploy-on-merge": false
+          "messari": "messari/qidao-gnosis",
+          "deploy-on-merge": true
         }
       }
     },

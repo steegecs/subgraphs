@@ -35,9 +35,8 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
             location = args.location + '/' + protocol + '-' + getDeploymentNetwork(network)
         }
 
-        console.log("LOOK AT ME: protocol + " + protocol + ": merge: " + protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge'], [])
         // Don't execute the script if the location is messari, you have specified not to deploy on merge, and this script is excuted by Github Action upon merge
-        if (args.location == 'steegecs' && [false, undefined].includes(protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge']) && ['true', 't'].includes(args.merge.toLowerCase())) {
+        if (args.location == 'messari' && [false, undefined].includes(protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge']) && ['true', 't'].includes(args.merge.toLowerCase())) {
             results += "Ignored in Deployment Configurations: " + location + '\n'
         } else {
             allScripts.set(location, scripts(protocol, network, template, location, prepareConstants))
@@ -69,7 +68,7 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
             }
             
             // Don't execute the script if the location is messari, you have specified not to deploy on merge, and this script is excuted by Github Action upon merge
-            if (args.location == 'steegecs' && [false, undefined].includes(protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge']) && ['true', 't'].includes(args.merge.toLowerCase())) {
+            if (args.location == 'messari' && [false, undefined].includes(protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge']) && ['true', 't'].includes(args.merge.toLowerCase())) {
                 results += "Ignored in Deployment Configurations: " + location + '\n'
             } else {
                 allScripts.set(location, scripts(protocol, network, template, location, prepareConstants))
@@ -99,7 +98,7 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
                 }
                 
                 // Don't execute the script if the location is messari, you have specified not to deploy on merge, and this script is excuted by Github Action upon merge
-                if (args.location == 'steegecs' && [false, undefined].includes(protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge']) && ['true', 't'].includes(args.merge.toLowerCase())) {
+                if (args.location == 'messari' && [false, undefined].includes(protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge']) && ['true', 't'].includes(args.merge.toLowerCase())) {
                     results += "Ignored in Deployment Configurations: " + location + '\n'
                 } else {
                     allScripts.set(location, scripts(protocol, network, template, location, prepareConstants))
