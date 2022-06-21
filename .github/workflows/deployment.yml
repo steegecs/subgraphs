@@ -1,9 +1,10 @@
 on: 
   push:
+    branches:
+      - master
 
 jobs:
   Deployment:
-    if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
     steps: 
       - id: files
