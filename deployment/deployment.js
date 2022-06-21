@@ -35,6 +35,7 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
             location = args.location + '/' + protocol + '-' + getDeploymentNetwork(network)
         }
 
+        console.log("LOOK AT ME: protocol + " + protocol + ": merge: " + protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge'], [])
         // Don't execute the script if the location is messari, you have specified not to deploy on merge, and this script is excuted by Github Action upon merge
         if (args.location == 'steegecs' && [false, undefined].includes(protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge']) && ['true', 't'].includes(args.merge.toLowerCase())) {
             results += "Ignored in Deployment Configurations: " + location + '\n'
@@ -57,6 +58,8 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
             let template = protocolNetworkMap[args.subgraph][protocol][network]['template']
             let location = ""
             let prepareConstants = protocolNetworkMap[args.subgraph][protocol][network]['prepare:constants']
+
+            console.log("LOOK AT ME: protocol + " + protocol + ": merge: " + protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge'], [])
 
             // Get location for configurations or derive using standard naming convention
             if (args.location in protocolNetworkMap[args.subgraph][protocol][network]) {
@@ -85,6 +88,8 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
                 let template = protocolNetworkMap[args.subgraph][protocol][network]['template']
                 let location = ""
                 let prepareConstants = protocolNetworkMap[args.subgraph][protocol][network]['prepare:constants']
+
+                console.log("LOOK AT ME: protocol + " + protocol + ": merge: " + protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge'], [])
 
                 // Get location for configurations or derive using standard naming convention
                 if (args.location in protocolNetworkMap[args.subgraph][protocol][network]) {
