@@ -744,11 +744,8 @@ export function _handleLiquidateBorrow(
   liquidate.liquidatee = borrower.toHexString();
   liquidate.blockNumber = event.block.number;
   liquidate.timestamp = event.block.timestamp;
-  liquidate.market = repayTokenMarketID;
-  if (liquidatedCTokenID) {
-    // this is logically redundant since nullcheck has been done before, but removing the if check will fail 'graph build'
-    liquidate.asset = liquidatedCTokenID;
-  }
+  liquidate.market = liquidatedCTokenID!;
+  liquidate.asset = repayTokenMarketID;
   liquidate.amount = seizeTokens;
   let gainUSD = seizeTokens
     .toBigDecimal()
@@ -1561,7 +1558,7 @@ export function _getOrCreateProtocol(
   return protocol;
 }
 
-function getOrCreateMarketHourlySnapshot(
+export function getOrCreateMarketHourlySnapshot(
   marketID: string,
   blockTimestamp: i32
 ): MarketHourlySnapshot {
