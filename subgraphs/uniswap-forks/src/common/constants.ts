@@ -140,4 +140,4 @@ export const MINIMUM_LIQUIDITY_FOUR_HUNDRED_THOUSAND = new BigDecimal(BIGINT_FOU
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-log.warning('', [])
+log.warning('g', [])
