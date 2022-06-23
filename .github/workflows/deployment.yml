@@ -17,4 +17,4 @@ jobs:
           HOSTED_SERVICE_ACCESS_TOKEN: ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
           CHANGED_FILES: "${{ steps.files.outputs.all }}"
           ABSOLUTE_PATH: ${{ github.workspace }}
-          GRAPH_DEPLOYMENT_LOCATION: messari
+          GRAPH_DEPLOYMENT_LOCATION: steegecs
