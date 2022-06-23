@@ -58,6 +58,8 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
             let location = ""
             let prepareConstants = protocolNetworkMap[args.subgraph][protocol][network]['prepare:constants']
 
+            console.log("LOOK AT ME: protocol + " + protocol + ": merge: " + protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge'], [])
+
             // Get location for configurations or derive using standard naming convention
             if (args.location in protocolNetworkMap[args.subgraph][protocol][network]) {
                 location = protocolNetworkMap[args.subgraph][protocol][network][args.location]
@@ -85,6 +87,8 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
                 let template = protocolNetworkMap[args.subgraph][protocol][network]['template']
                 let location = ""
                 let prepareConstants = protocolNetworkMap[args.subgraph][protocol][network]['prepare:constants']
+
+                console.log("LOOK AT ME: protocol + " + protocol + ": merge: " + protocolNetworkMap[args.subgraph][protocol][network]['deploy-on-merge'], [])
 
                 // Get location for configurations or derive using standard naming convention
                 if (args.location in protocolNetworkMap[args.subgraph][protocol][network]) {
