@@ -107,3 +107,5 @@ if (args.subgraph === undefined || args.protocol === undefined || args.network =
 } else {
     console.log('UNKOWN - Please post issue on github.')
 }
+
+
