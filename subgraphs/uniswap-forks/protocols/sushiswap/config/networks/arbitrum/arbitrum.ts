@@ -7,7 +7,7 @@ import { toLowerCase, toLowerCaseList } from '../../../../../src/common/utils/ut
 
 export class SushiswapArbitrumConfigurations implements Configurations {
   getNetwork(): string {
-    return Network.ARBITRUM_ONE;
+    return Network.ARBITRUM_ONE
   }
   getSchemaVersion(): string {
     return PROTOCOL_SCHEMA_VERSION;
