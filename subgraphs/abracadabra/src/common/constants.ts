@@ -175,7 +175,7 @@ export const HIGH_RISK_LIQUIDATION_PENALTY = 112500;
 export const ABRA_USER_REVENUE_SHARE = BigDecimal.fromString("0.75");
 export const ABRA_PROTOCOL_REVENUE_SHARE = BigDecimal.fromString("0.25");
 
-export const CHAINLINK_ORACLE_DECIMALS = 8 as i32;
+export const CHAINLINK_ORACLE_DECIMALS = 8 as i32
 
 export const ETH_NETWORK = "mainnet";
 export const FTM_NETWORK = "fantom";
