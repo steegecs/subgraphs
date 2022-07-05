@@ -117,7 +117,7 @@ export function updateUsageMetrics(event: ethereum.Event, from: Address, to: Add
     toAccount.save();
 
     protocol.cumulativeUniqueUsers += 1;
-    protocol.save();
+    protocol.save()
   }
 
   usageHourlySnapshot.cumulativeUniqueUsers = protocol.cumulativeUniqueUsers;
