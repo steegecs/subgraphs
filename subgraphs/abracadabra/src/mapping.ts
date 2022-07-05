@@ -40,7 +40,7 @@ export function handleLogDeploy(event: LogDeploy): void {
   const account = event.transaction.from.toHex().toLowerCase();
   if (ABRA_ACCOUNTS.indexOf(account) > NEG_INT_ONE) {
     createMarket(event.params.cloneAddress.toHexString(), event.block.number, event.block.timestamp);
-    CauldronDataSource.create(event.params.cloneAddress);
+    CauldronDataSource.create(event.params.cloneAddress)
   }
 }
 
