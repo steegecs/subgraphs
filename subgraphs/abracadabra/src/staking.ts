@@ -11,7 +11,7 @@ export function handleTransfer(event: Transfer): void {
   if (event.params.to.toHexString() == getStakedSpellAddress(dataSource.network())) {
     // stake spell into sspell
     // just add the same address, the way updateUsageMetrics is written, it will not double count
-    updateUsageMetrics(event, event.params.from, event.params.from);
+    updateUsageMetrics(event, event.params.from, event.params.from)
   } else if (event.params.from.toHexString() == getStakedSpellAddress(dataSource.network())) {
     // withdraw spell from sspell
     // just add the same address, the way updateUsageMetrics is written, it will not double count
