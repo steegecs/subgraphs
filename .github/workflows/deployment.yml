@@ -23,8 +23,9 @@ jobs:
         with: 
           ABSOLUTE_PATH: ${{ github.workspace }}
 
-      - name: GitHub Commit & Push with Rebase
-        uses: benkaiser/rebase-commit-push@v1.1
+      - uses: EndBug/add-and-commit@v9
         with:
-          rebase: true
+          add: '.'
+          commit: --signoff
+          push: true
 
