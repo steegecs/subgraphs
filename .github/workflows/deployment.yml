@@ -1,7 +1,7 @@
 on: 
   push:
     branches:
-      master
+      testing-commit
 
 jobs:
   Deployment: 
@@ -19,13 +19,12 @@ jobs:
           ABSOLUTE_PATH: ${{ github.workspace }}
           GRAPH_DEPLOYMENT_LOCATION: messari
 
-      # - uses: steegecs/Messari-Deployment-Config-Reset@main
-      #   with: 
-      #     ABSOLUTE_PATH: ${{ github.workspace }}
+      - uses: steegecs/Messari-Deployment-Config-Reset@main
+        with: 
+          ABSOLUTE_PATH: ${{ github.workspace }}
 
-      # - uses: EndBug/add-and-commit@v9
-      #   with:
-      #     add: '.'
-      #     commit: --signoff
-      #     push: true
+      - name: Commit & Push changes
+        uses: actions-js/push@v1.1
+        with:
+          rebase: true
 
