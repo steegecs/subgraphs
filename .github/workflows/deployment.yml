@@ -23,8 +23,8 @@ jobs:
         with: 
           ABSOLUTE_PATH: ${{ github.workspace }}
 
-      - name: Commit & Push changes
-        uses: actions-js/push@v1.1
+      - name: GitHub Commit & Push with Rebase
+        uses: benkaiser/rebase-commit-push@v1.1
         with:
           rebase: true
 
