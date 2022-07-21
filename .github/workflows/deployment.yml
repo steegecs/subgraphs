@@ -12,8 +12,7 @@ jobs:
         continue-on-error: true
 
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+
       - uses: steegecs/Action-Subgraph-Deployment@main
         with: 
           HOSTED_SERVICE_ACCESS_TOKEN: ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
@@ -21,13 +20,21 @@ jobs:
           ABSOLUTE_PATH: ${{ github.workspace }}
           GRAPH_DEPLOYMENT_LOCATION: messari
 
-      - name: print-diff
-        shell: bash
-        run: |
-          git fetch origin master
-          git diff origin/master..HEAD > mydiff
-          echo "mydiff = "
-          cat mydiff
+      - uses: technote-space/get-diff-action@v4
+        id: git-diff
+        with:
+          FILES: | 
+            deployment.yml
+            deployment.json
+      - name: install dependencies
+        run: yarn install
+        if: steps.git-diff.outputs.diff
+
+      - run: |
+          yarn install
+          yarn eslint ${{ steps.git-diff.outputs.diff }}
+        if: steps.git-diff.outputs.diff
+
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
