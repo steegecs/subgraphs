@@ -21,7 +21,13 @@ jobs:
           ABSOLUTE_PATH: ${{ github.workspace }}
           GRAPH_DEPLOYMENT_LOCATION: messari
 
-      - run: git diff
+      - name: print-diff
+        shell: bash
+        run: |
+          git fetch origin testt
+          git diff origin/testt..HEAD > mydiff
+          echo "mydiff = "
+          cat mydiff
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
