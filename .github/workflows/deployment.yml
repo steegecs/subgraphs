@@ -26,14 +26,8 @@ jobs:
           FILES: | 
             deployment.yml
             deployment.json
-      - name: install dependencies
-        run: yarn install
-        if: steps.git-diff.outputs.diff
-
-      - run: |
-          yarn install
-          yarn eslint ${{ steps.git-diff.outputs.diff }}
-        if: steps.git-diff.outputs.diff
+          FORMAT: json
+      - run: echo '${{ env.GIT_DIFF }}' | jq .
 
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main

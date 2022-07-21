@@ -5,7 +5,7 @@
         "arbitrum": {
           "template": "abracadabra.money.template.yaml",
           "steegecs": "steegecs/abracadabra-money-arbitrum",
-          "messari": "messari/abracadabra-money-arbitrum",
+          "messari": "essari/abracadabra-money-arbitrum",
           "deploy-on-merge": false
         },
         "avalanche": {
