@@ -19,7 +19,7 @@ jobs:
           ABSOLUTE_PATH: ${{ github.workspace }}
           GRAPH_DEPLOYMENT_LOCATION: messari
 
-      - run: git diff
+      - run: git diff --name-only origin/testt origin/${GITHUB_HEAD_REF}
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
