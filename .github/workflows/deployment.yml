@@ -5,12 +5,13 @@ on:
 
 jobs:
   Deployment: 
-  
+
     runs-on: ubuntu-latest
     steps: 
       - uses: steegecs/Messari-Deployment-Config-Reset@main
         with: 
           ABSOLUTE_PATH: ${{ github.workspace }}
+          
 
 
 
