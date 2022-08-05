@@ -7,7 +7,7 @@ const fs = require("fs");
  * @param {string} template - Template location that will be used to create subgraph.yaml
  * @param {string} location - Location in the subgraph will be deployed to {e.g. messari/uniswap-v2-ethereum}
  */
-function scripts(protocol, network, template, location, constants) {
+function scripts(protocol, network, template, location, constants, where) {
   let scripts = [];
   let removeResults = "rm -rf results.txt";
   let removeConfig = "rm -rf configurations/configure.ts";
@@ -25,7 +25,19 @@ function scripts(protocol, network, template, location, constants) {
     " --NETWORK=" +
     network;
   let codegen = "graph codegen";
-  let deployment = "npm run deploy:subgraph --LOCATION=" + location;
+
+  let deployment = "";
+  switch (where) {
+    case "hosted-service":
+    case "hosted":
+      deployment = "graph deploy --product hosted-service " + location;
+    case "subgraph-studio":
+    case "studio":
+      deployment = "graph deploy --product subgraph-studio " + location;
+    case "cronos":
+      deployment = "graph deploy --product cronos " + location;
+  }
+  deployment = "npm run deploy:subgraph --LOCATION=" + location;
 
   scripts.push(removeResults);
   scripts.push(removeConfig);
@@ -110,7 +122,9 @@ async function runCommands(allScripts, results, args, callback) {
             allScripts.get(allDeployments[deploymentIndex]).length
           ) {
             results +=
-              "Deployment Successful: " + allDeployments[deploymentIndex] + "\n";
+              "Deployment Successful: " +
+              allDeployments[deploymentIndex] +
+              "\n";
             deploymentIndex++;
             scriptIndex = 0;
             httpCounter = 1;
