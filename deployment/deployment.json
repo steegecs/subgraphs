@@ -136,6 +136,14 @@
         }
       }
     },
+    "aura": {
+      "aura": {
+        "ethereum": {
+          "template": "aura.template.yaml",
+          "deploy-on-merge": false
+        }
+      }
+    },
     "convex-finance": {
       "convex-finance": {
         "ethereum": {
