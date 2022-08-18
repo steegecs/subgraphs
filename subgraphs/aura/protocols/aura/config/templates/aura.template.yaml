@@ -1,0 +1,25 @@
+# prettier-ignore
+specVersion: 0.0.4
+repository: https://github.com/messari/subgraphs
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: PoolManager
+    network: {{ network }}
+    source:
+      address: "0xf843F61508Fc17543412DE55B10ED87f4C28DE50"
+      abi: PoolManager
+      startBlock: 14932209
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.6
+      language: wasm/assemblyscript
+      entities: []
+      abis:
+        - name: PoolManager
+          file: ./abis/PoolManager.json
+      eventHandlers:
+        - event: AddressesProviderRegistered(indexed address,indexed uint256)
+          handler: handleAddressesProviderRegistered
+      file: ./src/handlers/PoolManagerHandlers.ts
