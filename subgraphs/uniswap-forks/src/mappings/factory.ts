@@ -1,6 +1,11 @@
 import { log } from "@graphprotocol/graph-ts";
 
 import { PairCreated } from "../../generated/Factory/Factory";
+import {
+  TOP_HUNDRED_POOLS,
+  TOP_POOL,
+  TOP_TEN_POOLS,
+} from "../common/constants";
 import { createLiquidityPool } from "../common/creators";
 
 // Handle the creation of a new liquidity pool from the Factory contract
@@ -11,6 +16,12 @@ export function handlePairCreated(event: PairCreated): void {
     event.params.token0.toHexString(),
     event.params.token1.toHexString(),
   ]);
+
+  // Pool if not in top X
+  if (!TOP_HUNDRED_POOLS.includes(event.params.pair.toHexString())) {
+    return;
+  }
+
   createLiquidityPool(
     event,
     event.params.pair.toHexString(),

@@ -27,6 +27,7 @@ import {
 import {
   BIGINT_THOUSAND,
   BIGINT_ZERO,
+  TOP_POOL,
   UsageType,
   ZERO_ADDRESS,
 } from "../common/constants";
@@ -46,6 +47,7 @@ export function handleTransfer(event: Transfer): void {
   ) {
     return;
   }
+
   // mints
   if (event.params.from.toHexString() == ZERO_ADDRESS) {
     handleTransferMint(
