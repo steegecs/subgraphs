@@ -18,7 +18,7 @@ export function handlePairCreated(event: PairCreated): void {
   ]);
 
   // Pool if not in top X
-  if (!TOP_HUNDRED_POOLS.includes(event.params.pair.toHexString())) {
+  if (!TOP_POOL.includes(event.params.pair.toHexString())) {
     return;
   }
 
