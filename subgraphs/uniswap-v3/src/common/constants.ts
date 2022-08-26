@@ -1,8 +1,8 @@
 import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 
-////////////////////
-///// Versions ///
-//////////////////
+/////////////////
+///// Versions //
+/////////////////
 
 export const PROTOCOL_SCHEMA_VERSION = "1.3.0";
 
