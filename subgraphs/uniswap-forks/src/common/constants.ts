@@ -16,7 +16,7 @@ export namespace Protocol {
 }
 ////////////////////////
 ///// Schema Enums /////
-////////////////////////
+///////////////////////
 
 // The network names corresponding to the Network enum in the schema.
 // They are mainly intended for convenience on the data consumer side.
