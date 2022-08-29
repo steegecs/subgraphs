@@ -8,7 +8,7 @@ export const PROTOCOL_SCHEMA_VERSION = "1.3.0";
 
 /////////////////////
 ///// Protocols /////
-/////////////////////
+////////////////////
 export namespace Protocol {
   export const APESWAP = "Apeswap";
   export const UNISWAP_V2 = "Uniswap V2";
