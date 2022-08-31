@@ -5,6 +5,7 @@ jobs:
   Deployment: 
     runs-on: ubuntu-latest
     steps: 
+      - uses: actions/checkout@v2
       - id: files
         uses: jitterbit/get-changed-files@v1
         continue-on-error: true
@@ -13,8 +14,7 @@ jobs:
         run: |
           echo "::set-output name=configs_before::$(git show ${{ github.event.before }}:./deployment/deployment.json)\n"
           echo "::set-output name=configs_after::$(git show ${{ github.event.after }}:./deployment/deployment.json)\n"
-          
-      - uses: actions/checkout@v2
+
       - uses: steegecs/Action-Subgraph-Deployment@payloads
         with: 
           HOSTED_SERVICE_ACCESS_TOKEN: ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
