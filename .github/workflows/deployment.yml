@@ -16,12 +16,8 @@ jobs:
           CHANGED_FILES: "${{ steps.files.outputs.all }}"
           ABSOLUTE_PATH: ${{ github.workspace }}
           GRAPH_DEPLOYMENT_LOCATION: messari
-          COMMIT_BEFORE_PUSH: "${{github.event.before}}"
-          COMMIT_AFTER_PUSH: "${{github.event.after}}"
-
-      - run: |
-          git show ${{ github.event.after }}:./deployment/deployment.json
-
+          COMMIT_BEFORE_PUSH: git show ${{ github.event.before }}:./deployment/deployment.json
+          COMMIT_AFTER_PUSH: git show ${{ github.event.after }}:./deployment/deployment.json
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
