@@ -15,7 +15,6 @@ class Deployment {
   }
 
   prepare() {
-    this.isValidPackageJsonScripts();
     this.isValidInput();
     this.flattenFirstJsonLevel();
     this.isValidJsonData();
@@ -270,24 +269,6 @@ class Deployment {
   checkAuthorization() {
     if (!this.access && this.getServiceByAlias() == "cronos-portal") {
       throw new Error("please specify an authorization token");
-    }
-  }
-
-  isValidPackageJsonScripts() {
-    if (
-      this.type == undefined ||
-      this.access == undefined ||
-      this.fork == undefined ||
-      this.service == undefined ||
-      this.protocol == undefined ||
-      this.network == undefined ||
-      this.target == undefined ||
-      this.printlogs == undefined ||
-      this.merge == undefined
-    ) {
-      throw new Error(
-        "Please check package.json scripts in local subgraph folder. This error is being thrown becuase it is missing a parameteter in the 'deploy' script. You can find an updated version of the scripts in the deployments folder at the head of the directory."
-      );
     }
   }
 
