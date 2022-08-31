@@ -25,6 +25,7 @@ jobs:
           COMMIT_AFTER_PUSH: "${{ steps.deployment.outputs.configs_after }}"
       
       - run: |
+          echo ${{ github.event.commits }}
           echo ${{ github.event.before }}
           echo ${{ github.event.after }}
 
