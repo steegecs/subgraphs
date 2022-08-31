@@ -20,7 +20,7 @@ jobs:
           COMMIT_AFTER_PUSH: "${{github.event.after}}"
 
       - run: |
-        echo git show ${{ github.event.after }}^^:.deployment/deployment.json
+          echo git show ${{ github.event.after }}^^:.deployment/deployment.json
 
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
