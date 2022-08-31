@@ -8,7 +8,12 @@ jobs:
       - id: files
         uses: jitterbit/get-changed-files@v1
         continue-on-error: true
-
+      
+      - name: deployment
+        run: |
+          echo "::set-output name=configs_before::$(git show ${{ github.event.before }}:./deployment/deployment.json)\n"
+          echo "::set-output name=configs_after::$(git show ${{ github.event.after }}:./deployment/deployment.json)\n"
+          
       - uses: actions/checkout@v2
       - uses: steegecs/Action-Subgraph-Deployment@payloads
         with: 
@@ -16,8 +21,8 @@ jobs:
           CHANGED_FILES: "${{ steps.files.outputs.all }}"
           ABSOLUTE_PATH: ${{ github.workspace }}
           GRAPH_DEPLOYMENT_LOCATION: messari
-          COMMIT_BEFORE_PUSH: git show ${{ github.event.before }}:./deployment/deployment.json
-          COMMIT_AFTER_PUSH: git show ${{ github.event.after }}:./deployment/deployment.json
+          COMMIT_BEFORE_PUSH: "${{ steps.deployment.outputs.configs_before }}"
+          COMMIT_AFTER_PUSH: "${{ steps.deployment.outputs.configs_after }}"
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
