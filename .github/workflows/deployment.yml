@@ -24,7 +24,6 @@ jobs:
           COMMIT_BEFORE_PUSH: "${{ github.event.before }}"
           COMMIT_AFTER_PUSH: "${{ github.event.after }}"
       
-      
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
       #     ABSOLUTE_PATH: ${{ github.workspace }}
