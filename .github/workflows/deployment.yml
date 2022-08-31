@@ -12,7 +12,7 @@ jobs:
       
       - name: deployment
         run: |
-          git checkout ${{ github.event.before }}
+          git checkout ${{ github.event.after }}
           git show HEAD^^:./deployment/deployment.json
 
 
