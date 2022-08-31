@@ -1,7 +1,5 @@
 on: 
   push:
-    branches:
-      master
 
 jobs:
   Deployment: 
@@ -18,6 +16,9 @@ jobs:
           CHANGED_FILES: "${{ steps.files.outputs.all }}"
           ABSOLUTE_PATH: ${{ github.workspace }}
           GRAPH_DEPLOYMENT_LOCATION: messari
+        
+      - run: | 
+        echo github.payload.before
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
