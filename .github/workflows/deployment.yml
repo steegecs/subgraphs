@@ -1,5 +1,7 @@
 on: 
   push:
+    branches:
+      - testing-payload2
 
 jobs:
   Deployment: 
