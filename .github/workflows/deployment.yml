@@ -9,16 +9,15 @@ jobs:
         uses: jitterbit/get-changed-files@v1
         continue-on-error: true
 
-      # uses: actions/checkout@v2
-      #- uses: steegecs/Action-Subgraph-Deployment@main
-       # with: 
-        #  HOSTED_SERVICE_ACCESS_TOKEN: ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
-         # CHANGED_FILES: "${{ steps.files.outputs.all }}"
-          #ABSOLUTE_PATH: ${{ github.workspace }}
-          #GRAPH_DEPLOYMENT_LOCATION: messari
-        
-      - run: | 
-          echo "${{github.event}}"
+       uses: actions/checkout@v2
+      - uses: steegecs/Action-Subgraph-Deployment@payloads
+        with: 
+          HOSTED_SERVICE_ACCESS_TOKEN: ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
+          CHANGED_FILES: "${{ steps.files.outputs.all }}"
+          ABSOLUTE_PATH: ${{ github.workspace }}
+          GRAPH_DEPLOYMENT_LOCATION: messari
+          COMMIT_BEFORE_PUSH: "${{github.event.before}}"
+          COMMIT_AFTER_PUSH: "${{github.event.after}}"
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
