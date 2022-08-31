@@ -18,7 +18,7 @@ jobs:
           #GRAPH_DEPLOYMENT_LOCATION: messari
         
       - run: | 
-          echo ${{github}}
+          echo ${{github.event}}
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
