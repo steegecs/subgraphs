@@ -25,8 +25,8 @@ jobs:
           COMMIT_AFTER_PUSH: "${{ steps.deployment.outputs.configs_after }}"
       
       - run: |
-          git show ${{ github.event.before }}:./deployment/deployment.json
-          git show ${{ github.event.after }}:./deployment/deployment.json
+          echo ${{ github.event.before }}
+          echo ${{ github.event.after }}
 
       # - uses: steegecs/Messari-Deployment-Config-Reset@main
       #   with: 
