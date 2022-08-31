@@ -15,6 +15,7 @@ class Deployment {
   }
 
   prepare() {
+    this.isValidPackageJsonScripts();
     this.isValidInput();
     this.flattenFirstJsonLevel();
     this.isValidJsonData();
@@ -61,11 +62,8 @@ class Deployment {
   // Generates scripts necessary for deployment of each network
   generateScripts(protocol, network, template) {
     let scripts = [];
-    let location = this.getLocation(
-      protocol,
-      network,
-      this.getServiceByAlias()
-    );
+
+    let location = this.getLocation(protocol, network);
 
     scripts.push("rm -rf build");
     scripts.push("rm -rf generated");
@@ -96,8 +94,8 @@ class Deployment {
     scripts.push("graph codegen");
 
     // We don't want to deploy if we are building or just testing.
-    if ((this.type = "deploy" || this.type == "")) {
-      scripts.push(this.getDeploymentScript());
+    if (this.type == "deploy" || this.type == "") {
+      scripts.push(this.getDeploymentScript(location));
     } else {
       scripts.push("graph build");
     }
@@ -117,14 +115,14 @@ class Deployment {
   }
 
   // Makes sure the input arguments for the deployments you want are sensible.
-  checkValidDeploymentScope() {
+  checkValidScope() {
     if (!this.protocol && !this.fork) {
       throw new Error(
-        "please specify a protocol, protocol and network, or fork"
+        "--PROTOCOL, --NETWORK, --FORK: Please specify a protocol, protocol and network, or fork."
       );
     } else if (this.fork && (this.protocol || this.network)) {
       throw new Error(
-        "If you specify a fork, you must not specify a protocol or network"
+        "--PROTOCOL, --NETWORK, --FORK: If you specify a fork, you must not specify a protocol or network"
       );
     }
   }
@@ -146,10 +144,11 @@ class Deployment {
       case "cronos":
       case "c":
         return true;
-      case undefined:
-        throw new Error("service is not defined");
       default:
-        throw new Error("service is not valid");
+        throw new Error(
+          "--SERVICE: Service is not valid or is missing: service=" +
+            this.service
+        );
     }
   }
 
@@ -162,7 +161,7 @@ class Deployment {
   checkVersionLengthIsTwo(version) {
     if (version.split(".").length - 1 != 2) {
       throw new Error(
-        "(1) version is not valid - must be in format x.x.x (e.g. 1.3.1)"
+        "See deployment.json: (1) version is not valid - must be in format x.x.x (e.g. 1.3.1)"
       );
     }
   }
@@ -175,56 +174,90 @@ class Deployment {
       })
     ) {
       throw new Error(
-        "(2) version is not valid - must be in format x.x.x (e.g. 1.3.1)"
+        "See deployment.json: (2) version is not valid - must be in format x.x.x (e.g. 1.3.1)"
       );
     }
   }
 
   // Checks if the protocol level data in the deployment json file is present and/or valid.
   checkProtocolLevelData(protocol) {
-    if (!this.data[protocol]) {
-      throw new Error("protocol is not defined");
+    if (this.data[protocol] == undefined) {
+      throw new Error(
+        "Check --PROTOCOL spelling as argument or in deployment.json: protocol= " +
+          protocol
+      );
     } else if (Object.keys(this.data[protocol]) == []) {
-      throw new Error("no networks are defined for " + protocol);
+      throw new Error(
+        "See deployment.json: No networks are defined for: protocol=" + protocol
+      );
     }
   }
 
   // Checks if the network level data necessary to build this subgraph is present and/or valid.
   checkNetworkLevelBuildDataOnly(protocol, network) {
-    if (!this.data[protocol]["networks"][network]) {
-      throw new Error("network is not defined");
-    } else if (!this.data[protocol]["networks"][network]["files"]["template"]) {
+    if (this.data[protocol]["networks"][network] == undefined) {
       throw new Error(
-        "template is not defined for " + protocol + " " + network
+        "Check --NETWORK spelling as argument or in deployment.json: network=" +
+          network
+      );
+    } else if (
+      this.data[protocol]["networks"][network]["files"]["template"] == undefined
+    ) {
+      throw new Error(
+        "See deployment.json: template is missing for " +
+          protocol +
+          " " +
+          network
       );
     }
   }
 
   // Checks if the network level data necessary to build and deploy this subgraph is present and/or valid.
   checkNetworkLevelData(protocol, network) {
-    if (!this.data[protocol]["networks"][network]) {
-      throw new Error("network is not defined");
-    } else if (
-      !this.data[protocol]["networks"][network][this.getServiceByAlias()]
-    ) {
-      throw new Error("service is not defined for " + protocol + " " + network);
-    } else if (
-      !this.data[protocol]["networks"][network][this.getServiceByAlias()][
-        "subgraph-slug"
-      ]
-    ) {
+    if (this.data[protocol]["networks"][network] == undefined) {
       throw new Error(
-        "subgraph-slug is not defined for " + protocol + " " + network
+        "Check --NETWORK spelling as argument or in deployment.json: network=network"
       );
     } else if (
-      !this.data[protocol]["networks"][network][this.getServiceByAlias()][
-        "version"
-      ]
+      this.data[protocol]["networks"][network][this.getServiceByAlias()] ==
+      undefined
     ) {
-      throw new Error("version is not defined for " + protocol + " " + network);
-    } else if (!this.data[protocol]["networks"][network]["files"]["template"]) {
       throw new Error(
-        "template is not defined for " + protocol + " " + network
+        "See deployment.json: Service is missing for: protocol=" +
+          protocol +
+          " and network=" +
+          network
+      );
+    } else if (
+      this.data[protocol]["networks"][network][this.getServiceByAlias()][
+        "subgraph-slug"
+      ] == undefined
+    ) {
+      throw new Error(
+        "See deployment.json: subgraph-slug is not defined for: protocol=" +
+          protocol +
+          " network=" +
+          network
+      );
+    } else if (
+      this.data[protocol]["networks"][network][this.getServiceByAlias()][
+        "version"
+      ] == undefined
+    ) {
+      throw new Error(
+        "version is not defined for protocol=" +
+          protocol +
+          " network=" +
+          network
+      );
+    } else if (
+      this.data[protocol]["networks"][network]["files"]["template"] == undefined
+    ) {
+      throw new Error(
+        "See deployment.json: template is missing for: protocol=" +
+          protocol +
+          " network=" +
+          network
       );
     }
     this.checkValidVersion(
@@ -240,19 +273,39 @@ class Deployment {
     }
   }
 
+  isValidPackageJsonScripts() {
+    if (
+      this.type == undefined ||
+      this.access == undefined ||
+      this.fork == undefined ||
+      this.service == undefined ||
+      this.protocol == undefined ||
+      this.network == undefined ||
+      this.target == undefined ||
+      this.printlogs == undefined ||
+      this.merge == undefined
+    ) {
+      throw new Error(
+        "Please check package.json scripts in local subgraph folder. This error is being thrown becuase it is missing a parameteter in the 'deploy' script. You can find an updated version of the scripts in the deployments folder at the head of the directory."
+      );
+    }
+  }
+
   // Runs all checks for valid input data.
   isValidInput() {
     if (!this.target && this.type != "build") {
       throw new Error(
-        "Please specify a target location if you are deploy. If you are trying to build, set type=build"
+        "Please specify a target location if you are deploying. If you are trying to build, set type=build"
       );
     }
     if (!["build", "deploy", "check", ""].includes(this.type)) {
-      throw new Error("Please specify a valid type");
+      throw new Error("Please specify a valid type: type=" + this.type);
     }
-    this.checkAuthorization();
-    this.checkValidService();
-    this.checkValidDeploymentScope();
+    if (this.type != "build") {
+      this.checkAuthorization();
+      this.checkValidService();
+    }
+    this.checkValidScope();
   }
 
   // This checks if the deployment json file is valid for the deployments that you want to execute.
@@ -261,31 +314,34 @@ class Deployment {
     if (scope == "network") {
       this.checkProtocolLevelData(this.protocol);
       if (this.type == "deploy" || this.type == "check") {
-        this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
-      } else if (this.type == "build") {
         this.checkNetworkLevelData(this.protocol, this.network);
+      } else if (this.type == "build") {
+        this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
       }
     } else if (scope == "protocol") {
       this.checkProtocolLevelData(this.protocol);
       for (const network in this.data[this.protocol]["networks"]) {
         if (this.type == "deploy" || this.type == "check") {
-          this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
+          this.checkNetworkLevelData(this.protocol, network);
         } else if (this.type == "build") {
-          this.checkNetworkLevelData(this.protocol, this.network);
+          this.checkNetworkLevelBuildDataOnly(this.protocol, network);
         }
       }
     } else if (scope == "fork") {
       let forkProtocols = this.getAllForks();
       if (forkProtocols == []) {
-        return [false, "ERROR: fork is not defined"];
+        throw new Error(
+          "See deployment.json: fork is missing or not defined for: fork=" +
+            this.fork
+        );
       }
       for (const protocol in forkProtocols) {
         this.checkProtocolLevelData(protocol);
         for (const network in this.data[protocol]["networks"]) {
           if (this.type == "deploy" || this.type == "check") {
-            this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
+            this.checkNetworkLevelData(protocol, network);
           } else if (this.type == "build") {
-            this.checkNetworkLevelData(this.protocol, this.network);
+            this.checkNetworkLevelBuildDataOnly(protocol, network);
           }
         }
       }
@@ -309,7 +365,9 @@ class Deployment {
       case "c":
         return "cronos-portal";
       default:
-        throw new Error("service is not valid");
+        throw new Error(
+          "Service is missing or not valid for: service=" + this.service
+        );
     }
   }
 
@@ -330,8 +388,16 @@ class Deployment {
     return this.data[protocol]["networks"][network]["files"]["template"];
   }
 
-  getLocation(protocol, network, service) {
-    if (!this.data[protocol]["networks"][network][service][this.target]) {
+  getLocation(protocol, network) {
+    // Check if build first since you may not have a service and target prepared for build.
+    if (this.type == "build") {
+      return this.protocol + "/" + network;
+    }
+    let service = this.getServiceByAlias();
+    if (
+      this.data[protocol]["networks"][network][service][this.target] ==
+      undefined
+    ) {
       if (this.getServiceByAlias() == "hosted-service") {
         return (
           this.target +
@@ -359,7 +425,7 @@ class Deployment {
   }
 
   // Get the deployment script with the proper endpoint, version, and authorization token.
-  getDeploymentScript() {
+  getDeploymentScript(location) {
     let deploymentScript = "";
     switch (this.getServiceByAlias()) {
       case "decentralized-network":
@@ -405,7 +471,9 @@ class Deployment {
           " --node https://portal-api.cronoslabs.com/deploy --ipfs https://api.thegraph.com/ipfs";
         break;
       default:
-        throw new Error("service is not valid");
+        throw new Error(
+          "Service is missing or not valid for: service=" + this.service
+        );
     }
 
     return deploymentScript;

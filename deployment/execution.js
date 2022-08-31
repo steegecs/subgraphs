@@ -42,7 +42,7 @@ async function executeDeployment(deployment, callback) {
               );
             } else {
               logs = logs + "Exec error: " + error;
-              if (deployment.type == "build") {
+              if (["build", "check"].includes(deployment.type.toLowerCase())) {
                 results +=
                   "Build Failed: " + allDeployments[deploymentIndex] + "\n";
               } else {
@@ -60,7 +60,7 @@ async function executeDeployment(deployment, callback) {
             scriptIndex ==
             deployment.scripts.get(allDeployments[deploymentIndex]).length
           ) {
-            if (deployment.type == "build") {
+            if (["build", "check"].includes(deployment.type.toLowerCase())) {
               results +=
                 "Build Successful: " + allDeployments[deploymentIndex] + "\n";
             } else {
