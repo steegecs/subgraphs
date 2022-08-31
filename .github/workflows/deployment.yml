@@ -12,7 +12,6 @@ jobs:
       
       - name: deployment
         run: |
-          echo "::set-output name=configs_before::$(git show ${{ github.event.before }}:./deployment/deployment.json)"
           echo "::set-output name=configs_after::$(git show ${{ github.event.after }}:./deployment/deployment.json)"
 
       - uses: steegecs/Action-Subgraph-Deployment@payloads
