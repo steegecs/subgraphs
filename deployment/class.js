@@ -1,38 +1,42 @@
 class Deployment {
   constructor(depoymentJsonData, args) {
+    // Set arguments to variables
     this.data = depoymentJsonData;
     this.access = args.access;
-    this.service = args.service;
-    this.fork = args.fork;
-    this.protocol = args.protocol;
-    this.network = args.network;
-    this.target = args.target;
-    this.printlogs = args.printlogs;
-    this.merge = args.merge;
+    this.service = args.service.toLowerCase();
+    this.fork = args.fork.toLowerCase();
+    this.protocol = args.protocol.toLowerCase();
+    this.network = args.network.toLowerCase();
+    this.target = args.target.toLowerCase();
+    this.type = args.type.toLowerCase();
+    this.printlogs = args.printlogs.toLowerCase();
+    this.merge = args.merge.toLowerCase();
     this.scripts = new Map();
   }
 
   prepare() {
-    this.preprocessing();
+    this.isValidInput();
+    this.flattenFirstJsonLevel();
+    this.isValidJsonData();
     this.prepareScripts();
   }
 
   // Internal functions
   preprocessing() {
     this.flattenFirstJsonLevel();
-    this.isValidInput();
     this.isValidDeploymentData();
   }
 
+  // Checks if you are wanting to deploy a single network, all networks for a protocol, or all protocols and networks for a fork
   prepareScripts() {
-    let type = this.getDeploymentType();
-    if (type == "network") {
+    let scope = this.getDeploymentScope();
+    if (scope == "network") {
       this.generateScripts(
         this.protocol,
         this.network,
         this.getTemplate(this.protocol, this.network)
       );
-    } else if (type == "protocol") {
+    } else if (scope == "protocol") {
       for (const network in this.data[this.protocol]["networks"]) {
         this.generateScripts(
           this.protocol,
@@ -40,7 +44,7 @@ class Deployment {
           this.getTemplate(this.protocol, network)
         );
       }
-    } else if (type == "fork") {
+    } else if (scope == "fork") {
       let forkProtocols = this.getAllForks();
       for (const protocol in forkProtocols) {
         for (const network in this.data[protocol]["networks"]) {
@@ -54,6 +58,7 @@ class Deployment {
     }
   }
 
+  // Generates scripts necessary for deployment of each network
   generateScripts(protocol, network, template) {
     let scripts = [];
     let location = this.getLocation(
@@ -90,58 +95,17 @@ class Deployment {
     }
     scripts.push("graph codegen");
 
-    switch (this.getServiceByAlias()) {
-      case "decentralized-network":
-        let version = this.getVersion(
-          protocol,
-          network,
-          this.getServiceByAlias()
-        );
-        if (this.access) {
-          scripts.push(
-            "graph deploy --auth=" +
-              this.access +
-              " --product subgraph-studio " +
-              location +
-              " --versionLabel " +
-              version
-          );
-        } else {
-          scripts.push(
-            "graph deploy --product subgraph-studio " +
-              location +
-              " --versionLabel " +
-              version
-          );
-        }
-        break;
-      case "hosted-service":
-        if (this.access) {
-          scripts.push(
-            "graph deploy --auth=" +
-              this.access +
-              " --product hosted-service " +
-              location
-          );
-        } else {
-          scripts.push("graph deploy --product hosted-service " + location);
-        }
-        break;
-      case "cronos-portal":
-        scripts.push(
-          "graph deploy " +
-            location +
-            " --access-token=" +
-            this.access +
-            " --node https://portal-api.cronoslabs.com/deploy --ipfs https://api.thegraph.com/ipfs"
-        );
-        break;
-      default:
-        throw new Error("service is not valid");
+    // We don't want to deploy if we are building or just testing.
+    if ((this.type = "deploy" || this.type == "")) {
+      scripts.push(this.getDeploymentScript());
+    } else {
+      scripts.push("graph build");
     }
 
     this.scripts.set(location, scripts);
   }
+
+  // Just flattens the first level of the json file so you have networks as keys, instead of protocol type.
   flattenFirstJsonLevel() {
     let result = {};
     Object.keys(this.data).forEach((key1) =>
@@ -152,7 +116,8 @@ class Deployment {
     this.data = result;
   }
 
-  checkValidDeploymentType() {
+  // Makes sure the input arguments for the deployments you want are sensible.
+  checkValidDeploymentScope() {
     if (!this.protocol && !this.fork) {
       throw new Error(
         "please specify a protocol, protocol and network, or fork"
@@ -164,8 +129,9 @@ class Deployment {
     }
   }
 
+  // Checks if the input arguments are valid for the deployment location.
   checkValidService() {
-    switch (this.service.toLowerCase()) {
+    switch (this.service) {
       case "subgraph-studio":
       case "studio":
       case "s":
@@ -187,6 +153,7 @@ class Deployment {
     }
   }
 
+  // Makes sure the version specified in the json file is valid.
   checkValidVersion(version) {
     this.checkVersionLengthIsTwo(version);
     this.checkVersionIsNumber(version);
@@ -213,6 +180,27 @@ class Deployment {
     }
   }
 
+  // Checks if the protocol level data in the deployment json file is present and/or valid.
+  checkProtocolLevelData(protocol) {
+    if (!this.data[protocol]) {
+      throw new Error("protocol is not defined");
+    } else if (Object.keys(this.data[protocol]) == []) {
+      throw new Error("no networks are defined for " + protocol);
+    }
+  }
+
+  // Checks if the network level data necessary to build this subgraph is present and/or valid.
+  checkNetworkLevelBuildDataOnly(protocol, network) {
+    if (!this.data[protocol]["networks"][network]) {
+      throw new Error("network is not defined");
+    } else if (!this.data[protocol]["networks"][network]["files"]["template"]) {
+      throw new Error(
+        "template is not defined for " + protocol + " " + network
+      );
+    }
+  }
+
+  // Checks if the network level data necessary to build and deploy this subgraph is present and/or valid.
   checkNetworkLevelData(protocol, network) {
     if (!this.data[protocol]["networks"][network]) {
       throw new Error("network is not defined");
@@ -246,40 +234,47 @@ class Deployment {
     );
   }
 
-  checkProtocolLevelData(protocol) {
-    if (!this.data[protocol]) {
-      throw new Error("protocol is not defined");
-    } else if (Object.keys(this.data[protocol]) == []) {
-      throw new Error("no networks are defined for " + protocol);
-    }
-  }
-
   checkAuthorization() {
     if (!this.access && this.getServiceByAlias() == "cronos-portal") {
       throw new Error("please specify an authorization token");
     }
   }
 
+  // Runs all checks for valid input data.
   isValidInput() {
-    if (!this.target) {
-      throw new Error("target is not defined");
+    if (!this.target && this.type != "build") {
+      throw new Error(
+        "Please specify a target location if you are deploy. If you are trying to build, set type=build"
+      );
+    }
+    if (!["build", "deploy", "check", ""].includes(this.type)) {
+      throw new Error("Please specify a valid type");
     }
     this.checkAuthorization();
     this.checkValidService();
-    this.checkValidDeploymentType();
+    this.checkValidDeploymentScope();
   }
 
-  isValidDeploymentData() {
-    let type = this.getDeploymentType();
-    if (type == "network") {
+  // This checks if the deployment json file is valid for the deployments that you want to execute.
+  isValidJsonData() {
+    let scope = this.getDeploymentScope();
+    if (scope == "network") {
       this.checkProtocolLevelData(this.protocol);
-      this.checkNetworkLevelData(this.protocol, this.network);
-    } else if (type == "protocol") {
+      if (this.type == "deploy" || this.type == "check") {
+        this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
+      } else if (this.type == "build") {
+        this.checkNetworkLevelData(this.protocol, this.network);
+      }
+    } else if (scope == "protocol") {
       this.checkProtocolLevelData(this.protocol);
       for (const network in this.data[this.protocol]["networks"]) {
-        this.checkNetworkLevelData(this.protocol, network);
+        if (this.type == "deploy" || this.type == "check") {
+          this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
+        } else if (this.type == "build") {
+          this.checkNetworkLevelData(this.protocol, this.network);
+        }
       }
-    } else if (type == "fork") {
+    } else if (scope == "fork") {
       let forkProtocols = this.getAllForks();
       if (forkProtocols == []) {
         return [false, "ERROR: fork is not defined"];
@@ -287,14 +282,18 @@ class Deployment {
       for (const protocol in forkProtocols) {
         this.checkProtocolLevelData(protocol);
         for (const network in this.data[protocol]["networks"]) {
-          this.checkNetworkLevelData(protocol, network);
+          if (this.type == "deploy" || this.type == "check") {
+            this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
+          } else if (this.type == "build") {
+            this.checkNetworkLevelData(this.protocol, this.network);
+          }
         }
       }
     }
   }
 
   getServiceByAlias() {
-    switch (this.service.toLowerCase()) {
+    switch (this.service) {
       case "subgraph-studio":
       case "studio":
       case "s":
@@ -317,7 +316,7 @@ class Deployment {
   getAllForks() {
     returnObj = [];
     for (const protocol in this.data) {
-      if (this.data[protocol]["fork"].toLowerCase() == this.fork.toLowerCase())
+      if (this.data[protocol]["fork"].toLowerCase() == this.fork)
         returnObj.push(protocol);
     }
     return returnObj;
@@ -349,7 +348,7 @@ class Deployment {
     }
   }
 
-  getDeploymentType() {
+  getDeploymentScope() {
     if (this.protocol && this.network) {
       return "network";
     } else if (this.protocol) {
@@ -357,6 +356,59 @@ class Deployment {
     } else if (this.fork) {
       return "fork";
     }
+  }
+
+  // Get the deployment script with the proper endpoint, version, and authorization token.
+  getDeploymentScript() {
+    let deploymentScript = "";
+    switch (this.getServiceByAlias()) {
+      case "decentralized-network":
+        let version = this.getVersion(
+          protocol,
+          network,
+          this.getServiceByAlias()
+        );
+        if (this.access) {
+          deploymentScript =
+            "graph deploy --auth=" +
+            this.access +
+            " --product subgraph-studio " +
+            location +
+            " --versionLabel " +
+            version;
+        } else {
+          deploymentScript =
+            "graph deploy --product subgraph-studio " +
+            location +
+            " --versionLabel " +
+            version;
+        }
+        break;
+      case "hosted-service":
+        if (this.access) {
+          deploymentScript =
+            "graph deploy --auth=" +
+            this.access +
+            " --product hosted-service " +
+            location;
+        } else {
+          deploymentScript =
+            "graph deploy --product hosted-service " + location;
+        }
+        break;
+      case "cronos-portal":
+        deploymentScript =
+          "graph deploy " +
+          location +
+          " --access-token=" +
+          this.access +
+          " --node https://portal-api.cronoslabs.com/deploy --ipfs https://api.thegraph.com/ipfs";
+        break;
+      default:
+        throw new Error("service is not valid");
+    }
+
+    return deploymentScript;
   }
 }
 
