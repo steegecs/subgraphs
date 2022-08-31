@@ -15,6 +15,7 @@ jobs:
           #echo "::set-output name=configs_before::$(git show ${{ github.event.before }}:./deployment/deployment.json)"
           #echo "::set-output name=configs_after::$(git show ${{ github.event.before }}:./deployment/deployment.json)"
 
+
       - uses: steegecs/Action-Subgraph-Deployment@payloads
         with: 
           HOSTED_SERVICE_ACCESS_TOKEN: ${{ secrets.HOSTED_SERVICE_ACCESS_TOKEN }}
