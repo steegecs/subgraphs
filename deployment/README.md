@@ -3,11 +3,16 @@
 # Deploys uniswap-v2 to ethereum in steegecs hosted service.
 
 npm run deploy --PROTOCOL=uniswap-v2 --NETWORK=ethereum --TARGET=steegecs --SERVICE=h --TYPE=deploy
-npm run deploy --PROTOCOL=uniswap-v2 --NETWORK=ethereum --TARGET=steegecs --SERVICE=h
+
+**For deployments to Cronos network access token required**
+npm run deploy --PROTOCOL=vvs-finance --NETWORK=cronos --TARGET=steegecs --SERVICE=c --ACCESS='access_token'
 
 # Checks if uniswap-v2 is ready to deploy to ethereum in my hosted service and tests building the subgraph.
 
 npm run deploy --PROTOCOL=uniswap-v2 --NETWORK=ethereum --TARGET=steegecs --SERVICE=h --TYPE=check
+
+**For checks on the Cronos network access token required**
+npm run deploy --PROTOCOL=vvs-finance --NETWORK=cronos --TARGET=steegecs --SERVICE=c --ACCESS='access_token'
 
 # Builds uniswap-v2 for ethereum
 
@@ -38,4 +43,4 @@ npm run deploy --PROTOCOL=uniswap-v2 --TYPE=build
 - --TYPE=`build` --TYPE executes a clean build by first removing generated, build, subgraph.yaml, and configure.ts files and folders.
 - --TYPE=`deploy` command excutes the same step as `build`, but it goes all the way to deployment.
 - --TYPE=`check` command does everything `deploy` does except actually deploy the subgraph. What is different from `build` is that is runs all the same checks as `deploy`. Some do not apply to `build` - such as whether or not there is a valid deployment service in the deployment.json.
-  - This command will execute on each push to a remote branch in the Messari repository for relevant deployments that have been inpacted by the code changes.
+  - The deployment script will execute with `--TYPE=check` on each push to a remote branch in the Messari repository for relevant deployments that have been inpacted by the code changes.

@@ -36,7 +36,8 @@ class Deployment {
         this.network,
         this.getTemplate(this.protocol, this.network)
       );
-    } else if (scope == "protocol") {
+    }
+    if (scope == "protocol") {
       for (const network in this.data[this.protocol]["networks"]) {
         this.generateScripts(
           this.protocol,
@@ -44,7 +45,8 @@ class Deployment {
           this.getTemplate(this.protocol, network)
         );
       }
-    } else if (scope == "fork") {
+    }
+    if (scope == "fork") {
       let forkProtocols = this.getAllForks();
       for (const protocol in forkProtocols) {
         for (const network in this.data[protocol]["networks"]) {
@@ -93,7 +95,7 @@ class Deployment {
     scripts.push("graph codegen");
 
     // We don't want to deploy if we are building or just testing.
-    if (this.type == "deploy" || this.type == "") {
+    if (this.type == "deploy") {
       scripts.push(this.getDeploymentScript(location));
     } else {
       scripts.push("graph build");
@@ -115,9 +117,13 @@ class Deployment {
 
   // Makes sure the input arguments for the deployments you want are sensible.
   checkValidScope() {
-    if (!this.protocol && !this.fork) {
+    if (!this.fork && !this.protocol) {
       throw "--PROTOCOL, --NETWORK, --FORK: Please specify a protocol, protocol and network, or fork.";
-    } else if (this.fork && (this.protocol || this.network)) {
+    }
+    if (!this.protocol && this.network) {
+      throw "--PROTOCOL, --NETWORK,: Please specify a protocol for a deployment to a specific network.";
+    }
+    if (this.fork && (this.protocol || this.network)) {
       throw "--PROTOCOL, --NETWORK, --FORK: If you specify a fork, you must not specify a protocol or network";
     }
   }
@@ -130,11 +136,9 @@ class Deployment {
       case "s":
       case "decentralized-network":
       case "d":
-        return true;
       case "hosted-service":
       case "hosted":
       case "h":
-        return true;
       case "cronos-portal":
       case "cronos":
       case "c":
@@ -149,13 +153,13 @@ class Deployment {
 
   // Makes sure the version specified in the json file is valid.
   checkValidVersion(version) {
-    this.checkVersionLengthIsTwo(version);
+    this.checkVersionLengthIsThree(version);
     this.checkVersionIsNumber(version);
   }
 
-  checkVersionLengthIsTwo(version) {
-    if (version.split(".").length - 1 != 2) {
-      throw "See deployment.json: (1) version is not valid - must be in format x.x.x (e.g. 1.3.1)";
+  checkVersionLengthIsThree(version) {
+    if (version.split(".").length != 3) {
+      throw "See deployment.json: (1) version is not valid - should be 3 integers separated by periods - must be in format x.x.x (e.g. 1.3.1)";
     }
   }
 
@@ -166,18 +170,19 @@ class Deployment {
         return !isNaN(element);
       })
     ) {
-      throw "See deployment.json: (2) version is not valid - must be in format x.x.x (e.g. 1.3.1)";
+      throw "See deployment.json: (2) version is not valid - make sure to use integers between the periods - must be in format x.x.x (e.g. 1.3.1)";
     }
   }
 
   // Checks if the protocol level data in the deployment json file is present and/or valid.
   checkProtocolLevelData(protocol) {
-    if (this.data[protocol] == undefined) {
+    if ([undefined, ""].includes(this.data[protocol])) {
       throw (
         "Check --PROTOCOL spelling as argument or in deployment.json: protocol= " +
         protocol
       );
-    } else if (Object.keys(this.data[protocol]) == []) {
+    }
+    if (Object.keys(this.data[protocol]).length == 0) {
       throw (
         "See deployment.json: No networks are defined for: protocol=" + protocol
       );
@@ -185,15 +190,15 @@ class Deployment {
   }
 
   // Checks if the network level data necessary to build this subgraph is present and/or valid.
-  checkNetworkLevelBuildDataOnly(protocol, network) {
-    if (this.data[protocol]["networks"][network] == undefined) {
+  checkNetworkLevelBuildData(protocol, network) {
+    let networkData = this.data[protocol]["networks"][network];
+    if ([undefined, ""].includes(networkData)) {
       throw (
         "Check --NETWORK spelling as argument or in deployment.json: network=" +
         network
       );
-    } else if (
-      this.data[protocol]["networks"][network]["files"]["template"] == undefined
-    ) {
+    }
+    if ([undefined, ""].includes(networkData["files"]["template"])) {
       throw (
         "See deployment.json: template is missing for " +
         protocol +
@@ -204,23 +209,23 @@ class Deployment {
   }
 
   // Checks if the network level data necessary to build and deploy this subgraph is present and/or valid.
-  checkNetworkLevelData(protocol, network) {
-    if (this.data[protocol]["networks"][network] == undefined) {
+  checkNetworkLevelDeployData(protocol, network) {
+    let networkData = this.data[protocol]["networks"][network];
+    if ([undefined, ""].includes(networkData)) {
       throw "Check --NETWORK spelling as argument or in deployment.json: network=network";
-    } else if (
-      this.data[protocol]["networks"][network][this.getServiceByAlias()] ==
-      undefined
-    ) {
+    }
+    if ([undefined, ""].includes(networkData[this.getServiceByAlias()])) {
       throw (
         "See deployment.json: Service is missing for: protocol=" +
         protocol +
         " and network=" +
         network
       );
-    } else if (
-      this.data[protocol]["networks"][network][this.getServiceByAlias()][
-        "subgraph-slug"
-      ] == undefined
+    }
+    if (
+      [undefined, ""].includes(
+        networkData[this.getServiceByAlias()]["subgraph-slug"]
+      )
     ) {
       throw (
         "See deployment.json: subgraph-slug is not defined for: protocol=" +
@@ -228,10 +233,9 @@ class Deployment {
         " network=" +
         network
       );
-    } else if (
-      this.data[protocol]["networks"][network][this.getServiceByAlias()][
-        "version"
-      ] == undefined
+    }
+    if (
+      [undefined, ""].includes(networkData[this.getServiceByAlias()]["version"])
     ) {
       throw (
         "version is not defined for protocol=" +
@@ -239,9 +243,8 @@ class Deployment {
         " network=" +
         network
       );
-    } else if (
-      this.data[protocol]["networks"][network]["files"]["template"] == undefined
-    ) {
+    }
+    if ([undefined, ""].includes(networkData["files"]["template"])) {
       throw (
         "See deployment.json: template is missing for: protocol=" +
         protocol +
@@ -249,11 +252,15 @@ class Deployment {
         network
       );
     }
-    this.checkValidVersion(
-      this.data[protocol]["networks"][network][this.getServiceByAlias()][
-        "version"
-      ]
-    );
+    this.checkValidVersion(networkData[this.getServiceByAlias()]["version"]);
+  }
+
+  checkNetworkLevelData(protocol, network) {
+    if (this.type == "deploy" || this.type == "check") {
+      this.checkNetworkLevelDeployData(protocol, network);
+    } else {
+      this.checkNetworkLevelBuildData(protocol, network);
+    }
   }
 
   checkAuthorization() {
@@ -267,7 +274,7 @@ class Deployment {
     if (!this.target && this.type != "build") {
       throw "Please specify a target location if you are deploying. If you are trying to build, set type=build";
     }
-    if (!["build", "deploy", "check", ""].includes(this.type)) {
+    if (!["build", "deploy", "check"].includes(this.type)) {
       throw "Please specify a valid type: type=" + this.type;
     }
     if (this.type != "build") {
@@ -282,23 +289,17 @@ class Deployment {
     let scope = this.getDeploymentScope();
     if (scope == "network") {
       this.checkProtocolLevelData(this.protocol);
-      if (this.type == "deploy" || this.type == "check") {
-        this.checkNetworkLevelData(this.protocol, this.network);
-      } else if (this.type == "build") {
-        this.checkNetworkLevelBuildDataOnly(this.protocol, this.network);
-      }
-    } else if (scope == "protocol") {
+      this.checkNetworkLevelData(this.protocol, this.network);
+    }
+    if (scope == "protocol") {
       this.checkProtocolLevelData(this.protocol);
       for (const network in this.data[this.protocol]["networks"]) {
-        if (this.type == "deploy" || this.type == "check") {
-          this.checkNetworkLevelData(this.protocol, network);
-        } else if (this.type == "build") {
-          this.checkNetworkLevelBuildDataOnly(this.protocol, network);
-        }
+        this.checkNetworkLevelData(this.protocol, network);
       }
-    } else if (scope == "fork") {
+    }
+    if (scope == "fork") {
       let forkProtocols = this.getAllForks();
-      if (forkProtocols == []) {
+      if (forkProtocols.length == 0) {
         throw (
           "See deployment.json: fork is missing or not defined for: fork=" +
           this.fork
@@ -307,11 +308,7 @@ class Deployment {
       for (const protocol in forkProtocols) {
         this.checkProtocolLevelData(protocol);
         for (const network in this.data[protocol]["networks"]) {
-          if (this.type == "deploy" || this.type == "check") {
-            this.checkNetworkLevelData(protocol, network);
-          } else if (this.type == "build") {
-            this.checkNetworkLevelBuildDataOnly(protocol, network);
-          }
+          this.checkNetworkLevelData(protocol, network);
         }
       }
     }
@@ -384,9 +381,11 @@ class Deployment {
   getDeploymentScope() {
     if (this.protocol && this.network) {
       return "network";
-    } else if (this.protocol) {
+    }
+    if (this.protocol) {
       return "protocol";
-    } else if (this.fork) {
+    }
+    if (this.fork) {
       return "fork";
     }
   }
