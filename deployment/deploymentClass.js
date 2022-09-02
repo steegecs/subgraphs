@@ -176,7 +176,7 @@ class Deployment {
 
   // Checks if the protocol level data in the deployment json file is present and/or valid.
   checkProtocolLevelData(protocol) {
-    if ([undefined, ""].includes(this.data[protocol])) {
+    if (!this.data[protocol]) {
       throw (
         "Check --PROTOCOL spelling as argument or in deployment.json: protocol= " +
         protocol
@@ -192,13 +192,13 @@ class Deployment {
   // Checks if the network level data necessary to build this subgraph is present and/or valid.
   checkNetworkLevelBuildData(protocol, network) {
     let networkData = this.data[protocol]["networks"][network];
-    if ([undefined, ""].includes(networkData)) {
+    if (!networkData) {
       throw (
         "Check --NETWORK spelling as argument or in deployment.json: network=" +
         network
       );
     }
-    if ([undefined, ""].includes(networkData["files"]["template"])) {
+    if (!networkData["files"]["template"]) {
       throw (
         "See deployment.json: template is missing for " +
         protocol +
@@ -211,10 +211,10 @@ class Deployment {
   // Checks if the network level data necessary to build and deploy this subgraph is present and/or valid.
   checkNetworkLevelDeployData(protocol, network) {
     let networkData = this.data[protocol]["networks"][network];
-    if ([undefined, ""].includes(networkData)) {
+    if (!networkData) {
       throw "Check --NETWORK spelling as argument or in deployment.json: network=network";
     }
-    if ([undefined, ""].includes(networkData[this.getServiceByAlias()])) {
+    if (!networkData[this.getServiceByAlias()]) {
       throw (
         "See deployment.json: Service is missing for: protocol=" +
         protocol +
@@ -222,11 +222,7 @@ class Deployment {
         network
       );
     }
-    if (
-      [undefined, ""].includes(
-        networkData[this.getServiceByAlias()]["subgraph-slug"]
-      )
-    ) {
+    if (!networkData[this.getServiceByAlias()]["subgraph-slug"]) {
       throw (
         "See deployment.json: subgraph-slug is not defined for: protocol=" +
         protocol +
@@ -234,9 +230,7 @@ class Deployment {
         network
       );
     }
-    if (
-      [undefined, ""].includes(networkData[this.getServiceByAlias()]["version"])
-    ) {
+    if (!networkData[this.getServiceByAlias()]["version"]) {
       throw (
         "version is not defined for protocol=" +
         protocol +
@@ -244,7 +238,7 @@ class Deployment {
         network
       );
     }
-    if ([undefined, ""].includes(networkData["files"]["template"])) {
+    if (!networkData["files"]["template"]) {
       throw (
         "See deployment.json: template is missing for: protocol=" +
         protocol +
