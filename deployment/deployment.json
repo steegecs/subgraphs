@@ -1502,7 +1502,7 @@
     "abracadabra-money": {
       "networks": {
         "arbitrum": {
-          "status": "dev",
+          "status": "prod",
           "services": {
             "hosted-service": {
               "subgraph-slug": "abracadabra-money-arbitrum"
@@ -1859,7 +1859,7 @@
     "gamma-strategies": {
       "networks": {
         "arbitrum": {
-          "status": "dev",
+          "status": "prod",
           "services": {
             "hosted-service": {
               "subgraph-slug": "gamma-arbitrum"
