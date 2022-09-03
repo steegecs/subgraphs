@@ -1,12 +1,50 @@
 {
   "dex-amm": {
+    "apeswap": {
+      "networks": {
+        "bsc": {
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "apeswap-bsc"
+            }
+          },
+          "files": {
+            "template": "apeswap.bsc.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        },
+        "polygon": {
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "apeswap-polygon"
+            }
+          },
+          "files": {
+            "template": "apeswap.matic.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
     "balancer-v2": {
       "fork": "balancer-forks",
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "balancer-v2-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "balancer-v2-arbitrum"
+            }
           },
           "files": {
             "template": "balancer.v2.template.yaml"
@@ -18,9 +56,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "balancer-v2-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "balancer-v2-polygon"
+            }
           },
           "files": {
             "template": "balancer.v2.template.yaml"
@@ -32,42 +72,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "balancer-v2-ethereum",
-            "version": ""
-          },
-          "files": {
-            "template": "balancer.v2.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
-    "beethoven-x": {
-      "fork": "balancer-forks",
-      "networks": {
-        "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "beethoven-x-optimism",
-            "version": ""
-          },
-          "files": {
-            "template": "balancer.v2.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        },
-        "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "beethoven-x-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "balancer-v2-ethereum"
+            }
           },
           "files": {
             "template": "balancer.v2.template.yaml"
@@ -83,9 +92,11 @@
     "bancor-v3": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "bancor-v3-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "bancor-v3-ethereum"
+            }
           },
           "files": {
             "template": "bancor.v3.template.yaml"
@@ -97,12 +108,51 @@
         }
       }
     },
+    "beethoven-x": {
+      "fork": "balancer-forks",
+      "networks": {
+        "optimism": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "beethoven-x-optimism"
+            }
+          },
+          "files": {
+            "template": "balancer.v2.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        },
+        "fantom": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "beethoven-x-fantom"
+            }
+          },
+          "files": {
+            "template": "balancer.v2.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
     "curve-finance": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "curve-finance-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "curve-finance-arbitrum"
+            }
           },
           "files": {
             "template": "curve.template.yaml"
@@ -113,9 +163,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "curve-finance-avalanche",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "curve-finance-avalanche"
+            }
           },
           "files": {
             "template": "curve.template.yaml"
@@ -126,9 +178,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "curve-finance-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "curve-finance-fantom"
+            }
           },
           "files": {
             "template": "curve.template.yaml"
@@ -139,9 +193,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "curve-finance-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "curve-finance-ethereum"
+            }
           },
           "files": {
             "template": "curve.template.yaml"
@@ -152,9 +208,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "curve-finance-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "curve-finance-polygon"
+            }
           },
           "files": {
             "template": "curve.template.yaml"
@@ -165,9 +223,11 @@
           }
         },
         "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "curve-finance-optimism",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "curve-finance-optimism"
+            }
           },
           "files": {
             "template": "curve.template.yaml"
@@ -178,9 +238,11 @@
           }
         },
         "gnosis": {
-          "hosted-service": {
-            "subgraph-slug": "curve-finance-gnosis",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "curve-finance-gnosis"
+            }
           },
           "files": {
             "template": "curve.template.yaml"
@@ -195,9 +257,11 @@
     "ellipsis-finance": {
       "network": {
         "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "ellipsis-finance-bsc",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "ellipsis-finance-bsc"
+            }
           },
           "files": {
             "template": "ellipsis.finance.template.yaml"
@@ -209,12 +273,50 @@
         }
       }
     },
+    "honeyswap": {
+      "networks": {
+        "gnosis": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "honeyswap-gnosis"
+            }
+          },
+          "files": {
+            "template": "honeyswap.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        },
+        "polygon": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "honeyswap-polygon"
+            }
+          },
+          "files": {
+            "template": "honeyswap.matic.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
     "platypus-finance": {
       "networks": {
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "platypus-finance-avalanche",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "platypus-finance-avalanche"
+            }
           },
           "files": {
             "template": "platypus.template.yaml"
@@ -226,100 +328,14 @@
         }
       }
     },
-    "saddle-finance": {
-      "networks": {
-        "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "saddle-finance-arbitrum",
-            "version": ""
-          },
-          "files": {
-            "template": "saddle.finance.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        },
-        "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "saddle-finance-fantom",
-            "version": ""
-          },
-          "files": {
-            "template": "saddle.finance.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        },
-        "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "saddle-finance-ethereum",
-            "version": ""
-          },
-          "files": {
-            "template": "saddle.finance.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        },
-        "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "saddle-finance-optimism",
-            "version": ""
-          },
-          "files": {
-            "template": "saddle.finance.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
-    "apeswap": {
-      "networks": {
-        "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "apeswap-bsc",
-            "version": "1.1.5"
-          },
-          "files": {
-            "template": "apeswap.bsc.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        },
-        "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "apeswap-polygon",
-            "version": "1.1.5"
-          },
-          "files": {
-            "template": "apeswap.matic.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
     "quickswap": {
       "networks": {
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "quickswap-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "quickswap-polygon"
+            }
           },
           "files": {
             "template": "quickswap.template.yaml"
@@ -332,12 +348,78 @@
         }
       }
     },
+    "saddle-finance": {
+      "networks": {
+        "arbitrum": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "saddle-finance-arbitrum"
+            }
+          },
+          "files": {
+            "template": "saddle.finance.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        },
+        "fantom": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "saddle-finance-fantom"
+            }
+          },
+          "files": {
+            "template": "saddle.finance.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        },
+        "ethereum": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "saddle-finance-ethereum"
+            }
+          },
+          "files": {
+            "template": "saddle.finance.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        },
+        "optimism": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "saddle-finance-optimism"
+            }
+          },
+          "files": {
+            "template": "saddle.finance.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
     "solarbeam": {
       "networks": {
         "moonriver": {
-          "hosted-service": {
-            "subgraph-slug": "solarbeam-moonriver",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "solarbeam-moonriver"
+            }
           },
           "files": {
             "template": "solarbeam.template.yaml"
@@ -353,9 +435,11 @@
     "spiritswap": {
       "networks": {
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "spiritswap-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "solarbeam-fantom"
+            }
           },
           "files": {
             "template": "spiritswap.template.yaml"
@@ -371,9 +455,11 @@
     "spookyswap": {
       "networks": {
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "spookyswap-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "spookyswap-fantom"
+            }
           },
           "files": {
             "template": "spookyswap.template.yaml"
@@ -389,9 +475,11 @@
     "sushiswap": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-arbitrum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-arbitrum"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
@@ -403,9 +491,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-avalanche",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-avalanche"
+            }
           },
           "files": {
             "template": "uniswap.v2.template.yaml"
@@ -417,9 +507,11 @@
           }
         },
         "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-bsc",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-bsc"
+            }
           },
           "files": {
             "template": "uniswap.v2.template.yaml"
@@ -431,9 +523,11 @@
           }
         },
         "celo": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-celo",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-celo"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
@@ -445,9 +539,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-fantom",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-fantom"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
@@ -459,9 +555,11 @@
           }
         },
         "fuse": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-fuse",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-fuse"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
@@ -473,9 +571,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-ethereum"
+            }
           },
           "files": {
             "template": "sushiswap.mainnet.template.yaml"
@@ -487,9 +587,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-polygon",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-polygon"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
@@ -501,9 +603,11 @@
           }
         },
         "moonbeam": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-moonbeam",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-moonbeam"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
@@ -515,9 +619,11 @@
           }
         },
         "moonriver": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-moonriver",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-moonriver"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
@@ -529,72 +635,14 @@
           }
         },
         "gnosis": {
-          "hosted-service": {
-            "subgraph-slug": "sushiswap-gnosis",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "sushiswap-gnosis"
+            }
           },
           "files": {
             "template": "sushiswap.alt.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
-    "uniswap-v3": {
-      "networks": {
-        "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "uniswap-v3-ethreum",
-            "version": ""
-          },
-          "files": {
-            "template": "uniswap.v3.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        },
-        "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "uniswap-v3-arbitrum",
-            "version": ""
-          },
-          "files": {
-            "template": "uniswap.v3.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        },
-        "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "uniswap-v3-optimism",
-            "version": ""
-          },
-          "files": {
-            "template": "uniswap.v3.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        },
-        "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "uniswap-v3-polygon",
-            "version": ""
-          },
-          "files": {
-            "template": "uniswap.v3.template.yaml"
           },
           "options": {
             "prepare:yaml": true,
@@ -607,9 +655,11 @@
     "trader-joe": {
       "networks": {
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "trader-joe-avalanche",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "trader-joe-avalanche"
+            }
           },
           "files": {
             "template": "trader.joe.template.yaml"
@@ -622,30 +672,14 @@
         }
       }
     },
-    "trisolaris": {
-      "networks": {
-        "aurora": {
-          "hosted-service": {
-            "subgraph-slug": "trisolaris-aurora",
-            "version": ""
-          },
-          "files": {
-            "template": "trisolaris.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "prepare:constants": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
     "ubeswap": {
       "networks": {
         "celo": {
-          "hosted-service": {
-            "subgraph-slug": "ubeswap-celo",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "ubeswap-celo"
+            }
           },
           "files": {
             "template": "ubeswap-template.yaml"
@@ -661,13 +695,14 @@
     "uniswap-v2": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "uniswap-v2-ethereum",
-            "version": "1.1.7"
-          },
-          "decentralized-network": {
-            "subgraph-slug": "uniswap-v2-ethereum",
-            "version": "1.1.7"
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "uniswap-v2-ethereum"
+            },
+            "decentralized-network": {
+              "subgraph-slug": "uniswap-v2-ethereum"
+            }
           },
           "files": {
             "template": "uniswap.v2.template.yaml"
@@ -680,15 +715,65 @@
         }
       }
     },
-    "vvs-finance": {
+    "uniswap-v3": {
       "networks": {
-        "cronos": {
-          "hosted-service": {
-            "subgraph-slug": "vvs-finance",
-            "version": ""
+        "ethereum": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "uniswap-v3-ethereum"
+            }
           },
           "files": {
-            "template": "vvs.finance.template.yaml"
+            "template": "uniswap.v3.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        },
+        "arbitrum": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "uniswap-v3-arbitrum"
+            }
+          },
+          "files": {
+            "template": "uniswap.v3.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        },
+        "optimism": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "uniswap-v3-optimism"
+            }
+          },
+          "files": {
+            "template": "uniswap.v3.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "prepare:constants": true,
+            "deploy-on-merge": false
+          }
+        },
+        "polygon": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "uniswap-v3-polygon"
+            }
+          },
+          "files": {
+            "template": "uniswap.v3.template.yaml"
           },
           "options": {
             "prepare:yaml": true,
@@ -698,29 +783,37 @@
         }
       }
     },
-    "honeyswap": {
+    "trisolaris": {
       "networks": {
-        "gnosis": {
-          "hosted-service": {
-            "subgraph-slug": "honeyswap-gnosis",
-            "version": ""
+        "aurora": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "trisolaris-aurora"
+            }
           },
           "files": {
-            "template": "honeyswap.template.yaml"
+            "template": "trisolaris.template.yaml"
           },
           "options": {
             "prepare:yaml": true,
             "prepare:constants": true,
             "deploy-on-merge": false
           }
-        },
-        "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "honeyswap-polygon",
-            "version": ""
+        }
+      }
+    },
+    "vvs-finance": {
+      "networks": {
+        "cronos": {
+          "status": "dev",
+          "services": {
+            "cronos-portal": {
+              "subgraph-slug": "vvs-finance"
+            }
           },
           "files": {
-            "template": "honeyswap.matic.template.yaml"
+            "template": "vvs.finance.template.yaml"
           },
           "options": {
             "prepare:yaml": true,
@@ -735,9 +828,11 @@
     "aave-v2": {
       "networks": {
         "ethereum-arc": {
-          "hosted-service": {
-            "subgraph-slug": "aave-arc-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-arc-ethereum"
+            }
           },
           "files": {
             "template": "aave.v2.template.yaml"
@@ -748,9 +843,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v2-avalanche",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v2-avalanche"
+            }
           },
           "files": {
             "template": "aave.v2.template.yaml"
@@ -761,9 +858,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v2-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v2-ethereum"
+            }
           },
           "files": {
             "template": "aave.v2.template.yaml"
@@ -774,10 +873,11 @@
           }
         },
         "ethereum-amm": {
-          "hosted-service": {
-            "messari": "messari/aave-amm-ethereum",
-            "subgraph-slug": "aave-amm-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-amm-ethereum"
+            }
           },
           "files": {
             "template": "aave.v2.template.yaml"
@@ -788,9 +888,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v2-polygon",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v2-polygon"
+            }
           },
           "files": {
             "template": "aave.v2.template.yaml"
@@ -801,32 +903,14 @@
           }
         },
         "ethereum-rwa": {
-          "hosted-service": {
-            "messari": "messari/aave-rwa-ethereum",
-            "dmelotik": "dmelotik/aave-v2-rwa",
-            "subgraph-slug": "aave-rwa-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-rwa-ethereum"
+            }
           },
           "files": {
             "template": "aave.v2.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
-    "geist-finance": {
-      "networks": {
-        "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "geist-finance-fantom",
-            "dmelotik": "dmelotik/geist-fantom",
-            "version": ""
-          },
-          "files": {
-            "template": "geist.finance.template.yaml"
           },
           "options": {
             "prepare:yaml": true,
@@ -838,9 +922,11 @@
     "aave-v3": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v3-arbitrum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v3-arbitrum"
+            }
           },
           "files": {
             "template": "aave-v3.template.yaml"
@@ -851,9 +937,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v3-avalanche",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v3-avalanche"
+            }
           },
           "files": {
             "template": "aave-v3.template.yaml"
@@ -864,9 +952,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v3-fantom",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v3-fantom"
+            }
           },
           "files": {
             "template": "aave-v3.template.yaml"
@@ -877,9 +967,11 @@
           }
         },
         "harmony": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v3-harmony",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v3-harmony"
+            }
           },
           "files": {
             "template": "aave-v3.template.yaml"
@@ -890,9 +982,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v3-polygon",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v3-polygon"
+            }
           },
           "files": {
             "template": "aave-v3.template.yaml"
@@ -903,9 +997,11 @@
           }
         },
         "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "aave-v3-optimism",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aave-v3-optimism"
+            }
           },
           "files": {
             "template": "aave-v3.template.yaml"
@@ -920,9 +1016,11 @@
     "aurigami": {
       "networks": {
         "aurora": {
-          "hosted-service": {
-            "subgraph-slug": "aurigami-aurora",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "aurigami-aurora"
+            }
           },
           "files": {
             "template": "aurigami.template.yaml"
@@ -937,9 +1035,11 @@
     "banker-joe": {
       "networks": {
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "banker-joe-avalanche",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "banker-joe-avalanche"
+            }
           },
           "files": {
             "template": "banker-joe.template.yaml"
@@ -951,29 +1051,14 @@
         }
       }
     },
-    "tectonic": {
-      "networks": {
-        "cronos": {
-          "hosted-service": {
-            "subgraph-slug": "tectonic-cronos",
-            "version": ""
-          },
-          "files": {
-            "template": "tectonic.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
     "bastion-protocol": {
       "networks": {
         "aurora": {
-          "hosted-service": {
-            "subgraph-slug": "bastion-protocol-aurora",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "bastion-protocol-aurora"
+            }
           },
           "files": {
             "template": "bastion-protocol.template.yaml"
@@ -988,9 +1073,11 @@
     "benqi": {
       "networks": {
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "benqi-avalanche",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "benqi-avalanche"
+            }
           },
           "files": {
             "template": "benqi.template.yaml"
@@ -1005,9 +1092,11 @@
     "compound-v2": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "compound-v2-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "compound-v2-ethereum"
+            }
           },
           "files": {
             "template": "compound-v2.template.yaml"
@@ -1022,9 +1111,11 @@
     "cream-finance": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "cream-finance-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "cream-finance-arbitrum"
+            }
           },
           "files": {
             "template": "cream-finance.template.yaml"
@@ -1035,9 +1126,11 @@
           }
         },
         "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "cream-finance-bsc",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "cream-finance-bsc"
+            }
           },
           "files": {
             "template": "cream-finance.template.yaml"
@@ -1048,9 +1141,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "cream-finance-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "cream-finance-ethereum"
+            }
           },
           "files": {
             "template": "cream-finance.template.yaml"
@@ -1061,9 +1156,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "cream-finance-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "cream-finance-polygon"
+            }
           },
           "files": {
             "template": "cream-finance.template.yaml"
@@ -1078,9 +1175,11 @@
     "dforce": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "dforce-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "dforce-arbitrum"
+            }
           },
           "files": {
             "template": "dforce.template.yaml"
@@ -1091,9 +1190,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "dforce-avalanche",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "dforce-avalanche"
+            }
           },
           "files": {
             "template": "dforce.template.yaml"
@@ -1104,9 +1205,11 @@
           }
         },
         "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "dforce-bsc",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "dforce-bsc"
+            }
           },
           "files": {
             "template": "dforce.template.yaml"
@@ -1117,9 +1220,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "dforce-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "dforce-ethereum"
+            }
           },
           "files": {
             "template": "dforce.template.yaml"
@@ -1130,9 +1235,11 @@
           }
         },
         "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "dforce-optimism",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "dforce-optimism"
+            }
           },
           "files": {
             "template": "dforce.template.yaml"
@@ -1143,12 +1250,52 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "dforce-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "dforce-polygon"
+            }
           },
           "files": {
             "template": "dforce.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
+    "euler-finance": {
+      "networks": {
+        "ethereum": {
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "euler-finance-ethereum"
+            }
+          },
+          "files": {
+            "template": "euler.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
+    "geist-finance": {
+      "networks": {
+        "fantom": {
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "geist-finance-fantom"
+            }
+          },
+          "files": {
+            "template": "geist.finance.template.yaml"
           },
           "options": {
             "prepare:yaml": true,
@@ -1160,9 +1307,11 @@
     "iron-bank": {
       "networks": {
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "iron-bank-avalanche",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "iron-bank-avalanche"
+            }
           },
           "files": {
             "template": "iron-bank.template.yaml"
@@ -1173,9 +1322,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "iron-bank-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "iron-bank-fantom"
+            }
           },
           "files": {
             "template": "iron-bank.template.yaml"
@@ -1186,80 +1337,14 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "iron-bank-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "iron-bank-ethereum"
+            }
           },
           "files": {
             "template": "iron-bank.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
-    "rari-fuse": {
-      "networks": {
-        "arbitrum": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/fuse-official",
-            "subgraph-slug": "rari-fuse-arbitrum",
-            "version": ""
-          },
-          "files": {
-            "template": "rari-fuse.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        },
-        "ethereum": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/fuse-mainnet",
-            "subgraph-slug": "rari-fuse-ethereum",
-            "version": ""
-          },
-          "files": {
-            "template": "rari-fuse.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
-    "scream": {
-      "networks": {
-        "fantom": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/scream",
-            "subgraph-slug": "scream-fantom",
-            "version": ""
-          },
-          "files": {
-            "template": "scream.template.yaml"
-          },
-          "options": {
-            "prepare:yaml": true,
-            "deploy-on-merge": false
-          }
-        }
-      }
-    },
-    "venus": {
-      "networks": {
-        "bsc": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/venus",
-            "subgraph-slug": "venus-protocol-bsc",
-            "version": ""
-          },
-          "files": {
-            "template": "venus.template.yaml"
           },
           "options": {
             "prepare:yaml": true,
@@ -1271,9 +1356,11 @@
     "maple-finance": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "maple-finance-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "maple-finance-ethereum"
+            }
           },
           "files": {
             "template": "maple.finance.template.yaml"
@@ -1288,9 +1375,11 @@
     "moonwell": {
       "networks": {
         "moonriver": {
-          "hosted-service": {
-            "subgraph-slug": "moonwell-moonriver",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "moonwell-moonriver"
+            }
           },
           "files": {
             "template": "moonwell.template.yaml"
@@ -1301,9 +1390,11 @@
           }
         },
         "moonbeam": {
-          "hosted-service": {
-            "subgraph-slug": "moonwell-moonbeam",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "moonwell-moonbeam"
+            }
           },
           "files": {
             "template": "moonwell.template.yaml"
@@ -1314,16 +1405,108 @@
           }
         }
       }
+    },
+    "rari-fuse": {
+      "networks": {
+        "arbitrum": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "rari-fuse-arbitrum"
+            }
+          },
+          "files": {
+            "template": "rari-fuse.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        },
+        "ethereum": {
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "rari-fuse-ethereum"
+            }
+          },
+          "files": {
+            "template": "rari-fuse.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
+    "scream": {
+      "networks": {
+        "fantom": {
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "scream-fantom"
+            }
+          },
+          "files": {
+            "template": "scream.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
+    "tectonic": {
+      "networks": {
+        "cronos": {
+          "status": "prod",
+          "services": {
+            "cronos-portal": {
+              "subgraph-slug": "tectonic"
+            }
+          },
+          "files": {
+            "template": "tectonic.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
+    },
+    "venus-protocol": {
+      "networks": {
+        "bsc": {
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "venus-protocol-bsc"
+            }
+          },
+          "files": {
+            "template": "venus.template.yaml"
+          },
+          "options": {
+            "prepare:yaml": true,
+            "deploy-on-merge": false
+          }
+        }
+      }
     }
   },
   "cdp": {
-    "abracadabra": {
+    "abracadabra-money": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/abracadabra-arbitrum",
-            "subgraph-slug": "abracadabra-money-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "abracadabra-money-arbitrum"
+            }
           },
           "files": {
             "template": "abracadabra.money.template.yaml"
@@ -1334,10 +1517,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/abracadabra-avalanche",
-            "subgraph-slug": "abracadabra-money-avalanche",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "abracadabra-money-avalanche"
+            }
           },
           "files": {
             "template": "abracadabra.money.template.yaml"
@@ -1348,10 +1532,11 @@
           }
         },
         "bsc": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/abracadabra-bsc",
-            "subgraph-slug": "abracadabra-money-bsc",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "abracadabra-money-bsc"
+            }
           },
           "files": {
             "template": "abracadabra.money.template.yaml"
@@ -1362,10 +1547,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/abracadabra-fantom",
-            "subgraph-slug": "abracadabra-money-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "abracadabra-money-fantom"
+            }
           },
           "files": {
             "template": "abracadabra.money.template.yaml"
@@ -1376,10 +1562,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/abracadabra-ethereum",
-            "subgraph-slug": "abracadabra-money-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "abracadabra-money-ethereum"
+            }
           },
           "files": {
             "template": "abracadabra.money.template.yaml"
@@ -1394,9 +1581,11 @@
     "inverse-finance": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "inverse-finance-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "inverse-finance-ethereum"
+            }
           },
           "files": {
             "template": "inverse.finance.template.yaml"
@@ -1411,9 +1600,11 @@
     "liquity": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "liquity-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "liquity-ethereum"
+            }
           },
           "files": {
             "template": "liquity.template.yaml"
@@ -1428,9 +1619,11 @@
     "makerdao": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "makerdao-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "makerdao-ethereum"
+            }
           },
           "files": {
             "template": "makerdao.template.yaml"
@@ -1445,9 +1638,11 @@
     "qidao": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-arbitrum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-arbitrum"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1458,9 +1653,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-avalanche",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-avalanche"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1471,9 +1668,11 @@
           }
         },
         "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-bsc",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-bsc"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1484,9 +1683,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-fantom"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1497,9 +1698,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-polygon"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1510,9 +1713,11 @@
           }
         },
         "moonriver": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-moonriver",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-moonriver"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1523,9 +1728,11 @@
           }
         },
         "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-optimism",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-optimism"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1536,9 +1743,11 @@
           }
         },
         "gnosis": {
-          "hosted-service": {
-            "subgraph-slug": "qidao-gnosis",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "qidao-gnosis"
+            }
           },
           "files": {
             "template": "qidao.template.yaml"
@@ -1555,9 +1764,11 @@
     "arrakis-finance": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "arrakis-finance-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "arrakis-finance-ethereum"
+            }
           },
           "files": {
             "template": "arrakis.finance.template.yaml"
@@ -1572,9 +1783,11 @@
     "badgerdao": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "badgerdao-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "badgerdao-ethereum"
+            }
           },
           "files": {
             "template": "badgerdao.template.yaml"
@@ -1589,9 +1802,11 @@
     "beefy-finance": {
       "networks": {
         "aurora": {
-          "hosted-service": {
-            "subgraph-slug": "beefy-finance-aurora",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "beefy-finance-aurora"
+            }
           },
           "files": {
             "template": "beefy.finance.template.yaml"
@@ -1606,9 +1821,11 @@
     "belt-finance": {
       "networks": {
         "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "belt-finance-bsc",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "belt-finance-bsc"
+            }
           },
           "files": {
             "template": "belt.finance.template.yaml"
@@ -1623,9 +1840,11 @@
     "convex-finance": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "convex-finance-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "convex-finance-ethereum"
+            }
           },
           "files": {
             "template": "convex.template.yaml"
@@ -1640,9 +1859,11 @@
     "gamma-strategies": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "gamma-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "gamma-arbitrum"
+            }
           },
           "files": {
             "template": "gamma.strategies.template.yaml"
@@ -1653,9 +1874,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "gamma-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "gamma-ethereum"
+            }
           },
           "files": {
             "template": "gamma.strategies.template.yaml"
@@ -1666,9 +1889,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "gamma-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "gamma-polygon"
+            }
           },
           "files": {
             "template": "gamma.strategies.template.yaml"
@@ -1679,9 +1904,11 @@
           }
         },
         "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "gamma-optimism",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "gamma-optimism"
+            }
           },
           "files": {
             "template": "gamma.strategies.template.yaml"
@@ -1696,10 +1923,11 @@
     "rari-vaults": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/rari-vaults",
-            "subgraph-slug": "rari-vaults-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "rari-vaults-ethereum"
+            }
           },
           "files": {
             "template": "rari-vaults.template.yaml"
@@ -1714,9 +1942,11 @@
     "stakedao": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "stakedao-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "stakedao-ethereum"
+            }
           },
           "files": {
             "template": "stakedao.template.yaml"
@@ -1731,9 +1961,11 @@
     "tokemak": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "tokemak-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "tokemak-ethereum"
+            }
           },
           "files": {
             "template": "tokemak.template.yaml"
@@ -1748,9 +1980,11 @@
     "vesper-finance": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "vesper-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "vesper-ethereum"
+            }
           },
           "files": {
             "template": "vesper.finance.template.yaml"
@@ -1765,9 +1999,11 @@
     "yearn-v2": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "yearn-v2-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "yearn-v2-arbitrum"
+            }
           },
           "files": {
             "template": "yearn.v2.template.yaml"
@@ -1778,9 +2014,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "yearn-v2-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "yearn-v2-fantom"
+            }
           },
           "files": {
             "template": "yearn.v2.template.yaml"
@@ -1791,9 +2029,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "yearn-v2-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "yearn-v2-ethereum"
+            }
           },
           "files": {
             "template": "yearn.v2.template.yaml"
@@ -1810,9 +2050,11 @@
     "lido": {
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "lido-ethereum",
-            "version": ""
+          "status": "prod",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "lido-ethereum"
+            }
           },
           "files": {
             "template": "lido.template.yaml"
@@ -1830,9 +2072,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "angle-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "angle-governance"
+            }
           },
           "files": {
             "template": "angle-governance.template.yaml"
@@ -1848,9 +2092,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "code4rena-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "code4rena-governance"
+            }
           },
           "files": {
             "template": "code4rena-governance.template.yaml"
@@ -1866,9 +2112,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "ens-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "ens-governance"
+            }
           },
           "files": {
             "template": "ens-governance.template.yaml"
@@ -1884,9 +2132,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "euler-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "euler-governance"
+            }
           },
           "files": {
             "template": "euler-governance.template.yaml"
@@ -1902,9 +2152,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "fei-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "fei-governance"
+            }
           },
           "files": {
             "template": "fei-governance.template.yaml"
@@ -1920,9 +2172,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "hop-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "hop-governance"
+            }
           },
           "files": {
             "template": "hop-governance.template.yaml"
@@ -1938,9 +2192,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "silo-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "silo-governance"
+            }
           },
           "files": {
             "template": "silo-governance.template.yaml"
@@ -1956,9 +2212,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "truefi-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "truefi-governance"
+            }
           },
           "files": {
             "template": "truefi-governance.template.yaml"
@@ -1974,9 +2232,11 @@
       "type": "openzeppelin-governor",
       "networks": {
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "unlock-governance",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "unlock-governance"
+            }
           },
           "files": {
             "template": "unlock-governance.template.yaml"
@@ -1993,9 +2253,11 @@
     "arweave": {
       "networks": {
         "arweave-mainnet": {
-          "hosted-service": {
-            "subgraph-slug": "network-arweave-mainnet",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-arweave-mainnet"
+            }
           },
           "files": {
             "template": "arweave.template.yaml"
@@ -2010,9 +2272,11 @@
     "cosmos": {
       "networks": {
         "cosmoshub": {
-          "hosted-service": {
-            "subgraph-slug": "network-cosmos",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-cosmos"
+            }
           },
           "files": {
             "template": "cosmos.template.yaml"
@@ -2023,9 +2287,11 @@
           }
         },
         "osmosis": {
-          "hosted-service": {
-            "subgraph-slug": "network-osmosis",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-osmosis"
+            }
           },
           "files": {
             "template": "cosmos.template.yaml"
@@ -2040,9 +2306,11 @@
     "evm": {
       "networks": {
         "arbitrum": {
-          "hosted-service": {
-            "subgraph-slug": "network-arbitrum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-arbitrum"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2053,9 +2321,11 @@
           }
         },
         "aurora": {
-          "hosted-service": {
-            "subgraph-slug": "network-aurora",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-aurora"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2066,9 +2336,11 @@
           }
         },
         "avalanche": {
-          "hosted-service": {
-            "subgraph-slug": "network-avalanche",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-avalanche"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2079,9 +2351,11 @@
           }
         },
         "boba": {
-          "hosted-service": {
-            "subgraph-slug": "network-boba",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-boba"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2092,9 +2366,11 @@
           }
         },
         "bsc": {
-          "hosted-service": {
-            "subgraph-slug": "network-bsc",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-bsc"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2105,9 +2381,11 @@
           }
         },
         "celo": {
-          "hosted-service": {
-            "subgraph-slug": "network-celo",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-celo"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2118,9 +2396,11 @@
           }
         },
         "clover": {
-          "hosted-service": {
-            "subgraph-slug": "network-clover",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-clover"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2131,9 +2411,11 @@
           }
         },
         "fantom": {
-          "hosted-service": {
-            "subgraph-slug": "network-fantom",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-fantom"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2144,9 +2426,11 @@
           }
         },
         "fuse": {
-          "hosted-service": {
-            "subgraph-slug": "network-fuse",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-fuse"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2157,9 +2441,11 @@
           }
         },
         "harmony": {
-          "hosted-service": {
-            "subgraph-slug": "network-harmony",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-harmony"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2170,9 +2456,11 @@
           }
         },
         "ethereum": {
-          "hosted-service": {
-            "subgraph-slug": "network-ethereum",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-ethereum"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2183,9 +2471,11 @@
           }
         },
         "polygon": {
-          "hosted-service": {
-            "subgraph-slug": "network-polygon",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-polygon"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2196,9 +2486,11 @@
           }
         },
         "moonbeam": {
-          "hosted-service": {
-            "subgraph-slug": "network-moonbeam",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-moonbeam"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2209,9 +2501,11 @@
           }
         },
         "moonriver": {
-          "hosted-service": {
-            "subgraph-slug": "network-moonriver",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-moonriver"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2222,9 +2516,11 @@
           }
         },
         "optimism": {
-          "hosted-service": {
-            "subgraph-slug": "network-optimism",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-optimism"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2235,9 +2531,11 @@
           }
         },
         "gnosis": {
-          "hosted-service": {
-            "subgraph-slug": "network-gnosis",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-gnosis"
+            }
           },
           "files": {
             "template": "evm.template.yaml"
@@ -2252,10 +2550,11 @@
     "near": {
       "networks": {
         "near-mainnet": {
-          "hosted-service": {
-            "dmelotik": "dmelotik/network-near-mainnet",
-            "subgraph-slug": "network-near",
-            "version": ""
+          "status": "dev",
+          "services": {
+            "hosted-service": {
+              "subgraph-slug": "network-near"
+            }
           },
           "files": {
             "template": "near.template.yaml"
