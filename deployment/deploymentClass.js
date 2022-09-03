@@ -214,7 +214,15 @@ class Deployment {
     if (!networkData) {
       throw "Check --NETWORK spelling as argument or in deployment.json: network=network";
     }
-    if (!networkData[this.getServiceByAlias()]) {
+    if (!networkData["services"]) {
+      throw (
+        "See deployment.json: services are missing for: protocol-" +
+        protocol +
+        " and network=" +
+        network
+      );
+    }
+    if (!networkData["services"][this.getServiceByAlias()]) {
       throw (
         "See deployment.json: Service is missing for: protocol=" +
         protocol +
@@ -222,7 +230,7 @@ class Deployment {
         network
       );
     }
-    if (!networkData[this.getServiceByAlias()]["subgraph-slug"]) {
+    if (!networkData["services"][this.getServiceByAlias()]["subgraph-slug"]) {
       throw (
         "See deployment.json: subgraph-slug is not defined for: protocol=" +
         protocol +
@@ -230,7 +238,7 @@ class Deployment {
         network
       );
     }
-    if (!networkData[this.getServiceByAlias()]["version"]) {
+    if (!networkData["services"][this.getServiceByAlias()]["version"]) {
       throw (
         "version is not defined for protocol=" +
         protocol +
@@ -246,7 +254,7 @@ class Deployment {
         network
       );
     }
-    this.checkValidVersion(networkData[this.getServiceByAlias()]["version"]);
+    // this.checkValidVersion(networkData[this.getServiceByAlias()]["version"]);
   }
 
   checkNetworkLevelData(protocol, network) {
