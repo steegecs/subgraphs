@@ -3,6 +3,8 @@ const { Deployment } = require("./deploymentClass.js");
 const deploymentJsonData = require("./deployment.json");
 const args = require("minimist")(process.argv.slice(2));
 
+console.log(args);
+
 if (
   args.type == undefined ||
   args.access == undefined ||
@@ -12,7 +14,8 @@ if (
   args.network == undefined ||
   args.target == undefined ||
   args.printlogs == undefined ||
-  args.merge == undefined
+  args.merge == undefined ||
+  args.version == undefined
 ) {
   throw "Please check package.json scripts in local subgraph folder. This error is being thrown becuase it is missing a parameteter in the 'deploy' script. You can find an updated version of the scripts in the deployments folder at the head of the directory.";
 }

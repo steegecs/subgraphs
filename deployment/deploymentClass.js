@@ -11,6 +11,7 @@ class Deployment {
     this.type = args.type.toLowerCase();
     this.printlogs = args.printlogs.toLowerCase();
     this.merge = args.merge.toLowerCase();
+    this.version = args.version;
     this.scripts = new Map();
   }
 
@@ -153,6 +154,9 @@ class Deployment {
 
   // Makes sure the version specified in the json file is valid.
   checkValidVersion(version) {
+    if (!version) {
+      throw "See deployment.json: (0) version is missing";
+    }
     this.checkVersionLengthIsThree(version);
     this.checkVersionIsNumber(version);
   }
@@ -285,6 +289,9 @@ class Deployment {
       this.checkAuthorization();
       this.checkValidService();
     }
+    if (this.getServiceByAlias() == "decentralized-network") {
+      this.checkValidVersion(this.version);
+    }
     this.checkValidScope();
   }
 
@@ -394,11 +401,6 @@ class Deployment {
     let deploymentScript = "";
     switch (this.getServiceByAlias()) {
       case "decentralized-network":
-        let version = this.getVersion(
-          protocol,
-          network,
-          this.getServiceByAlias()
-        );
         if (this.access) {
           deploymentScript =
             "graph deploy --auth=" +
@@ -406,13 +408,13 @@ class Deployment {
             " --product subgraph-studio " +
             location +
             " --versionLabel " +
-            version;
+            this.version;
         } else {
           deploymentScript =
             "graph deploy --product subgraph-studio " +
             location +
             " --versionLabel " +
-            version;
+            this.version;
         }
         break;
       case "hosted-service":
