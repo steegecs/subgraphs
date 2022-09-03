@@ -15,7 +15,7 @@ export namespace Protocol {
   export const SUSHISWAP = "Sushiswap";
 }
 ////////////////////////
-///// Schema Enums /////
+///// Schema Enums ////
 ////////////////////////
 
 // The network names corresponding to the Network enum in the schema.
