@@ -238,14 +238,6 @@ class Deployment {
         network
       );
     }
-    if (!networkData["services"][this.getServiceByAlias()]["version"]) {
-      throw (
-        "version is not defined for protocol=" +
-        protocol +
-        " network=" +
-        network
-      );
-    }
     if (!networkData["files"]["template"]) {
       throw (
         "See deployment.json: template is missing for: protocol=" +
@@ -254,6 +246,16 @@ class Deployment {
         network
       );
     }
+
+    // Checks for valid subgraph version if we decide to include it.
+    // if (!networkData["services"][this.getServiceByAlias()]["version"]) {
+    //   throw (
+    //     "version is not defined for protocol=" +
+    //     protocol +
+    //     " network=" +
+    //     network
+    //   );
+    // }
     // this.checkValidVersion(networkData[this.getServiceByAlias()]["version"]);
   }
 
@@ -347,7 +349,9 @@ class Deployment {
   }
 
   getVersion(protocol, network, service) {
-    return this.data[protocol]["networks"][network][service]["version"];
+    return this.data[protocol]["networks"][network]["services"][service][
+      "version"
+    ];
   }
 
   getTemplate(protocol, network) {
@@ -360,23 +364,16 @@ class Deployment {
       return this.protocol + "/" + network;
     }
     let service = this.getServiceByAlias();
-    if (
-      this.data[protocol]["networks"][network][service][this.target] ==
-      undefined
-    ) {
-      if (this.getServiceByAlias() == "hosted-service") {
-        return (
-          this.target +
-          "/" +
-          this.data[protocol]["networks"][network][service]["subgraph-slug"]
-        );
+    let serviceData =
+      this.data[protocol]["networks"][network]["services"][service];
+    if (!serviceData[this.target]) {
+      if (this.getServiceByAlias() == "decentralized-network") {
+        return serviceData["subgraph-slug"];
       } else {
-        return this.data[protocol]["networks"][network][service][
-          "subgraph-slug"
-        ];
+        return this.target + "/" + serviceData["subgraph-slug"];
       }
     } else {
-      return this.data[protocol]["networks"][network][service][this.target];
+      return serviceData[this.target];
     }
   }
 
