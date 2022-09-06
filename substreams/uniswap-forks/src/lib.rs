@@ -26,7 +26,7 @@ fn block_to_transfers(blk: eth::Block) -> Result<erc721::Transfers, substreams::
                 return None;
             }
 
-            let transfer = abi::erc721::events::Transfer::decode(log);
+            let transfer = abi::erc721::events::Transfer::decode(log).unwrap();
             println!("Transfer: {:?}", transfer);
 
             Some(erc721::Transfer {
