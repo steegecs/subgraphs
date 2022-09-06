@@ -1,0 +1,11 @@
+message LiquidityPool {
+    string id  = 1;
+    string name = 2; // dai/usdc
+    string symbol = 3; // fixme: maybe remove this
+    string token0Id = 4;
+    string token1Id = 5;
+    string lpToken = 6;
+    uint64 timestamp = 7;
+    LiquidityPoolFee liquidityPoolFee = 8;
+    uint64 createdBlockNumber = 9;
+}
