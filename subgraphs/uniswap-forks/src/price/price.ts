@@ -59,71 +59,48 @@ export function findUSDPricePerToken(
   if (token.id == NetworkConfigs.getReferenceToken()) {
     return nativeToken.lastPriceUSD!;
   }
+
+  if (NetworkConfigs.getStableCoins().includes(token.id)) {
+    return BIGDECIMAL_ONE;
+  }
+
   let tokenWhitelist = getOrCreateTokenWhitelist(token.id);
   let whiteList = tokenWhitelist.whitelistPools;
-  // for now just take USD from pool with greatest TVL
-  // need to update this to actually detect best rate based on liquidity distribution
-  let largestLiquidityWhitelistTokens = BIGDECIMAL_ZERO;
-  let priceSoFar = BIGDECIMAL_ZERO;
 
-  // hardcoded fix for incorrect rates
-  // if whitelist includes token - get the safe price
-  if (NetworkConfigs.getStableCoins().includes(token.id)) {
-    priceSoFar = BIGDECIMAL_ONE;
-  } else if (NetworkConfigs.getUntrackedTokens().includes(token.id)) {
-    priceSoFar = BIGDECIMAL_ZERO;
-  } else {
-    for (let i = 0; i < whiteList.length; ++i) {
-      let poolAddress = whiteList[i];
-      let poolAmounts = getLiquidityPoolAmounts(poolAddress);
-      let pool = getLiquidityPool(poolAddress);
+  for (let i = 0; i < whiteList.length; ++i) {
+    let poolAddress = whiteList[i];
+    let poolAmounts = getLiquidityPoolAmounts(poolAddress);
+    let pool = getLiquidityPool(poolAddress);
 
-      if (pool.outputTokenSupply!.gt(BIGINT_ZERO)) {
-        if (
-          pool.inputTokens[0] == token.id &&
-          pool.totalValueLockedUSD.gt(
-            NetworkConfigs.getMinimumLiquidityThresholdTrackPrice()
-          )
-        ) {
-          // whitelist token is token1
-          let whitelistToken = getOrCreateToken(pool.inputTokens[1]);
-          // get the derived NativeToken in pool
-          let whitelistTokenLocked = poolAmounts.inputTokenBalances[1].times(
-            whitelistToken.lastPriceUSD!
-          );
-          if (whitelistTokenLocked.gt(largestLiquidityWhitelistTokens)) {
-            largestLiquidityWhitelistTokens = whitelistTokenLocked;
-            // token1 per our token * nativeToken per token1
-            priceSoFar = safeDiv(
-              poolAmounts.inputTokenBalances[1],
-              poolAmounts.inputTokenBalances[0]
-            ).times(whitelistToken.lastPriceUSD! as BigDecimal);
-          }
-        }
-        if (
-          pool.inputTokens[1] == token.id &&
-          pool.totalValueLockedUSD.gt(
-            NetworkConfigs.getMinimumLiquidityThresholdTrackPrice()
-          )
-        ) {
-          let whitelistToken = getOrCreateToken(pool.inputTokens[0]);
-          // get the derived nativeToken in pool
-          let whitelistTokenLocked = poolAmounts.inputTokenBalances[0].times(
-            whitelistToken.lastPriceUSD!
-          );
-          if (whitelistTokenLocked.gt(largestLiquidityWhitelistTokens)) {
-            largestLiquidityWhitelistTokens = whitelistTokenLocked;
-            // token0 per our token * NativeToken per token0
-            priceSoFar = safeDiv(
-              poolAmounts.inputTokenBalances[0],
-              poolAmounts.inputTokenBalances[1]
-            ).times(whitelistToken.lastPriceUSD! as BigDecimal);
-          }
-        }
-      }
+    if (
+      pool.inputTokens[0] == token.id &&
+      pool.totalValueLockedUSD.gt(
+        NetworkConfigs.getMinimumLiquidityThresholdTrackPrice()
+      )
+    ) {
+      // whitelist token is token1
+      let whitelistToken = getOrCreateToken(pool.inputTokens[1]);
+      return safeDiv(
+        poolAmounts.inputTokenBalances[1],
+        poolAmounts.inputTokenBalances[0]
+      ).times(whitelistToken.lastPriceUSD! as BigDecimal);
+    }
+
+    if (
+      pool.inputTokens[1] == token.id &&
+      pool.totalValueLockedUSD.gt(
+        NetworkConfigs.getMinimumLiquidityThresholdTrackPrice()
+      )
+    ) {
+      let whitelistToken = getOrCreateToken(pool.inputTokens[0]);
+      return safeDiv(
+        poolAmounts.inputTokenBalances[0],
+        poolAmounts.inputTokenBalances[1]
+      ).times(whitelistToken.lastPriceUSD! as BigDecimal);
     }
   }
-  return priceSoFar; // nothing was found return 0
+
+  return BIGDECIMAL_ZERO;
 }
 
 /**
