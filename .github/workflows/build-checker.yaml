@@ -1,7 +1,8 @@
 on:  
   pull_request:
-
-
+    branches:
+      - master
+      
 jobs:
   Deployment: 
     runs-on: ubuntu-latest
