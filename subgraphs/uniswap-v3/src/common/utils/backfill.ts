@@ -21,14 +21,14 @@ import {
 } from "../getters";
 import { updateTokenWhitelists } from "../updateMetrics";
 import { Pool as PoolTemplate } from "../../../generated/templates";
-import { Pool } from "../../../generated/Factory/Pool";
+import { Pool } from "../../../generated/factory/pool";
 import { createPoolFees } from "../creators";
 import { ERC20 } from "../../../generated/Factory/ERC20";
 import { convertTokenToDecimal } from "./utils";
 import { POOL_MAPPINGS } from "./poolMappings";
 
 /**
- * Create entries in store for each pool and token
+ * reate entries in store for each pool and token
  * before regenesis.
  */
 export function populateEmptyPools(event: ethereum.Event): void {
