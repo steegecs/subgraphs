@@ -28,7 +28,7 @@ import { convertTokenToDecimal } from "./utils";
 import { POOL_MAPPINGS } from "./poolMappings";
 
 /**
- * Create entries in store for each pool and token
+ * reate entries in store for each pool and token
  * before regenesis.
  */
 export function populateEmptyPools(event: ethereum.Event): void {
