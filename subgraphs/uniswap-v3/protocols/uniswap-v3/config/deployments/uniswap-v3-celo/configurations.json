@@ -1,9 +1,30 @@
 {
-  "network": "celo",
-  "factoryAddress": "0xAfE208a311B21f13EF87E33A90049fC17A7acDEc",
-  "startBlock": 13757683,
-  "deployment": "UNISWAP_V3_CELO",
+  "network": "Network.CELO",
+  "protocolName": "Uniswap V3",
+  "factoryAddress": "0xd9dc0d8f754c027df7ecb4bd381301cec76cd32f",
+  "feeOnOff": "FeeSwitch.OFF",
+  "rewardIntervalType": "RewardIntervalType.NONE",
+  "referenceToken": "0x471ece3750da237f93b8e339c536989b8978a438",
+  "whitelistTokens": {
+    "CELO": "0x471ece3750da237f93b8e339c536989b8978a438",
+    "cUSD": "0x765de816845861e75a25fca122bb6898b8b1282a",
+    "cEUR": "0xd8763cba276a3738e6de85b4b3bf5fded6d6ca73",
+    "NCT": "0x02de4766c272abc10bc88c220d214a26960a7e92",
+    "cM02": "0x32a9fe697a32135bfd313a6ac28792dae4d9979d",
+    "wETH": "0x66803fb87abd4aac3cbb3fad7c3aa01f6f3fb207"
+  },
+  "stableCoins": {
+    "cUSD": "0x765de816845861e75a25fca122bb6898b8b1282a"
+  },
+  "stableOraclePools": {
+    "CELO_CUSD_0_30": "0x079e7a44f42e9cd2442c3b9536244be634e8f888"
+  },
+  "untrackedPairs": {},
+  "untrackedTokens": {},
+  "minimumLiquidityThreshold": 25000,
+
+  "factoryStartBlock": 13757683,
   "graftEnabled": false,
-  "subgraphId": "QmSc7pZu9tm455ZCLVK9CDdusdMGR3DfbsBQpvuYyUN13a",
-  "graftStartBlock": 15118044
+  "subgraphId": "",
+  "graftStartBlock": 0
 }

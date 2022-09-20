@@ -1,6 +1,6 @@
 // import { log } from '@graphprotocol/graph-ts'
 import { BigDecimal, ethereum, BigInt, Address } from "@graphprotocol/graph-ts";
-import { NetworkConfigs } from "../../configurations/configure";
+import { NetworkConfigs } from "../../configurations/configure.mustache";
 import {
   Account,
   Token,

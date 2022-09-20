@@ -1,6 +1,6 @@
 // import { log } from '@graphprotocol/graph-ts'
 import { Address, BigDecimal, ethereum, log } from "@graphprotocol/graph-ts";
-import { NetworkConfigs } from "../../configurations/configure";
+import { NetworkConfigs } from "../../configurations/configure.mustache";
 import { ERC20 } from "../../generated/Factory/ERC20";
 import {
   DexAmmProtocol,

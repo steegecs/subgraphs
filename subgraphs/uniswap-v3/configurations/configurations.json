@@ -19,8 +19,8 @@
     "USDs": "0xd74f5255d557944cf7dd0e45ff521520002d5748"
   },
   "stableOraclePools": {
-    "wETH_USDC_0_05": "0xc31e54c7a869b9fcbecc14363cf510d1c41fa443",
-    "wETH_USDC_0_30": "0x17c14d2c404d167802b16c450d3c99f88f2c4f4d",
+    "wETH_USDC_05": "0xc31e54c7a869b9fcbecc14363cf510d1c41fa443",
+    "wETH_USDC_30": "0x17c14d2c404d167802b16c450d3c99f88f2c4f4d",
     "wETH_USDT": "0xc858a329bf053be78d6239c4a4343b8fbd21472b"
   },
   "untrackedPairs": {},

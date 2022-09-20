@@ -2,7 +2,7 @@
 import { PoolCreated } from "../../generated//Factory/Factory";
 import { Address } from "@graphprotocol/graph-ts";
 import { createLiquidityPool } from "../common/creators";
-import { NetworkConfigs } from "../../configurations/configure";
+import { NetworkConfigs } from "../../configurations/configure.mustache";
 
 // Liquidity pool is created from the Factory contract.
 // Create a pool entity and start monitoring events from the newly deployed pool contract specified in the subgraph.yaml.

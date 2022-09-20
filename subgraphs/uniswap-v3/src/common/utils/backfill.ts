@@ -1,5 +1,5 @@
 import { Address, ethereum, log } from "@graphprotocol/graph-ts";
-import { NetworkConfigs } from "../../../configurations/configure";
+import { NetworkConfigs } from "../../../configurations/configure.mustache";
 import {
   LiquidityPool,
   _HelperStore,

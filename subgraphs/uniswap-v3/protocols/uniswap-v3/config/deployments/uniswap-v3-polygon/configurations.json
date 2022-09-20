@@ -1,8 +1,35 @@
 {
-  "network": "matic",
-  "factoryAddress": "0x1F98431c8aD98523631AE4a59f267346ea31F984",
-  "startBlock": 22757546,
-  "deployment": "UNISWAP_V3_POLYGON",
+  "network": "Network.MATIC",
+  "protocolName": "Uniswap V3",
+  "factoryAddress": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+  "feeOnOff": "FeeSwitch.OFF",
+  "rewardIntervalType": "RewardIntervalType.NONE",
+  "referenceToken": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+  "whitelistTokens": {
+    "WETH": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+    "DAI": "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    "USDC": "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    "USDT": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    "MIMATIC": "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+    "WBTC": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
+    "link": "0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39",
+    "MATIC": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270"
+  },
+  "stableCoins": {
+    "DAI": "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
+    "USDC": "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
+    "USDT": "0xc2132D05D31c914a87C6611C10748AEb04B58e8F",
+    "MIMATIC": "0xa3Fa99A148fA48D14Ed51d610c367C61876997F1"
+  },
+  "stableOraclePools": {
+    "USDC_wETH_0_05": "0x45dda9cb7c25131df268515131f647d726f50608",
+    "USDC_wETH_0_30": "0x0e44ceb592acfc5d3f09d996302eb4c499ff8c10"
+  },
+  "untrackedPairs": {},
+  "untrackedTokens": {},
+  "minimumLiquidityThreshold": 100000,
+
+  "factoryStartBlock": 22757546,
   "graftEnabled": false,
   "subgraphId": "",
   "graftStartBlock": 0

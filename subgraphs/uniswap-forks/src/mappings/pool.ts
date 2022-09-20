@@ -31,6 +31,7 @@ import {
   ZERO_ADDRESS,
 } from "../common/constants";
 import { getLiquidityPool } from "../common/getters";
+import { decoded } from "../Test";
 
 // Handle transfers event.
 // The transfers are either occur as a part of the Mint or Burn event process.
@@ -106,6 +107,7 @@ export function handleBurn(event: Burn): void {
 
 // Handle a swap event emitted from a pool contract.
 export function handleSwap(event: Swap): void {
+  log.warning("DECODED AGE:" + decoded.age.toString(), []);
   createSwapHandleVolumeAndFees(
     event,
     event.params.to.toHexString(),

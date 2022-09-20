@@ -1,5 +1,5 @@
 import { BigDecimal } from "@graphprotocol/graph-ts";
-import { Factory } from "../../generated/Factory/Factory";
+import { Factory } from "../generated/Factory/Factory";
 
 export interface Configurations {
   getNetwork(): string;
@@ -12,7 +12,7 @@ export interface Configurations {
   getFactoryContract(): Factory;
   getFeeOnOff(): string;
   getRewardIntervalType(): string;
-  getReferenceToken(): string
+  getReferenceToken(): string;
   getRewardToken(): string;
   getWhitelistTokens(): string[];
   getStableCoins(): string[];

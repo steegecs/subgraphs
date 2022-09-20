@@ -21,11 +21,8 @@ import {
   PRECISION,
   BIGDECIMAL_TEN_THOUSAND,
 } from "../constants";
-import {
-  exponentToBigInt,
-  safeDiv,
-} from "../utils/utils";
-import { NetworkConfigs } from "../../../configurations/configure";
+import { exponentToBigInt, safeDiv } from "../utils/utils";
+import { NetworkConfigs } from "../../../configurations/configure.mustache";
 
 // Divide numbers too large for floating point or BigDecimal
 

@@ -1,9 +1,72 @@
 {
-  "network": "mainnet",
-  "factoryAddress": "0x1F98431c8aD98523631AE4a59f267346ea31F984",
-  "startBlock": 12369620,
-  "deployment": "UNISWAP_V3_ETHEREUM",
+  "network": "Network.MAINNET",
+  "protocolName": "Uniswap V3",
+  "factoryAddress": "0x1f98431c8ad98523631ae4a59f267346ea31f984",
+  "feeOnOff": "FeeSwitch.OFF",
+  "rewardIntervalType": "RewardIntervalType.NONE",
+  "referenceToken": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+  "whitelistTokens": {
+    "WETH": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+    "DAI": "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "USDC": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDT": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+    "TUSD": "0x0000000000085d4780b73119b644ae5ecd22b376",
+    "WBTC": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+    "CDAI": "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
+    "CUSDC": "0x39aa39c021dfbae8fac545936693ac917d5e7563",
+    "EBASE": "0x86fadb80d8d2cff3c3680819e4da99c10232ba0f",
+    "SUSD": "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+    "MKR": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+    "COMP": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+    "LINK": "0x514910771af9ca656af840dff83e8264ecf986ca",
+    "SNX": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+    "YFI": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+    "1INCH": "0x111111111117dc0aa78b770fa6a738034120c302",
+    "yCurv": "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8",
+    "FEI": "0x956f47f50a910163d8bf957cf5846d573e7f87ca",
+    "MATIC": "0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0",
+    "AAVE": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+    "sETH2": "0xfe2e637202056d30016725477c5da089ab0a043a"
+  },
+  "stableCoins": {
+    "DAI": "0x6b175474e89094c44da98b954eedeac495271d0f",
+    "USDC": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+    "USDT": "0xdac17f958d2ee523a2206206994597c13d831ec7"
+  },
+  "stableOraclePools": {
+    "USDC_wETH": "0x8ad599c3a0ff1de082011efddc58f1908eb6e6d8"
+  },
+  "untrackedPairs": {
+    "MULAN_USDT": "0x8fe8d9bb8eeba3ed688069c3d6b556c9ca258248",
+    "AURORA": "0xfd9715a9f03678975b2e224c938fae8d481b09b2"
+  },
+  "untrackedTokens": {
+    "TRIBE": "0xc7283b66eb1eb5fb86327f08e1b5816b0720212b",
+    "MM": "0x6b4c7a5e3f0b99fcd83e9c089bddd6c7fce5c611",
+    "BIT": "0x1a4b46696b2bb4794eb3d4c26f1c55f9170fa4c5",
+    "AUDIO": "0x18aaa7115705e8be94bffebde57af9bfc265b998",
+    "SNX": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+    "NCT": "0x9e46a38f5daabe8683e10793b06749eef7d733d1",
+    "PERP": "0xbc396689893d065f41bc2c6ecbee5e0085233447",
+    "renZEC": "0x1c5db575e2ff833e46a2e9864c22f4b22e0b37c2",
+    "vBNT": "0x48fb253446873234f2febbf9bdeaa72d9d387f94",
+    "ONE": "0xd5cd84d6f044abe314ee7e414d37cae8773ef9d3",
+    "FLOAT": "0xb05097849bca421a3f51b249ba6cca4af4b97cb9",
+    "LY": "0x8686525d6627a25c68de82c228448f43c97999f2",
+    "CELR": "0x4f9254c83eb525f9fcf346490bbb3ed28a81c667",
+    "EDEN": "0x1559fa1b8f28238fd5d76d9f434ad86fd20d1559",
+    "MIM": "0x99d8a9c45b2eca8864373a26d1459e3dff1e17f3",
+    "BED": "0x2af1df3ab0ab157e1e2ad8f88a7d04fbea0c7dc6",
+    "GEL": "0x15b7c0c907e4c6b9adaaaabc300c08991d6cea05",
+    "APE": "0x4d224452801aced8b2f0aebe155379bb5d594381",
+    "EURT": "0xc581b735a1688071a1746c968e0798d642ede491",
+    "SOHM": "0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f",
+    "SILV": "0x398aea1c9ceb7de800284bb399a15e0efe5a9ec2"
+  },
+  "minimumLiquidityThreshold": 400000,
+
+  "factoryStartBlock": 12369620,
   "graftEnabled": false,
-  "subgraphId": "QmYH9eXvZoLX6gox87wamg7WcdnkKqWxc5YqjLwY6KpLFu",
-  "graftStartBlock": 13639984
+  "subgraphId": "",
+  "graftStartBlock": 0
 }

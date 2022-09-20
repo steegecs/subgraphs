@@ -17,7 +17,7 @@ import {
   getOrCreateToken,
   getTradingFee,
 } from "./getters";
-import { NetworkConfigs } from "../../configurations/configure";
+import { NetworkConfigs } from "../../configurations/configure.mustache";
 import {
   BIGDECIMAL_FIFTY,
   BIGDECIMAL_NEG_ONE,
