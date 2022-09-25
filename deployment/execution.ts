@@ -5,7 +5,7 @@ const fs = require("fs");
  * @param {string[]} array - Protocol that is being deployed
  * @param {string} callback
  */
-async function executeDeployment(deployment, callback) {
+export async function executeDeployment(deployment, callback) {
   let logs = "";
   let results = "RESULTS:\n";
   let deploymentIndex = 0;
@@ -75,7 +75,7 @@ async function executeDeployment(deployment, callback) {
     } else {
       // all done here
       fs.writeFile("results.txt", logs.replace(/\u00[^m]*?m/g, ""), (err) => {
-        if (err) throw new Error(err).message;
+        if (err) throw new Error(err);
       });
 
       // Print the logs if printlogs is 't' or 'true'
@@ -90,5 +90,3 @@ async function executeDeployment(deployment, callback) {
   // start the first iteration
   next();
 }
-
-module.exports = { executeDeployment };

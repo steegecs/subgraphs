@@ -1,5 +1,41 @@
-class Deployment {
-  constructor(depoymentJsonData, args) {
+interface Arguments {
+  token: string;
+  service: string;
+  id: string;
+  span: string;
+  target: string;
+  slug: string;
+  deploy: string;
+  printlogs: string;
+}
+
+export class Deployment {
+  // Raw data from the deployment.json file
+  data: Map<string, Object>;
+  // Access token for deployment service
+  token: string;
+  // Service that you are deploying to
+  service: string;
+  // deployment id the specifies a single or multiple deployments.
+  id: string;
+  // Specifies if you are deploying a single subgraph, all subgraphs for a protocol, or all subgraphs for all protocols for a fork
+  span: string;
+  // The account target for the deployment (i.e. messari).
+  target: string;
+  // Alternate slug for deployment location
+  slug: string;
+  // (true/false) Specifies if you are deploying or just building a subgraph
+  deploy: string;
+  // (true/false) Print the logs from the deployment.
+  printlogs: string;
+  // An object the contains all deployment configurations from the deployment.json
+  allDeployments: Map<string, Object>;
+  // An object that contains all deployment configurations that you are deploying with.
+  deployments: Map<string, Object>;
+  // Contains all scripts for deployment all subgraphs specified in the command line.
+  scripts: Map<string, string[]>;
+
+  constructor(depoymentJsonData: Map<string, Object>, args: Arguments) {
     // Set arguments to variables
     this.data = depoymentJsonData;
     this.token = args.token;
@@ -10,9 +46,9 @@ class Deployment {
     this.slug = args.slug.toLowerCase();
     this.deploy = args.deploy.toLowerCase();
     this.printlogs = args.printlogs.toLowerCase();
-    this.allDeployments = {};
-    this.deployments = {};
-    this.scripts = new Map();
+    this.allDeployments = new Map<string, Object[]>();
+    this.deployments = new Map<string, Object[]>();
+    this.scripts = new Map<string, string[]>();
   }
 
   prepare() {
@@ -23,11 +59,11 @@ class Deployment {
   }
 
   flattenDeploymentData() {
-    const allDeployments = {};
+    const allDeployments = new Map<string, Object[]>();
+
     for (const protocol of Object.keys(this.data)) {
-      for (const [deployment, deploymentData] of Object.entries(
-        this.data[protocol].deployments
-      )) {
+      const deployments: Map<string, any> = this.data[protocol].deployments;
+      for (const [deployment, deploymentData] of Object.entries(deployments)) {
         deploymentData.protocol = this.data[protocol].protocol;
         deploymentData.base = this.data[protocol].base;
         deploymentData.schema = this.data[protocol].schema;
@@ -37,6 +73,8 @@ class Deployment {
     }
 
     this.allDeployments = allDeployments;
+
+    // Add 10 to all deployments
   }
 
   // Checks if you are wanting to deploy a single subgraph, all subgraphs for a protocol, or all subgraphs for all protocols for a fork
@@ -48,7 +86,7 @@ class Deployment {
       if (this.allDeployments[this.id]) {
         this.deployments[this.id] = this.allDeployments[this.id];
       } else {
-        throw new Error(`No deployment found for: ${this.id}`).message;
+        throw new Error(`No deployment found for: ${this.id}`);
       }
     }
 
@@ -65,7 +103,7 @@ class Deployment {
       if (Object.keys(this.deployments).length === 0) {
         throw new Error(
           `Please specifiy valid protocol or add this protocol in deployment.json for protocol: ${this.id}`
-        ).message;
+        );
       }
     }
 
@@ -82,7 +120,7 @@ class Deployment {
       if (Object.keys(this.deployments).length === 0) {
         throw new Error(
           `Please specifiy valid base or add this base in deployment.json for base: ${this.id}`
-        ).message;
+        );
       }
     }
   }
@@ -103,7 +141,7 @@ class Deployment {
 
   // Generates scripts necessary for deployment.
   generateScripts(deployment, deploymentData) {
-    const scripts = [];
+    const scripts: string[] = [];
 
     const location = this.getLocation(deploymentData.protocol, deploymentData);
 
@@ -147,7 +185,7 @@ class Deployment {
       default:
         throw new Error(
           "Please specify a valid span: e.g. ['single', 's', or '', 'protocol' or 'p', 'base' or 'b']"
-        ).message;
+        );
     }
   }
 
@@ -163,7 +201,7 @@ class Deployment {
       default:
         throw new Error(
           "Please specify a valid deploy: e.g. ['true' or 't', 'false', 'f', or '']"
-        ).message;
+        );
     }
   }
 
@@ -185,14 +223,14 @@ class Deployment {
       default:
         throw new Error(
           `--SERVICE: Service is not valid or is missing: service=${this.service}`
-        ).message;
+        );
     }
   }
 
   // Requires authorization for cronos portal deployments.
   checkAuthorization() {
     if (!this.token && this.getService() === "cronos-portal") {
-      throw new Error("please specify an authorization token").message;
+      throw new Error("please specify an authorization token");
     }
   }
 
@@ -200,13 +238,12 @@ class Deployment {
   isValidInput() {
     this.checkValidDeploy();
     if (!this.target && this.getDeploy() === true) {
-      throw new Error("Please specify a target location if you are deploying")
-        .message;
+      throw new Error("Please specify a target location if you are deploying");
     }
     if (this.slug && this.getDeploymentSpan() !== "single") {
       throw new Error(
         "You may only specify a slug if you are deploying a single subgraph."
-      ).message;
+      );
     }
     if (this.getDeploy() === true) {
       this.checkAuthorization();
@@ -234,7 +271,7 @@ class Deployment {
       default:
         throw new Error(
           `Service is missing or not valid for: service=${this.service}`
-        ).message;
+        );
     }
   }
 
@@ -250,7 +287,7 @@ class Deployment {
       default:
         throw new Error(
           "Please specify a valid deploy: e.g. ['true' or 't', 'false', 'f', '']"
-        ).message;
+        );
     }
   }
 
@@ -289,7 +326,7 @@ class Deployment {
       default:
         throw new Error(
           "Please specify a valid span: e.g. ['single', 's', or '', 'protocol' or 'p', 'base' or 'b']"
-        ).message;
+        );
     }
   }
 
@@ -317,11 +354,9 @@ class Deployment {
       default:
         throw new Error(
           `Service is missing or not valid for: service=${this.service}`
-        ).message;
+        );
     }
 
     return deploymentScript;
   }
 }
-
-module.exports = { Deployment };

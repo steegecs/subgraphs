@@ -1,13 +1,15 @@
+const { executeDeployment } = require("./execution");
 const args = require("minimist")(process.argv.slice(2));
-const { executeDeployment } = require("./execution.js");
 const {
   validateDeploymentJson,
-} = require("./validation/validateDeploymentJson.js");
-const { Deployment } = require("./deploymentClass.js");
+} = require("./validation/validateDeploymentJson.ts");
+const { Deployment } = require("./deploymentClass.ts");
 const deploymentJsonData = require("./deployment.json");
 
 validateDeploymentJson(deploymentJsonData);
 
+console.log(process.argv);
+console.log(args);
 if (
   args.deploy === undefined ||
   args.token === undefined ||
@@ -20,7 +22,7 @@ if (
 ) {
   throw new Error(
     "Please check package.json scripts in local subgraph folder. This error is being thrown because it is missing a parameter in the 'build' script. You can find an updated version of the scripts in the deployments folder at the head of the directory."
-  ).message;
+  );
 }
 
 const deploymentJsonMap = JSON.parse(JSON.stringify(deploymentJsonData));
