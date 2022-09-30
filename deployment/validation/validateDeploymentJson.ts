@@ -180,10 +180,10 @@ function checkDeploymentsIDsPresentAndValid(
     ).message;
   }
 
+  const services: Map<string, Object> = deploymentData["services"];
+
   // Make sure all deployment IDs are valid
-  for (const [service, serviceData] of Object.entries(
-    deploymentData["services"]
-  )) {
+  for (const [service, serviceData] of Object.entries(services)) {
     if (
       !["hosted-service", "cronos-portal", "decentralized-network"].includes(
         service
@@ -231,7 +231,7 @@ function checkOptionsPresent(protocol, deployment, deploymentData) {
   }
 }
 
-function checkDuplicateIDs(deploymentJsonMap) {
+function checkDuplicateIDs(deploymentJsonMap: Map<string, Object>) {
   const deploymentIDs = new Set();
   const protocols = new Set();
 
@@ -249,7 +249,7 @@ function checkDuplicateIDs(deploymentJsonMap) {
   }
 
   // Check deployment IDs do not match a protocol. Necessary because we use protocol as a deployment ID in CI/CD scripts.
-  for (const protocol of protocols) {
+  for (const protocol in protocols) {
     if (deploymentIDs.has(protocol)) {
       throw new Error(
         `There is is a deployment id that is the same as a protocol: ${protocol}`
@@ -283,7 +283,7 @@ function checkVersionsArgumentsCount(protocol, deployment, deploymentData) {
 }
 
 // Run tests before each build in CI/CD
-function validateDeploymentJson(deploymentJsonMap) {
+export function validateDeploymentJson(deploymentJsonMap: Map<string, any>) {
   // Checks if all necessary fields exist and contain valid values in the deployment.json
   for (const [protocol, protocolData] of Object.entries(deploymentJsonMap)) {
     // Check if protocol data is valid
@@ -311,5 +311,3 @@ function validateDeploymentJson(deploymentJsonMap) {
   // Check for duplicate deployment IDs and duplicate protocol/deploymentID combinations
   checkDuplicateIDs(deploymentJsonMap);
 }
-
-module.exports = { validateDeploymentJson };
