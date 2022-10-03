@@ -23,9 +23,35 @@ jobs:
       
       - name: Install dependencies
         run: npm ci --ignore-scripts
+  
+  LintStagedFiles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
 
-      - name: Folderslint
-        run: npm run folderslint
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: npm-${{ hashFiles('package-lock.json') }}
+          restore-keys: npm-
+      
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      - name: Run eslint on changed files
+        uses: tj-actions/eslint-changed-files@v14
+        with:
+          config_path: "./subgraphs/.eslintrc"
+          extra_args: "--max-warnings=0"
+          file_extensions: |
+            subgraphs/**/*.ts
+            subgraphs/**/*.tsx
 
   Build:
     runs-on: macos-latest

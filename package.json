@@ -7,13 +7,14 @@
     "@typescript-eslint/eslint-plugin": "^5.38.0",
     "@typescript-eslint/parser": "^5.38.0",
     "eslint": "^8.23.1",
+    "eslint-config-prettier": "^8.5.0",
+    "folderslint": "^1.2.0",
     "husky": "^8.0.1",
     "lint-staged": "^13.0.3",
-    "prettier": "^2.7.1",
-    "folderslint": "^1.2.0"
+    "prettier": "^2.7.1"
   },
   "lint-staged": {
-    "*.ts": "eslint --cache --fix",
+    "subgraphs/**/*.ts": "npm run lint",
     "*.{ts,css,md}": "prettier --write"
   },
   "scripts": {
