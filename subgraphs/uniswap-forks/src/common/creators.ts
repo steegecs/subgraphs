@@ -40,7 +40,7 @@ import { getTrackedVolumeUSD } from "../price/price";
 
 /**
  * Create the fee for a pool depending on the the protocol and network specific fee structure.
- * Specified in the typescript configuration file.
+ * Specified in the typescript configuration file
  */
 export function createPoolFees(poolAddress: string): string[] {
   let poolLpFee = new LiquidityPoolFee(poolAddress.concat("-lp-fee"));
