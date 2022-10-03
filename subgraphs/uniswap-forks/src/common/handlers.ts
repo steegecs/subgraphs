@@ -12,7 +12,7 @@ export function handleTransferMint(
 ): void {
   let transfer = getOrCreateTransfer(event);
 
-  // Tracks supply of minted LP tokens
+  // Tracks supply of minted LP token
   pool.outputTokenSupply = pool.outputTokenSupply!.plus(value);
 
   // if - create new mint if no mints so far or if last one is done already
