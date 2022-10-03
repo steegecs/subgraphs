@@ -97,7 +97,7 @@ export function getOrCreateTransfer(event: ethereum.Event): _Transfer {
 export function getOrCreateUsageMetricDailySnapshot(
   event: ethereum.Event
 ): UsageMetricsDailySnapshot {
-  // Number of days since Unix epoch
+  // Number of days since Uni epoch
   let id = event.block.timestamp.toI32() / SECONDS_PER_DAY;
   let dayId = id.toString();
   // Create unique id for the day
