@@ -1,5 +1,4 @@
 import * as fs from 'fs'
-import { MESSARI_REPO_PATH } from '../../../bin/env'
 
 export interface ScriptGeneratorArgs {
   token: string
@@ -236,7 +235,7 @@ export class ScriptGenerator {
 
   writeDeploymentJsonContext(deploymentJsonData: DeploymentJsonData) {
     fs.writeFileSync(
-      `${MESSARI_REPO_PATH}/subgraphs/${deploymentJsonData.base}/protocols/${deploymentJsonData.protocol}/config/deployments/${deploymentJsonData.deployment}/deploymentJsonContext.json`,
+      `${process.env.MESSARI_REPO_PATH}/subgraphs/${deploymentJsonData.base}/protocols/${deploymentJsonData.protocol}/config/deployments/${deploymentJsonData.deployment}/deploymentJsonContext.json`,
       JSON.stringify(deploymentJsonData, null, 2)
     )
   }

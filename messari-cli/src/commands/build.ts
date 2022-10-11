@@ -10,7 +10,8 @@ import { validateDeploymentJson } from '../../../deployment/validation/validateD
 import { getScopeAlias, getServiceAlias } from '../command-helpers/build/alias'
 import { isValidVersion } from '../command-helpers/build/checkVersion'
 import { Executor as ExecutorClass } from '../command-helpers/build/execution'
-import { MESSARI_REPO_PATH } from '../../bin/env'
+import { checkRepoPath } from '../env/checkRepoPath'
+//import { checkSubgraphsEnv } from '../command-helpers/build/checkSubgraphsEnv'
 
 const HELP: string = `
 ${chalk.bold('messari build')} ${chalk.bold('[<deployment-id>]')} [options]
@@ -69,6 +70,9 @@ module.exports = {
     version = v || version
     help = (h || help) === undefined ? false : true
 
+    // console.log(process.env.MESSARI_REPO_PATH)
+    await checkRepoPath(toolbox, process.env.MESSARI_REPO_PATH)
+
     // Show help text if requested
     if (help) {
       info(HELP)
@@ -76,7 +80,11 @@ module.exports = {
     }
 
     // Check if the deployment.json file exists
-    if (!fs.existsSync(`${MESSARI_REPO_PATH}/deployment/deployment.json`)) {
+    if (
+      !fs.existsSync(
+        `${process.env.MESSARI_REPO_PATH}/deployment/deployment.json`
+      )
+    ) {
       info(
         'deployment.json file not found - Please move to subgraph directory at <messari-repo>/subgraphs/subgraphs/**'
       )
@@ -85,7 +93,10 @@ module.exports = {
 
     // Read the deployment.json file
     const deploymentJSONData = JSON.parse(
-      fs.readFileSync(`${MESSARI_REPO_PATH}/deployment/deployment.json`, 'utf8')
+      fs.readFileSync(
+        `${process.env.MESSARI_REPO_PATH}/deployment/deployment.json`,
+        'utf8'
+      )
     )
 
     // Check if deployment.json data is valid
@@ -95,6 +106,8 @@ module.exports = {
       info(e.message)
       return
     }
+
+    // checkSubgraphsEnv(toolbox)
 
     const askId = {
       type: 'input',

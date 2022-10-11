@@ -1,4 +1,3 @@
-import { MESSARI_REPO_PATH } from '../../../bin/env'
 import { Deployment } from './scriptGenerator'
 
 const { exec } = require('child_process')
@@ -125,7 +124,7 @@ export class Executor {
 
     if (this.scriptIndex == 0) {
       process.chdir(
-        `${MESSARI_REPO_PATH}/subgraphs/${
+        `${process.env.MESSARI_REPO_PATH}/subgraphs/${
           this.deployments[this.deploymentIndex].base
         }`
       )
