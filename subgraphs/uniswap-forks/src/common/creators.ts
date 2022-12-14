@@ -37,7 +37,6 @@ import {
   getOrCreateLPToken,
 } from "./getters";
 import { convertTokenToDecimal } from "./utils/utils";
-import { updateDepositHelper } from "./updateMetrics";
 import { NetworkConfigs } from "../../configurations/configure";
 
 /**
@@ -197,8 +196,6 @@ export function createDeposit(
     .lastPriceUSD!.times(token0Amount)
     .plus(token1.lastPriceUSD!.times(token1Amount));
   deposit.pool = pool.id;
-
-  updateDepositHelper(event.address);
 
   deposit.save();
 }
