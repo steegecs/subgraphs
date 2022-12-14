@@ -16,16 +16,12 @@ import {
   handleTransferToPoolBurn,
 } from "../common/handlers";
 import {
-  updateFinancials,
   updateInputTokenBalances,
-  updatePoolMetrics,
   updateTvlAndTokenPrices,
-  updateUsageMetrics,
 } from "../common/updateMetrics";
 import {
   BIGINT_THOUSAND,
   BIGINT_ZERO,
-  UsageType,
   ZERO_ADDRESS,
 } from "../common/constants";
 import { getLiquidityPool } from "../common/getters";
