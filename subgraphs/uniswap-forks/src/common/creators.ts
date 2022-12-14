@@ -6,6 +6,7 @@ import {
   ethereum,
   log,
   BigDecimal,
+  Bytes,
 } from "@graphprotocol/graph-ts";
 import {
   Account,
@@ -99,9 +100,9 @@ export function createPoolFees(
 // Create a liquidity pool from PairCreated event emission.
 export function createLiquidityPool(
   event: ethereum.Event,
-  poolAddress: string,
-  token0Address: string,
-  token1Address: string
+  poolAddress: Bytes,
+  token0Address: Bytes,
+  token1Address: Bytes
 ): void {
   const protocol = getOrCreateProtocol();
 
@@ -191,7 +192,7 @@ export function createDeposit(
   const logIndexI32 = event.logIndex.toI32();
   const transactionHash = event.transaction.hash.toHexString();
   const deposit = new Deposit(
-    transactionHash.concat("-").concat(event.logIndex.toString())
+    event.transaction.hash.concatI32(event.logIndex.toI32())
   );
 
   deposit.hash = transactionHash;
@@ -238,7 +239,7 @@ export function createWithdraw(
   const logIndexI32 = event.logIndex.toI32();
   const transactionHash = event.transaction.hash.toHexString();
   const withdrawal = new Withdraw(
-    transactionHash.concat("-").concat(event.logIndex.toString())
+    event.transaction.hash.concatI32(event.logIndex.toI32())
   );
 
   withdrawal.hash = transactionHash;
@@ -311,7 +312,7 @@ export function createSwapHandleVolumeAndFees(
   const logIndexI32 = event.logIndex.toI32();
   const transactionHash = event.transaction.hash.toHexString();
   const swap = new SwapEvent(
-    transactionHash.concat("-").concat(event.logIndex.toString())
+    event.transaction.hash.concatI32(event.logIndex.toI32())
   );
 
   // update swap event

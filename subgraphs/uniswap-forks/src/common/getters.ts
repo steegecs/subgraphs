@@ -1,5 +1,5 @@
 // import { log } from "@graphprotocol/graph-ts";
-import { Address, BigInt, ethereum } from "@graphprotocol/graph-ts";
+import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { NetworkConfigs } from "../../configurations/configure";
 import { TokenABI } from "../../generated/Factory/TokenABI";
 import {
@@ -216,7 +216,7 @@ export function getOrCreateLiquidityPoolHourlySnapshot(
       event.address.toHexString().concat("-").concat(hourId)
     );
     poolMetrics.protocol = NetworkConfigs.getFactoryAddress();
-    poolMetrics.pool = event.address.toHexString();
+    poolMetrics.pool = event.address;
     poolMetrics.totalValueLockedUSD = BIGDECIMAL_ZERO;
     poolMetrics.hourlyVolumeUSD = BIGDECIMAL_ZERO;
     poolMetrics.hourlyVolumeByTokenAmount = [BIGINT_ZERO, BIGINT_ZERO];
@@ -272,14 +272,14 @@ export function getOrCreateFinancialsDailySnapshot(
   return financialMetrics;
 }
 
-export function getOrCreateToken(address: string): Token {
+export function getOrCreateToken(address: Bytes): Token {
   let token = Token.load(address);
   if (!token) {
     token = new Token(address);
 
     token.lastPriceUSD = BIGDECIMAL_ZERO;
     token.lastPriceBlockNumber = BIGINT_ZERO;
-    if (NetworkConfigs.getBrokenERC20Tokens().includes(address)) {
+    if (NetworkConfigs.getBrokenERC20Tokens().includes(address.toHexString())) {
       token.name = "";
       token.symbol = "";
       token.decimals = DEFAULT_DECIMALS;
@@ -287,7 +287,9 @@ export function getOrCreateToken(address: string): Token {
 
       return token as Token;
     }
-    const erc20Contract = TokenABI.bind(Address.fromString(address));
+    const erc20Contract = TokenABI.bind(
+      Address.fromString(address.toHexString())
+    );
     const decimals = erc20Contract.try_decimals();
     // Using try_cause some values might be missing
     const name = erc20Contract.try_name();
@@ -303,7 +305,7 @@ export function getOrCreateToken(address: string): Token {
 }
 
 export function getOrCreateLPToken(
-  tokenAddress: string,
+  tokenAddress: Bytes,
   token0: Token,
   token1: Token
 ): Token {
@@ -321,8 +323,8 @@ export function getOrCreateLPToken(
   return token;
 }
 
-export function getOrCreateRewardToken(address: string): RewardToken {
-  let rewardToken = RewardToken.load(address);
+export function getOrCreateRewardToken(address: Bytes): RewardToken {
+  let rewardToken = RewardToken.load(address.toHexString());
   if (rewardToken == null) {
     const token = getOrCreateToken(address);
     rewardToken = new RewardToken(RewardTokenType.DEPOSIT + "-" + address);

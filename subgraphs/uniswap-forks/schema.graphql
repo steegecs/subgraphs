@@ -37,7 +37,7 @@ enum ProtocolType {
 
 type Token @entity {
   " Smart contract address of the token "
-  id: ID!
+  id: Bytes!
 
   " Name of the token, mirrored from the smart contract "
   name: String!
@@ -375,7 +375,7 @@ type FinancialsDailySnapshot @entity {
 
 type LiquidityPool @entity {
   " Smart contract address of the pool "
-  id: ID!
+  id: Bytes!
 
   " The protocol this pool belongs to "
   protocol: DexAmmProtocol!
@@ -629,7 +629,7 @@ contracts.
 """
 interface Event {
   " { Event type }-{ Transaction hash }-{ Log index } "
-  id: ID!
+  id: Bytes!
 
   " Transaction hash of the transaction that emitted this event "
   hash: String!
@@ -655,7 +655,7 @@ interface Event {
 
 type Deposit implements Event @entity {
   " deposit-{ Transaction hash }-{ Log index } "
-  id: ID!
+  id: Bytes!
 
   " Transaction hash of the transaction that emitted this event "
   hash: String!
@@ -699,7 +699,7 @@ type Deposit implements Event @entity {
 
 type Withdraw implements Event @entity {
   " withdraw-{ Transaction hash }-{ Log index }"
-  id: ID!
+  id: Bytes!
 
   " Transaction hash of the transaction that emitted this event "
   hash: String!
@@ -743,7 +743,7 @@ type Withdraw implements Event @entity {
 
 type Swap implements Event @entity {
   " swap-{ Transaction hash }-{ Log index } "
-  id: ID!
+  id: Bytes!
 
   " Transaction hash of the transaction that emitted this event "
   hash: String!
@@ -947,7 +947,7 @@ type _TokenWhitelist @entity {
 
 type _LiquidityPoolAmount @entity {
   " Smart contract address of the pool "
-  id: ID!
+  id: Bytes!
 
   " Input tokens of the pool (not input tokens of the event/transaction). E.g. WETH and USDC from a WETH-USDC pool "
   inputTokens: [Token!]!
