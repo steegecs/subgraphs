@@ -939,7 +939,7 @@ type _HelperStore @entity {
 " This is used to keep tract of the derived price of tokens in ethereum and the whitelisted pools to which it belongs"
 type _TokenWhitelist @entity {
   " Token Address "
-  id: ID!
+  id: Bytes!
 
   " pools token is in that are white listed for USD pricing "
   whitelistPools: [LiquidityPool!]!

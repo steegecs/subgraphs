@@ -6,7 +6,6 @@ import {
   ethereum,
   log,
   BigDecimal,
-  Bytes,
 } from "@graphprotocol/graph-ts";
 import {
   Account,
@@ -36,16 +35,10 @@ import {
   getOrCreateTransfer,
   getOrCreateToken,
   getOrCreateLPToken,
-  getLiquidityPoolAmounts,
 } from "./getters";
-import { convertTokenToDecimal, isSameSign } from "./utils/utils";
-import {
-  updateDepositHelper,
-  updateTokenWhitelists,
-  updateVolumeAndFees,
-} from "./updateMetrics";
+import { convertTokenToDecimal } from "./utils/utils";
+import { updateDepositHelper } from "./updateMetrics";
 import { NetworkConfigs } from "../../configurations/configure";
-import { getTrackedVolumeUSD } from "../price/price";
 
 /**
  * Create the fee for a pool depending on the the protocol and network specific fee structure.
@@ -100,9 +93,9 @@ export function createPoolFees(
 // Create a liquidity pool from PairCreated event emission.
 export function createLiquidityPool(
   event: ethereum.Event,
-  poolAddress: Bytes,
-  token0Address: Bytes,
-  token1Address: Bytes
+  poolAddress: Address,
+  token0Address: Address,
+  token1Address: Address
 ): void {
   const protocol = getOrCreateProtocol();
 
@@ -110,8 +103,6 @@ export function createLiquidityPool(
   const token0 = getOrCreateToken(token0Address);
   const token1 = getOrCreateToken(token1Address);
   const LPtoken = getOrCreateLPToken(poolAddress, token0, token1);
-
-  updateTokenWhitelists(token0, token1, poolAddress);
 
   const pool = new LiquidityPool(poolAddress);
   const poolAmounts = new _LiquidityPoolAmount(poolAddress);
@@ -121,7 +112,6 @@ export function createLiquidityPool(
   pool.symbol = LPtoken.symbol;
   pool.inputTokens = [token0.id, token1.id];
   pool.outputToken = LPtoken.id;
-  pool.fees = createPoolFees(poolAddress, event.block.number);
   pool.isSingleSided = false;
   pool.createdTimestamp = event.block.timestamp;
   pool.createdBlockNumber = event.block.number;
@@ -139,7 +129,7 @@ export function createLiquidityPool(
   poolAmounts.inputTokenBalances = [BIGDECIMAL_ZERO, BIGDECIMAL_ZERO];
 
   // Used to track the number of deposits in a liquidity pool
-  const poolDeposits = new _HelperStore(poolAddress);
+  const poolDeposits = new _HelperStore(poolAddress.toHexString());
   poolDeposits.valueInt = INT_ZERO;
 
   // update number of pools
@@ -147,7 +137,7 @@ export function createLiquidityPool(
   protocol.save();
 
   // Create and track the newly created pool contract based on the template specified in the subgraph.yaml file.
-  PairTemplate.create(Address.fromString(poolAddress));
+  PairTemplate.create(poolAddress);
 
   pool.save();
   token0.save();
@@ -177,10 +167,7 @@ export function createDeposit(
 ): void {
   const transfer = getOrCreateTransfer(event);
 
-  const pool = getLiquidityPool(
-    event.address.toHexString(),
-    event.block.number
-  );
+  const pool = getLiquidityPool(event.address);
 
   const token0 = getOrCreateToken(pool.inputTokens[INT_ZERO]);
   const token1 = getOrCreateToken(pool.inputTokens[INT_ONE]);
@@ -197,8 +184,8 @@ export function createDeposit(
 
   deposit.hash = transactionHash;
   deposit.logIndex = logIndexI32;
-  deposit.protocol = NetworkConfigs.getFactoryAddress();
-  deposit.to = pool.id;
+  deposit.protocol = NetworkConfigs.getFactoryAddress().toHexString();
+  deposit.to = pool.id.toHexString();
   deposit.from = transfer.sender!;
   deposit.blockNumber = event.block.number;
   deposit.timestamp = event.block.timestamp;
@@ -224,10 +211,7 @@ export function createWithdraw(
 ): void {
   const transfer = getOrCreateTransfer(event);
 
-  const pool = getLiquidityPool(
-    event.address.toHexString(),
-    event.block.number
-  );
+  const pool = getLiquidityPool(event.address);
 
   const token0 = getOrCreateToken(pool.inputTokens[INT_ZERO]);
   const token1 = getOrCreateToken(pool.inputTokens[INT_ONE]);
@@ -244,9 +228,9 @@ export function createWithdraw(
 
   withdrawal.hash = transactionHash;
   withdrawal.logIndex = logIndexI32;
-  withdrawal.protocol = NetworkConfigs.getFactoryAddress();
+  withdrawal.protocol = NetworkConfigs.getFactoryAddress().toHexString();
   withdrawal.to = transfer.sender!;
-  withdrawal.from = pool.id;
+  withdrawal.from = pool.id.toHexString();
   withdrawal.blockNumber = event.block.number;
   withdrawal.timestamp = event.block.timestamp;
   withdrawal.inputTokens = [
@@ -286,18 +270,10 @@ export function createSwapHandleVolumeAndFees(
   }
 
   const protocol = getOrCreateProtocol();
-  const pool = getLiquidityPool(
-    event.address.toHexString(),
-    event.block.number
-  );
-  const poolAmounts = getLiquidityPoolAmounts(event.address.toHexString());
+  const pool = getLiquidityPool(event.address);
 
   const token0 = getOrCreateToken(pool.inputTokens[0]);
   const token1 = getOrCreateToken(pool.inputTokens[1]);
-
-  // totals for volume updates
-  const amount0 = amount0In.minus(amount0Out);
-  const amount1 = amount1In.minus(amount1Out);
 
   // Gets the tokenIn and tokenOut payload based on the amounts
   const swapTokens = getSwapTokens(
@@ -332,23 +308,6 @@ export function createSwapHandleVolumeAndFees(
   swap.pool = pool.id;
 
   swap.save();
-
-  // only accounts for volume through white listed tokens
-  const trackedAmountUSD = getTrackedVolumeUSD(
-    poolAmounts,
-    swapTokens.amountInConverted,
-    swapTokens.tokenIn,
-    swapTokens.amountOutConverted,
-    swapTokens.tokenOut
-  );
-  updateVolumeAndFees(
-    event,
-    protocol,
-    pool,
-    trackedAmountUSD,
-    amount0.abs(),
-    amount1.abs()
-  );
 }
 
 class SwapTokens {

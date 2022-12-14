@@ -16,6 +16,7 @@ import {
   PROTOCOL_NAME,
   PROTOCOL_SLUG,
 } from "../../../src/common/constants";
+import { toAddressList } from "../../../../../src/common/utils/utils";
 
 export class UniswapV2MainnetConfigurations implements Configurations {
   getNetwork(): string {
@@ -36,8 +37,8 @@ export class UniswapV2MainnetConfigurations implements Configurations {
   getProtocolSlug(): string {
     return PROTOCOL_SLUG;
   }
-  getFactoryAddress(): string {
-    return "0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f";
+  getFactoryAddress(): Address {
+    return Address.fromString("0x5C69bEe701ef814a2B6a3EDD4B1652CB9cc5aA6f");
   }
   getFactoryContract(): Factory {
     return Factory.bind(
@@ -71,14 +72,14 @@ export class UniswapV2MainnetConfigurations implements Configurations {
   getRewardTokenRate(): BigInt {
     return BIGINT_ZERO;
   }
-  getReferenceToken(): string {
-    return "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2";
+  getReferenceToken(): Address {
+    return Address.fromString("0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2");
   }
-  getRewardToken(): string {
-    return "";
+  getRewardToken(): Address {
+    return Address.fromString("");
   }
-  getWhitelistTokens(): string[] {
-    return [
+  getWhitelistTokens(): Address[] {
+    return toAddressList([
       "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2", // WETH
       "0x6b175474e89094c44da98b954eedeac495271d0f", // DAI
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
@@ -99,27 +100,27 @@ export class UniswapV2MainnetConfigurations implements Configurations {
       "0xa47c8bf37f92abed4a126bda807a7b7498661acd", // WUST
       "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984", // UNI
       "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599", // WBTC
-    ];
+    ]);
   }
-  getStableCoins(): string[] {
-    return [
+  getStableCoins(): Address[] {
+    return toAddressList([
       "0x6b175474e89094c44da98b954eedeac495271d0f", // DAI
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48", // USDC
       "0xdac17f958d2ee523a2206206994597c13d831ec7", // USDT
-    ];
+    ]);
   }
-  getStableOraclePools(): string[] {
-    return [
+  getStableOraclePools(): Address[] {
+    return toAddressList([
       "0xb4e16d0168e52d35cacd2c6185b44281ec28c9dc", // USDC/wETH created 10008355
       "0xa478c2975ab1ea89e8196811f51a7b7ade33eb11", // DAI/wETH created block 10042267
       "0x0d4a11d5eeaac28ec3f61d100daf4d40471f1852", // USDT/wETH created block 10093341
-    ];
+    ]);
   }
-  getUntrackedPairs(): string[] {
-    return ["0x9ea3b5b4ec044b70375236a281986106457b20ef"];
+  getUntrackedPairs(): Address[] {
+    return toAddressList(["0x9ea3b5b4ec044b70375236a281986106457b20ef"]);
   }
-  getUntrackedTokens(): string[] {
-    return [
+  getUntrackedTokens(): Address[] {
+    return toAddressList([
       // Uncomment some of these depending on how to pricing turns out.
       "0x77dc1f32a15f0c255b7ae0a1f67fc0b46e7b8bba", // TheOnlyInu
       "0x5dbcf33d8c2e976c6b560249878e6f1491bca25c", // yearn Curve.fi
@@ -205,10 +206,10 @@ export class UniswapV2MainnetConfigurations implements Configurations {
       "0x80ab141f324c3d6f2b18b030f1c4e95d4d658778", // DEA
       "0x82a77710495a35549d2add797412b4a4497d33ef", // DOGZ
       "0x5b558564b57e4ff88c6b8d8e7eeee599bf79b368", // MultiMillion
-    ];
+    ]);
   }
-  getBrokenERC20Tokens(): string[] {
-    return [];
+  getBrokenERC20Tokens(): Address[] {
+    return toAddressList([]);
   }
   getMinimumLiquidityThresholdTrackVolume(): BigDecimal {
     return MINIMUM_LIQUIDITY_FOUR_HUNDRED_THOUSAND;

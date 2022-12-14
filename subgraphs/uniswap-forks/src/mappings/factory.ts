@@ -1,4 +1,4 @@
-import { Bytes, log } from "@graphprotocol/graph-ts";
+import { log } from "@graphprotocol/graph-ts";
 
 import { PairCreated } from "../../generated/Factory/Factory";
 import { createLiquidityPool } from "../common/creators";
@@ -13,9 +13,9 @@ export function handlePairCreated(event: PairCreated): void {
   ]);
   createLiquidityPool(
     event,
-    Bytes.fromHexString(event.params.pair.toHexString()),
-    Bytes.fromHexString(event.params.token1.toHexString()),
-    Bytes.fromHexString(event.params.token1.toHexString())
+    event.params.pair,
+    event.params.token0,
+    event.params.token1
   );
 }
 

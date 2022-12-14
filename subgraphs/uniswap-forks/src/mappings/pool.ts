@@ -3,37 +3,29 @@ import {
   Burn,
   Swap,
   Transfer,
-  Sync,
 } from "../../generated/templates/Pair/Pair";
-import {
-  createDeposit,
-  createWithdraw,
-  createSwapHandleVolumeAndFees,
-} from "../common/creators";
-import {
-  handleTransferBurn,
-  handleTransferMint,
-  handleTransferToPoolBurn,
-} from "../common/handlers";
-import {
-  updateInputTokenBalances,
-  updateTvlAndTokenPrices,
-} from "../common/updateMetrics";
 import {
   BIGINT_THOUSAND,
   BIGINT_ZERO,
   ZERO_ADDRESS,
 } from "../common/constants";
+import {
+  createDeposit,
+  createWithdraw,
+  createSwapHandleVolumeAndFees,
+} from "../common/creators";
 import { getLiquidityPool } from "../common/getters";
+import {
+  handleTransferBurn,
+  handleTransferMint,
+  handleTransferToPoolBurn,
+} from "../common/handlers";
 
 // Handle transfers event.
 // The transfers are either occur as a part of the Mint or Burn event process.
 // The tokens being transferred in these events are the LP tokens from the liquidity pool that emitted this event.
 export function handleTransfer(event: Transfer): void {
-  const pool = getLiquidityPool(
-    event.address.toHexString(),
-    event.block.number
-  );
+  const pool = getLiquidityPool(event.address);
 
   // ignore initial transfers for first adds
   if (
@@ -71,19 +63,6 @@ export function handleTransfer(event: Transfer): void {
       event.params.from.toHexString()
     );
   }
-}
-
-// Handle Sync event.
-// Emitted after every Swap, Mint, and Burn event.
-// Gives information about the rebalancing of tokens used to update tvl, balances, and token pricing
-export function handleSync(event: Sync): void {
-  updateInputTokenBalances(
-    event.address,
-    event.params.reserve0,
-    event.params.reserve1,
-    event.block.number
-  );
-  updateTvlAndTokenPrices(event.address, event.block.number);
 }
 
 // Handle a mint event emitted from a pool contract. Considered a deposit into the given liquidity pool.

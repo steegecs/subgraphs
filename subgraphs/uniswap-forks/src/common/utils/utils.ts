@@ -1,4 +1,10 @@
-import { BigInt, BigDecimal, Bytes, ethereum } from "@graphprotocol/graph-ts";
+import {
+  BigInt,
+  BigDecimal,
+  Bytes,
+  ethereum,
+  Address,
+} from "@graphprotocol/graph-ts";
 import {
   BIGDECIMAL_HUNDRED,
   BIGDECIMAL_ONE,
@@ -90,4 +96,13 @@ export function isSameSign(a: BigInt, b: BigInt): boolean {
     return true;
   }
   return false;
+}
+
+// Turn list of strings to Address
+export function toAddressList(list: string[]): Address[] {
+  const addressList = new Array<Address>(list.length);
+  for (let i = 0; i < list.length; i++) {
+    addressList[i] = Address.fromString(list[i]);
+  }
+  return addressList;
 }

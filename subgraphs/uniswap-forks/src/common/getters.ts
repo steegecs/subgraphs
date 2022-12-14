@@ -1,5 +1,5 @@
 // import { log } from "@graphprotocol/graph-ts";
-import { Address, BigInt, Bytes, ethereum } from "@graphprotocol/graph-ts";
+import { Address, Bytes, ethereum } from "@graphprotocol/graph-ts";
 import { NetworkConfigs } from "../../configurations/configure";
 import { TokenABI } from "../../generated/Factory/TokenABI";
 import {
@@ -28,13 +28,16 @@ import {
   BIGINT_ZERO,
   SECONDS_PER_HOUR,
 } from "./constants";
-import { createPoolFees } from "./creators";
 
 export function getOrCreateProtocol(): DexAmmProtocol {
-  let protocol = DexAmmProtocol.load(NetworkConfigs.getFactoryAddress());
+  let protocol = DexAmmProtocol.load(
+    NetworkConfigs.getFactoryAddress().toHexString()
+  );
 
   if (!protocol) {
-    protocol = new DexAmmProtocol(NetworkConfigs.getFactoryAddress());
+    protocol = new DexAmmProtocol(
+      NetworkConfigs.getFactoryAddress().toHexString()
+    );
     protocol.name = NetworkConfigs.getProtocolName();
     protocol.slug = NetworkConfigs.getProtocolSlug();
     protocol.totalValueLockedUSD = BIGDECIMAL_ZERO;
@@ -56,18 +59,14 @@ export function getOrCreateProtocol(): DexAmmProtocol {
   return protocol;
 }
 
-export function getLiquidityPool(
-  poolAddress: string,
-  blockNumber: BigInt
-): LiquidityPool {
+export function getLiquidityPool(poolAddress: Address): LiquidityPool {
   const pool = LiquidityPool.load(poolAddress)!;
-  pool.fees = createPoolFees(poolAddress, blockNumber);
   pool.save();
   return pool;
 }
 
 export function getLiquidityPoolAmounts(
-  poolAddress: string
+  poolAddress: Address
 ): _LiquidityPoolAmount {
   return _LiquidityPoolAmount.load(poolAddress)!;
 }
@@ -77,7 +76,7 @@ export function getLiquidityPoolFee(id: string): LiquidityPoolFee {
 }
 
 export function getOrCreateTokenWhitelist(
-  tokenAddress: string
+  tokenAddress: Bytes
 ): _TokenWhitelist {
   let tokenTracker = _TokenWhitelist.load(tokenAddress);
   // fetch info if null
@@ -113,7 +112,7 @@ export function getOrCreateUsageMetricDailySnapshot(
 
   if (!usageMetrics) {
     usageMetrics = new UsageMetricsDailySnapshot(dayId);
-    usageMetrics.protocol = NetworkConfigs.getFactoryAddress();
+    usageMetrics.protocol = NetworkConfigs.getFactoryAddress().toHexString();
 
     usageMetrics.dailyActiveUsers = INT_ZERO;
     usageMetrics.cumulativeUniqueUsers = INT_ZERO;
@@ -145,7 +144,7 @@ export function getOrCreateUsageMetricHourlySnapshot(
 
   if (!usageMetrics) {
     usageMetrics = new UsageMetricsHourlySnapshot(hourId);
-    usageMetrics.protocol = NetworkConfigs.getFactoryAddress();
+    usageMetrics.protocol = NetworkConfigs.getFactoryAddress().toHexString();
 
     usageMetrics.hourlyActiveUsers = INT_ZERO;
     usageMetrics.cumulativeUniqueUsers = INT_ZERO;
@@ -176,8 +175,8 @@ export function getOrCreateLiquidityPoolDailySnapshot(
     poolMetrics = new LiquidityPoolDailySnapshot(
       event.address.toHexString().concat("-").concat(dayId)
     );
-    poolMetrics.protocol = NetworkConfigs.getFactoryAddress();
-    poolMetrics.pool = event.address.toHexString();
+    poolMetrics.protocol = NetworkConfigs.getFactoryAddress().toHexString();
+    poolMetrics.pool = event.address;
     poolMetrics.totalValueLockedUSD = BIGDECIMAL_ZERO;
     poolMetrics.dailyVolumeUSD = BIGDECIMAL_ZERO;
     poolMetrics.dailyVolumeByTokenAmount = [BIGINT_ZERO, BIGINT_ZERO];
@@ -215,7 +214,7 @@ export function getOrCreateLiquidityPoolHourlySnapshot(
     poolMetrics = new LiquidityPoolHourlySnapshot(
       event.address.toHexString().concat("-").concat(hourId)
     );
-    poolMetrics.protocol = NetworkConfigs.getFactoryAddress();
+    poolMetrics.protocol = NetworkConfigs.getFactoryAddress().toHexString();
     poolMetrics.pool = event.address;
     poolMetrics.totalValueLockedUSD = BIGDECIMAL_ZERO;
     poolMetrics.hourlyVolumeUSD = BIGDECIMAL_ZERO;
@@ -251,7 +250,8 @@ export function getOrCreateFinancialsDailySnapshot(
 
   if (!financialMetrics) {
     financialMetrics = new FinancialsDailySnapshot(id);
-    financialMetrics.protocol = NetworkConfigs.getFactoryAddress();
+    financialMetrics.protocol =
+      NetworkConfigs.getFactoryAddress().toHexString();
 
     financialMetrics.totalValueLockedUSD = BIGDECIMAL_ZERO;
     financialMetrics.dailyVolumeUSD = BIGDECIMAL_ZERO;
@@ -279,7 +279,9 @@ export function getOrCreateToken(address: Bytes): Token {
 
     token.lastPriceUSD = BIGDECIMAL_ZERO;
     token.lastPriceBlockNumber = BIGINT_ZERO;
-    if (NetworkConfigs.getBrokenERC20Tokens().includes(address.toHexString())) {
+    if (
+      NetworkConfigs.getBrokenERC20Tokens().includes(Address.fromBytes(address))
+    ) {
       token.name = "";
       token.symbol = "";
       token.decimals = DEFAULT_DECIMALS;

@@ -1,4 +1,4 @@
-import { BigDecimal, BigInt } from "@graphprotocol/graph-ts";
+import { Address, BigDecimal, BigInt } from "@graphprotocol/graph-ts";
 import { Factory } from "../../generated/Factory/Factory";
 
 // This interface is to be used by the configurations classes for each protocol/network deployment.
@@ -10,7 +10,7 @@ export interface Configurations {
   getSchemaVersion(): string;
   getSubgraphVersion(): string;
   getMethodologyVersion(): string;
-  getFactoryAddress(): string;
+  getFactoryAddress(): Address;
   getFactoryContract(): Factory;
   getTradeFee(blockNumber: BigInt): BigDecimal;
   getProtocolFeeToOn(blockNumber: BigInt): BigDecimal;
@@ -20,14 +20,14 @@ export interface Configurations {
   getFeeOnOff(): string;
   getRewardIntervalType(): string;
   getRewardTokenRate(): BigInt;
-  getReferenceToken(): string;
-  getRewardToken(): string;
-  getWhitelistTokens(): string[];
-  getStableCoins(): string[];
-  getStableOraclePools(): string[];
-  getUntrackedPairs(): string[];
-  getUntrackedTokens(): string[];
-  getBrokenERC20Tokens(): string[];
+  getReferenceToken(): Address;
+  getRewardToken(): Address;
+  getWhitelistTokens(): Address[];
+  getStableCoins(): Address[];
+  getStableOraclePools(): Address[];
+  getUntrackedPairs(): Address[];
+  getUntrackedTokens(): Address[];
+  getBrokenERC20Tokens(): Address[];
   getMinimumLiquidityThresholdTrackVolume(): BigDecimal;
   getMinimumLiquidityThresholdTrackPrice(): BigDecimal;
 }
