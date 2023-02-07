@@ -130,10 +130,11 @@ export function handleCollectPool(event: CollectEvent): void {
     pool._totalAmountCollected,
     [event.params.amount0, event.params.amount1],
   ]);
-  pool.uncollectedSupplySideTokenAmounts = sumBigIntListByIndex([
-    subtractBigIntLists(pool._totalAmountEarned, pool._totalAmountCollected),
-    pool._totalAmountWithdrawn,
-  ]);
+  pool.uncollectedSupplySideTokenAmounts = subtractBigIntLists(
+    pool._totalAmountEarned,
+    subtractBigIntLists(pool._totalAmountCollected, pool._totalAmountWithdrawn)
+  );
+
   pool.uncollectedSupplySideValuesUSD = getAmountUSD(
     event,
     pool,

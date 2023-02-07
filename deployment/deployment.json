@@ -3346,8 +3346,8 @@
         "network": "arbitrum",
         "status": "prod",
         "versions": {
-          "schema": "1.3.0",
-          "subgraph": "1.2.0",
+          "schema": "3.0.3",
+          "subgraph": "1.2.1",
           "methodology": "1.0.0"
         },
         "files": {
@@ -3368,8 +3368,8 @@
         "network": "celo",
         "status": "prod",
         "versions": {
-          "schema": "1.3.0",
-          "subgraph": "1.1.5",
+          "schema": "3.0.3",
+          "subgraph": "1.1.6",
           "methodology": "1.0.0"
         },
         "files": {
@@ -3390,8 +3390,8 @@
         "network": "ethereum",
         "status": "prod",
         "versions": {
-          "schema": "1.3.0",
-          "subgraph": "1.2.0",
+          "schema": "3.0.3",
+          "subgraph": "1.2.1",
           "methodology": "1.0.0"
         },
         "files": {
@@ -3416,8 +3416,8 @@
         "network": "optimism",
         "status": "prod",
         "versions": {
-          "schema": "1.3.0",
-          "subgraph": "1.1.2",
+          "schema": "3.0.3",
+          "subgraph": "1.1.3",
           "methodology": "1.0.0"
         },
         "files": {
@@ -3438,8 +3438,8 @@
         "network": "polygon",
         "status": "prod",
         "versions": {
-          "schema": "1.3.0",
-          "subgraph": "1.1.4",
+          "schema": "3.0.3",
+          "subgraph": "1.1.5",
           "methodology": "1.0.0"
         },
         "files": {
@@ -3577,6 +3577,10 @@
           "hosted-service": {
             "slug": "qidao-ethereum",
             "query-id": "qidao-ethereum"
+          },
+          "decentralized-network": {
+            "slug": "qidao-ethereum",
+            "query-id": "EXuutY6qkZbXjYeJZdiDBf2imJswTNdfm8YZCqhAthfW"
           }
         }
       },
