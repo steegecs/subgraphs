@@ -29,6 +29,7 @@ import {
   SECONDS_PER_HOUR,
 } from "./constants";
 import { createPoolFees } from "./creators";
+import { findUSDPricePerToken } from "../price/price";
 
 export function getOrCreateProtocol(): DexAmmProtocol {
   let protocol = DexAmmProtocol.load(NetworkConfigs.getFactoryAddress());
@@ -272,7 +273,11 @@ export function getOrCreateFinancialsDailySnapshot(
   return financialMetrics;
 }
 
-export function getOrCreateToken(address: string): Token {
+export function getOrCreateToken(
+  event: ethereum.Event,
+  address: string,
+  retrieve_price: bool = true
+): Token {
   let token = Token.load(address);
   if (!token) {
     token = new Token(address);
@@ -299,6 +304,13 @@ export function getOrCreateToken(address: string): Token {
 
     token.save();
   }
+
+  if (event.block.number != token.lastPriceBlockNumber! && retrieve_price) {
+    token.lastPriceUSD = findUSDPricePerToken(event, token);
+    token.lastPriceBlockNumber = event.block.number;
+    token.save();
+  }
+
   return token as Token;
 }
 
@@ -321,10 +333,13 @@ export function getOrCreateLPToken(
   return token;
 }
 
-export function getOrCreateRewardToken(address: string): RewardToken {
+export function getOrCreateRewardToken(
+  event: ethereum.Event,
+  address: string
+): RewardToken {
   let rewardToken = RewardToken.load(address);
   if (rewardToken == null) {
-    const token = getOrCreateToken(address);
+    const token = getOrCreateToken(event, address);
     rewardToken = new RewardToken(RewardTokenType.DEPOSIT + "-" + address);
     rewardToken.token = token.id;
     rewardToken.type = RewardTokenType.DEPOSIT;

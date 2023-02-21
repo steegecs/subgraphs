@@ -139,10 +139,12 @@ export const INT_ONE = 1 as i32;
 export const INT_TWO = 2 as i32;
 export const INT_FOUR = 4 as i32;
 
+export const BIGDECIMAL_NEG_ONE = new BigDecimal(BIGINT_NEG_ONE);
 export const BIGDECIMAL_ZERO = new BigDecimal(BIGINT_ZERO);
 export const BIGDECIMAL_ONE = new BigDecimal(BIGINT_ONE);
 export const BIGDECIMAL_TWO = new BigDecimal(BIGINT_TWO);
 export const BIGDECIMAL_TEN = new BigDecimal(BIGINT_TEN);
+export const BIGDECIMAL_TWENTY = new BigDecimal(BIGINT_TEN.times(BIGINT_TWO));
 export const BIGDECIMAL_HUNDRED = new BigDecimal(BIGINT_HUNDRED);
 
 export const BIGDECIMAL_FIFTY_PERCENT = new BigDecimal(BIGINT_FIFTY);
@@ -152,6 +154,7 @@ export const SECONDS_PER_DAY = 60 * 60 * 24;
 export const SECONDS_PER_HOUR = 60 * 60;
 export const MS_PER_DAY = new BigDecimal(BigInt.fromI32(24 * 60 * 60 * 1000));
 export const ONE_WEEK_IN_DAYS = BigInt.fromI32(7);
+export const PRICE_CHANGE_BUFFER_LIMIT = 5 as i32;
 
 export const MS_PER_YEAR = DAYS_PER_YEAR.times(
   new BigDecimal(BigInt.fromI32(24 * 60 * 60 * 1000))
