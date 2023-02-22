@@ -301,6 +301,7 @@ export function getOrCreateToken(
     token.decimals = decimals.reverted ? DEFAULT_DECIMALS : decimals.value;
     token.name = name.reverted ? "" : name.value;
     token.symbol = symbol.reverted ? "" : symbol.value;
+    token._largePriceChangeBuffer = 0;
 
     token.save();
   }
@@ -328,6 +329,7 @@ export function getOrCreateLPToken(
     token.decimals = DEFAULT_DECIMALS;
     token.lastPriceUSD = BIGDECIMAL_ZERO;
     token.lastPriceBlockNumber = BIGINT_ZERO;
+    token._largePriceChangeBuffer = 0;
     token.save();
   }
   return token;

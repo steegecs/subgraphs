@@ -2,11 +2,11 @@ import { Versions as VersionsInterface } from "../../../deployment/context/inter
 
 export class VersionsClass implements VersionsInterface {
   getSchemaVersion(): string {
-    return "1.3.1";
+    return "1.3.0";
   }
 
   getSubgraphVersion(): string {
-    return "1.1.11";
+    return "1.1.6";
   }
 
   getMethodologyVersion(): string {

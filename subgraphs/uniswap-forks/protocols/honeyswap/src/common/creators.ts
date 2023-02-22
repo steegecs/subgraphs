@@ -75,8 +75,8 @@ export function createLiquidityPool(
   const protocol = getOrCreateProtocol();
 
   // create the tokens and tokentracker
-  const token0 = getOrCreateToken(token0Address);
-  const token1 = getOrCreateToken(token1Address);
+  const token0 = getOrCreateToken(event, token0Address);
+  const token1 = getOrCreateToken(event, token1Address);
   const LPtoken = getOrCreateLPToken(poolAddress, token0, token1);
 
   updateTokenWhitelists(token0, token1, poolAddress);
@@ -146,7 +146,7 @@ export function createPoolRewardToken(
   const pool = getLiquidityPool(poolAddress, blockNumber);
 
   pool.rewardTokens = [
-    getOrCreateRewardToken(NetworkConfigs.getRewardToken()).id,
+    getOrCreateRewardToken(event, NetworkConfigs.getRewardToken()).id,
   ];
 
   pool.save();

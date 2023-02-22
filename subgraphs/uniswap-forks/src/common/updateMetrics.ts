@@ -32,10 +32,6 @@ import {
   UsageType,
 } from "./constants";
 import { convertTokenToDecimal, percToDec } from "./utils/utils";
-import {
-  findUSDPricePerToken,
-  updateNativeTokenPriceInUSD,
-} from "../price/price";
 import { NetworkConfigs } from "../../configurations/configure";
 
 // Update FinancialsDailySnapshots entity
