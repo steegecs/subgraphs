@@ -15,7 +15,6 @@ import {
   BIGDECIMAL_ONE,
   BIGDECIMAL_TWO,
   BIGINT_ZERO,
-  BIGDECIMAL_TEN,
   PRICE_CHANGE_BUFFER_LIMIT,
 } from "../common/constants";
 import { safeDiv } from "../common/utils/utils";
@@ -145,8 +144,8 @@ export function findUSDPricePerToken(
   // If priceSoFar 10x greater or less than token.lastPriceUSD, use token.lastPriceUSD
   // Increment buffer so that it allows large price jumps if seen repeatedly
   if (
-    priceSoFar.gt(token.lastPriceUSD!.times(BIGDECIMAL_TEN)) ||
-    priceSoFar.lt(token.lastPriceUSD!.div(BIGDECIMAL_TEN))
+    priceSoFar.gt(token.lastPriceUSD!.times(BIGDECIMAL_TWO)) ||
+    priceSoFar.lt(token.lastPriceUSD!.div(BIGDECIMAL_TWO))
   ) {
     if (token._largePriceChangeBuffer < PRICE_CHANGE_BUFFER_LIMIT) {
       token._largePriceChangeBuffer = token._largePriceChangeBuffer + 1;
