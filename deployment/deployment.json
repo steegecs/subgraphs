@@ -3150,7 +3150,7 @@
     }
   },
   "makerdao": {
-    "schema": "lending",
+    "schema": "",
     "base": "makerdao",
     "protocol": "makerdao",
     "project": "makerdao",
