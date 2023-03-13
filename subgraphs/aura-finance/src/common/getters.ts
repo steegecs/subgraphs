@@ -206,6 +206,21 @@ export function getOrCreateBalancerPoolToken(
 
         const weights = getPoolTokenWeights(poolAddress, popIndex);
 
+        if (
+          weights.length != tokens.length ||
+          balances.length != tokens.length
+        ) {
+          log.error(
+            "Token parameter lengths do not match: Tokens: {}, Balances: {}, Weights: {}",
+            [
+              tokens.length.toString(),
+              balances.length.toString(),
+              weights.length.toString(),
+            ]
+          );
+          return bpt;
+        }
+
         const knownPricePoolTokenValueUSD = bigIntToBigDecimal(
           balances[knownPricePoolTokenIndex],
           knownPricePoolToken.decimals
