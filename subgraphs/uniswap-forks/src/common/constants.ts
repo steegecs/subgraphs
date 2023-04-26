@@ -66,6 +66,7 @@ export namespace RewardTokenType {
 
 
 export namespace TransferType {
+  export const NONE = Bytes.fromHexString("NONE");
   export const MINT = Bytes.fromHexString('MINT')
   export const BURN = Bytes.fromHexString('BURN')
   // Pool addresses are also stored in the HelperStore

@@ -1,6 +1,6 @@
 import { ethereum, BigInt, Bytes } from "@graphprotocol/graph-ts";
 import { getLiquidityPool, getOrCreateTransfer } from "./getters";
-import { TransferType } from "./constants";
+import { BIGINT_ONE, BIGINT_ZERO, TransferType } from "./constants";
 
 // Handle data from transfer event for mints. Used to populate deposit entity in the mint event.
 export function handleTransferMint(event: ethereum.Event, value: BigInt, to: Bytes): void {
@@ -12,7 +12,7 @@ export function handleTransferMint(event: ethereum.Event, value: BigInt, to: Byt
 
   // if - create new mint if no mints so far or if last one is done already
   // else - This is done to remove a potential feeto mint --- Not active
-  if (!transfer.type) {
+  if (transfer.type == TransferType.NONE) {
     transfer.type = TransferType.MINT;
 
     // Address that is minted to
@@ -35,6 +35,7 @@ export function handleTransferToPoolBurn(event: ethereum.Event, from: Bytes): vo
 
   transfer.type = TransferType.BURN;
   transfer.sender = from;
+  transfer.liquidity = BIGINT_ZERO;
 
   transfer.save();
 }

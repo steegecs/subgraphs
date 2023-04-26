@@ -30,6 +30,8 @@ import {
   PROTOCOL_SCHEMA_VERSION,
   PROTOCOL_SUBGRAPH_VERSION,
   PROTOCOL_METHODOLOGY_VERSION,
+  ZERO_ADDRESS,
+  TransferType,
 } from "./constants";
 export function getOrCreateDex(): DexAmmProtocol {
   let protocol = DexAmmProtocol.load(NetworkConfigs.FACTORY_ADDRESS);
@@ -84,8 +86,10 @@ export function getOrCreateTransfer(event: ethereum.Event): _Transfer {
   let transfer = _Transfer.load(event.transaction.hash);
   if (!transfer) {
     transfer = new _Transfer(event.transaction.hash);
+    transfer.type = TransferType.NONE
     transfer.blockNumber = event.block.number;
     transfer.timestamp = event.block.timestamp;
+    transfer.sender = Bytes.fromHexString(ZERO_ADDRESS);
   }
   transfer.save();
   return transfer;
