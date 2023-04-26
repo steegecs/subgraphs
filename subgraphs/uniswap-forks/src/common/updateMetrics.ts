@@ -196,7 +196,7 @@ export function updateTvlAndTokenPrices(poolAddress: Bytes, blockNumber: BigInt)
   let outputTokenSupply = convertTokenToDecimal(pool.outputTokenSupply!, DEFAULT_DECIMALS);
 
   // Update LP token prices
-  if (pool.outputTokenSupply == BIGINT_ZERO) {
+  if (pool.outputTokenSupply! == BIGINT_ZERO) {
     pool.outputTokenPriceUSD = BIGDECIMAL_ZERO;
   } else {
     pool.outputTokenPriceUSD = newTvl.div(outputTokenSupply);
