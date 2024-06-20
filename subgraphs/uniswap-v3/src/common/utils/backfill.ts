@@ -22,7 +22,7 @@ import {
 } from "../getters";
 import { updateTokenWhitelists } from "../updateMetrics";
 import { Pool as PoolTemplate } from "../../../generated/templates";
-import { Pool } from "../../../generated/Factory/Pool";
+import { Pool } from "../../../generated/factory/pool";
 import { createPoolFees } from "../creators";
 import { ERC20 } from "../../../generated/Factory/ERC20";
 import { convertTokenToDecimal } from "./utils";
